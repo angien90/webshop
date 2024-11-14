@@ -1,0 +1,30 @@
+body {
+    font-family: "Gabriela", serif;
+    font-weight: 400;
+    font-style: normal;
+    background-color: #2ab0bc86;
+}
+
+header {
+    background-color: #fe6491;
+}
+
+/* Produktlistan */
+article {
+    background-color: white;
+    border-radius: 30px;
+    margin: 20px;
+    padding: 20px;
+    width: auto;
+}
+
+article h2 {
+    text-align: center;
+}
+
+article img {
+    display: flex;
+    justify-content: center;
+
+}
+      

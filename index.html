@@ -4,11 +4,79 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite App</title>
+    <title>Gottfrids gyllene munkar</title>
+    
+    <link rel="stylesheet" href="css/style.css" type="text/css">
+    
+    <link rel="icon" type="image/x-icon" href="/img/logo_gottfrids_gyllene_munkar.png">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gabriela&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&" />
+
+    
   </head>
+
   <body>
+    <!-- Top meny-->
+    <header>
+      <button><span class="material-symbols-outlined">shopping_cart</span></button>
+      <span class="total-sum">kr</span>
+      <button><span class="material-symbols-outlined">menu</span></button>
+      
+    </header>
+
+    <main>
+    <!-- Sidans övre del -->
+      <section>
+        <h1>Gottfrids Gyllene Munkar</h1>
+        <img src="img/logo_gottfrids_gyllene_munkar.png" width="400" height="400" />
+        <h2>Snaskköpings bästa munkar direkt vid din dörr</h2>
+      </section>
+
+    <!-- Produktlista -->
+      <article>
+        <h2>Namn</h2>
+        <img src="img/Donut_med_kola_glasyr.png" width="400" height="400"/>
+        <h3>Pris</h3>
+        <h3>Rating</h3>
+        <h3>Kategori</h3>
+        <button><span class="material-symbols-outlined">remove_shopping_cart</span></button>
+        <input type="number" value="0">
+        <button><span class="material-symbols-outlined">add_shopping_cart</span></button>
+      </article>
+
+    <!-- Beställningsformulär -->
+      <form>
+        <lable for="name">Förnamn</lable>
+
+
+      </form>
+
+    </main>
+
+    <!-- Sidfot -->
+    <footer>
+      <ul>
+        <li>Om oss</li>
+        <li>Kontakta oss</li>
+      </ul>
+
+      <ul>
+        <li>Gottfrids Gyllene Munkar</li>
+        <li>Snaskvägen 1</li>
+        <li>123 45 Snaskköping</li>
+      </ul>
+    </footer>
+
+
+
+
+
+
+
     <div id="app"></div>
     <script type="module" src="/main.js"></script>
   </body>
