@@ -1,3 +1,16 @@
+/*
+ X Skapa en array med objekt som bär alla produkterna. 
+ X Skapa en funktion som loopar ut alla produkterna på sidan/i vår html struktur. 
+ - Skapa funktion för plus och minus antal 
+ - Skapa funktion som beräknar totalen (och uppdateras vid förändring)
+ - Skapa visuell bild av raiting
+ - Toggla funktioner i beställningsformuläret som ska döljas och synas. 
+ - Skapa en timer som räknar ner och deletar innehåll
+ - Fält i formuläret ska valideras innan det går att skicka beställningen. 
+ -
+ */
+
+
 
 //  Produktlistan  //
 const productList = [
@@ -210,8 +223,8 @@ function printProductListDiv() {
         <img src="${eachProduct.img.url}" alt="${eachProduct.img.alt}">
         <p>${eachProduct.img.alt}</p>
         <div class="product-information">
-          <p>${eachProduct.raiting}</p>
-          <h3>${eachProduct.kategori}</h3>
+          <h3>${eachProduct.raiting}</h3>
+          <h3>Kategori: ${eachProduct.kategori}</h3>
           <h3>${eachProduct.pris} kr/st</h3>
         </div>
         
@@ -224,4 +237,5 @@ function printProductListDiv() {
     `; 
   });
 }
+
 printProductListDiv();

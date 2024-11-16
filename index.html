@@ -23,15 +23,17 @@
   <body>
     <!-- Top meny-->
     <header>
-      <button><span class="material-symbols-outlined">shopping_cart</span></button>
+      
+      <button><a class="explore-more" href="#varukorgen"><span class="material-symbols-outlined">shopping_cart</span></a></button>
       <span class="total-sum">kr</span>
       <button><span class="material-symbols-outlined">menu</span></button>
     </header>
 
     <main>
+
     <!-- Sidans övre del -->
-      <section>
-        <div class="top-bar">
+      <section class="top-bar">
+        <div>
           <h1>Gottfrids Gyllene Munkar</h1>
           <img src="img/logo_gottfrids_gyllene_munkar.png" alt="Gottfrids Gyllene Munkars logotype" width="400" height="400" />
         </div>
@@ -55,8 +57,8 @@
 
     </main>
 
-    <!-- Beställningsformulär -->
-    <form>
+    <!-- Varukorg -->
+    <form id="varukorgen">
       <section class="varukorg">
         <h2>Varukorg</h2>
         <p><a href="#">Product 1</a> <span class="price">$15</span><span class="price" style="color:black"><i class="fa fa-shopping-cart"></i><b>4</b></span></p>
@@ -67,76 +69,71 @@
         <p>Total <span class="price" style="color:black"><b>$30</b></span></p>
       </section>
 
+    <!-- Kunduppgifter -->
       <section class="leveransuppgifter">
-        <h3>Leveransuppgifter</h3>
-        <label for="fname">Förnamn:</label><br>
-        <input type="text" id="fname" name="fname" value="Förnamn"><br>
+        <h2>Leveransuppgifter</h2>
+        <p>(* = obligatoriska fält)</p>
+        <label for="fname">Förnamn: *</label><br>
+        <input type="text" id="fname" name="fname" value=""><br>
 
-        <label for="lname">Efternamn:</label><br>
-        <input type="text" id="lname" name="lname" value="Efternamn"><br>
+        <label for="lname">Efternamn: *</label><br>
+        <input type="text" id="lname" name="lname" value=""><br>
         
-        <label for="address">Adress (gata + nr):</label><br>
-        <input type="text" id="address" name="address" value="Adress (gata + nr)"><br>
-
-        <label for="postnr">Postnummer:</label><br>
-        <input type="text" id="postnr" name="postnr" value="Postnummer"><br>
-
-        <label for="postort">Postort:</label><br>
-        <input type="text" id="postort" name="postort" value="Postort"><br>
-
-        <label for="phone">Telefon (mobil):</label><br>
-        <input type="tel" id="phone" name="phone" value="Telefon (mobil)"><br>
+        <label for="address">Adress (gata + nr): *</label><br>
+        <input type="text" id="address" name="address" value=""><br>
 
         <label for="postkod">Postkod:</label><br>
-        <input type="text" id="postkod" name="postkod" value="Postkod"><br>
-      
-        <label for="epost">E-postadress:</label><br>
-        <input type="email" id="epost" name="epost" value="E-postadress"><br>
-      
-        <label>
-          <input type="checkbox" checked="" name="personnummer"> Jag godkänner att Gottrids Gyllene Munkar behandlar mina personuppgifter</label><br>
-        </label>
+        <input type="text" id="postkod" name="postkod" value=""><br>
 
-        <label>
-          <input type="checkbox" checked="checked" name="nyhetsbrev"> Jag vill ta emot Gottrids Gyllene Munkars nyhetsbrev</label><br>
-        </label>
+        <label for="postnr">Postnummer: *</label><br>
+        <input type="text" id="postnr" name="postnr" value=""><br>
+
+        <label for="postort">Postort: *</label><br>
+        <input type="text" id="postort" name="postort" value=""><br>
+
+        <label for="phone">Telefon (mobil): *</label><br>
+        <input type="tel" id="phone" name="phone" value=""><br>
+      
+        <label for="epost">E-postadress: *</label><br>
+        <input type="email" id="epost" name="epost" value=""><br>
+      
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" checked="" name="personnummer"> Jag godkänner att Gottrids Gyllene Munkar behandlar mina personuppgifter</label><br>
+          </label>
+
+          <label>
+            <input type="checkbox" checked="checked" name="nyhetsbrev"> Jag vill ta emot Gottrids Gyllene Munkars nyhetsbrev</label><br>
+          </label>
+        </div>
       </section>
 
+    <!-- Betalningsuppgifter -->
       <section class="betalningsuppgifter">
         <h3>Betalningsuppgifter</h3>
-          <label for="fname">Accepted Cards</label>
-          <div class="icon-container">
+          <p>Accepterade kort</p>
+          <div class="kort-ikoner">
             <i class="fa fa-cc-visa" style="color:navy;"></i>
-            <i class="fa fa-cc-amex" style="color:blue;"></i>
             <i class="fa fa-cc-mastercard" style="color:red;"></i>
-            <i class="fa fa-cc-discover" style="color:orange;"></i>
           </div>
 
-          <label for="cname">Name on Card</label>
-          <input type="text" id="cname" name="cardname" placeholder="John More Doe">
-          <label for="ccnum">Credit card number</label>
-          <input type="text" id="ccnum" name="cardnumber" placeholder="1111-2222-3333-4444">
-          <label for="expmonth">Exp Month</label>
-          <input type="text" id="expmonth" name="expmonth" placeholder="September">
-
-          <div class="row">
-            <div class="col-50">
-              <label for="expyear">Exp Year</label>
-              <input type="text" id="expyear" name="expyear" placeholder="2018">
-            </div>
-
-            <div class="col-50">
-              <label for="cvv">CVV</label>
-              <input type="text" id="cvv" name="cvv" placeholder="352">
-            </div>
-            </div>
+          <div class="kort-information">
+            <label for="cname">Kortnamn</label>
+            <input type="text" id="cname" name="cardname" placeholder="Gottfrid Jästson">
+            <label for="ccnum">Kortnummer</label>
+            <input type="text" id="ccnum" name="cardnumber" placeholder="1111-2222-3333-4444">
+            <label for="expmonth">Utgångsmånad</label>
+            <input type="text" id="expmonth" name="expmonth" placeholder="01">
+            <label for="expyear">Utgångsår</label>
+            <input type="text" id="expyear" name="expyear" placeholder="12">
+            <label for="cvv">CVV</label>
+            <input type="text" id="cvv" name="cvv" placeholder="123">
           </div>
-        </div>
+      </section>
 
-        <label>
-          <input type="checkbox" checked="checked" name="sameadr"> Shipping address same as billing
-        </label>
-        <input type="submit" value="Continue to checkout" class="btn">
+      <section class="beställningsknappar">
+        <button>Ta bort beställning<br><span class="material-symbols-outlined">Delete</span></button>
+        <button class="submit-button">Skicka beställning<br><span class="material-symbols-outlined">shopping_cart_checkout</span></button>
       </section>
     </form>
    
@@ -144,9 +141,9 @@
     <!-- Sidfot -->
     <footer>
       <ul>
-        <li>Om oss</li>
-        <li>Kontakta oss</li>
-        <li>Instagram</li>
+        <li><a href="#">Om oss</a></li>
+        <li><a href="#">Kontakta oss</a></li>
+        <li><a href="#">Instagram</a></li>
       </ul>
 
       <ul>
@@ -156,13 +153,6 @@
       </ul>
     </footer>
 
-
-
-
-
-
-
-    <div id="app"></div>
     <script type="module" src="/main.js"></script>
   </body>
 </html>

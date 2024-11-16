@@ -1,0 +1,42 @@
+main {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);       
+}
+
+/* Sidans övre del */
+.top-bar {
+    grid-column: 1 / span 4;
+    flex-direction: column;
+}
+
+.top-bar h1 {
+    font-size: 3rem;
+}
+
+.slogan {
+    font-size: 2rem;
+}
+
+/* Sorterings funktion */
+.sort-function {
+    grid-column: 1 / span 4;
+    flex-direction: row;
+}
+
+.sort-function h2 {
+    font-size: 1.2rem;
+}
+
+/* Produktlista */
+article {
+    grid-column: 1 / span 4;
+    flex-direction: row; 
+}
+
+#product-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
