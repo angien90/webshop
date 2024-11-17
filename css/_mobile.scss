@@ -195,6 +195,15 @@ form {
     align-items: center;
 }
 
+#total-cost {
+    text-align:right;
+    padding-right: 100px;
+    margin-bottom: 20px;
+    margin-top: 20px;
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
 /* Kunduppgifter */
 .leveransuppgifter {
     gap: 0px;
@@ -235,11 +244,11 @@ form {
 .checkbox {
     display: flex;
     flex-direction: column;
-    align-items: left;
+    align-items: start;
 }
 
 .checkbox input {
-    width: 30px;
+    width: 35px;
     margin-bottom: 0px;
 }
 
@@ -264,13 +273,20 @@ form {
 .kort-information {
     display: flex;
     flex-direction: column;
-    align-items: left;
+    align-items: start;
     margin-top: 20px;
     margin-bottom: 20px;
 }
 
 .kort-information input {
     margin-bottom: 10px;
+}
+
+.skicka-betalning {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
 }
 
 .beställningsknappar {

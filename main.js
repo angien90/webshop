@@ -8,7 +8,8 @@
  - Skapa en timer som räknar ner och deletar innehåll
  - Fält i formuläret ska valideras innan det går att skicka beställningen. 
  - Lägg in regler för rabatter
- - 
+ - Lägg till funktion för varukorg
+ - Bekrätfelse ruta vid beställning
  */
 
 
