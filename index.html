@@ -23,8 +23,7 @@
   <body>
     <!-- Top meny-->
     <header>
-      
-      <button><a class="explore-more" href="#varukorgen"><span class="material-symbols-outlined">shopping_cart</span></a></button>
+      <a href="#varukorgen" class="button"><span class="material-symbols-outlined">shopping_cart</span></a>
       <span class="total-sum">kr</span>
       <button><span class="material-symbols-outlined">menu</span></button>
     </header>
@@ -74,37 +73,37 @@
         <h2>Leveransuppgifter</h2>
         <p>(* = obligatoriska fält)</p>
         <label for="fname">Förnamn: *</label><br>
-        <input type="text" id="fname" name="fname" value=""><br>
+        <input type="text" id="fname" name="fname" placeholder="Gottfrid" value=""><br>
 
         <label for="lname">Efternamn: *</label><br>
-        <input type="text" id="lname" name="lname" value=""><br>
+        <input type="text" id="lname" name="lname" placeholder="Jästson" value=""><br>
         
         <label for="address">Adress (gata + nr): *</label><br>
-        <input type="text" id="address" name="address" value=""><br>
+        <input type="text" id="address" name="address" placeholder="Snaskvägen 1" value=""><br>
 
-        <label for="postkod">Postkod:</label><br>
-        <input type="text" id="postkod" name="postkod" value=""><br>
+        <label for="portkod">Portkod:</label><br>
+        <input type="text" id="portkod" name="portkod" placeholder="1234" value=""><br>
 
         <label for="postnr">Postnummer: *</label><br>
-        <input type="text" id="postnr" name="postnr" value=""><br>
+        <input type="text" id="postnr" name="postnr" placeholder="123 45" value=""><br>
 
         <label for="postort">Postort: *</label><br>
-        <input type="text" id="postort" name="postort" value=""><br>
+        <input type="text" id="postort" name="postort" placeholder="Snaskköping" value=""><br>
 
         <label for="phone">Telefon (mobil): *</label><br>
-        <input type="tel" id="phone" name="phone" value=""><br>
+        <input type="tel" id="phone" name="phone" placeholder="0701 23 45 67" value=""><br>
       
         <label for="epost">E-postadress: *</label><br>
-        <input type="email" id="epost" name="epost" value=""><br>
+        <input type="email" id="epost" name="epost" placeholder="gottfridsgyllenemunkar@munkar.com" value=""><br>
       
         <div class="checkbox">
           <label>
-            <input type="checkbox" checked="" name="personnummer"> Jag godkänner att Gottrids Gyllene Munkar behandlar mina personuppgifter</label><br>
-          </label>
+            <input type="checkbox" checked="" name="personnummer"> Jag godkänner att Gottrids Gyllene Munkar behandlar mina personuppgifter
+          </label><br>
 
           <label>
-            <input type="checkbox" checked="checked" name="nyhetsbrev"> Jag vill ta emot Gottrids Gyllene Munkars nyhetsbrev</label><br>
-          </label>
+            <input type="checkbox" checked="checked" name="nyhetsbrev"> Jag vill ta emot Gottrids Gyllene Munkars nyhetsbrev
+          </label><br>
         </div>
       </section>
 
@@ -128,13 +127,14 @@
             <input type="text" id="expyear" name="expyear" placeholder="12">
             <label for="cvv">CVV</label>
             <input type="text" id="cvv" name="cvv" placeholder="123">
+            <input type="submit" id="submit" name="submit">
           </div>
       </section>
 
-      <section class="beställningsknappar">
+      <div class="beställningsknappar">
         <button>Ta bort beställning<br><span class="material-symbols-outlined">Delete</span></button>
         <button class="submit-button">Skicka beställning<br><span class="material-symbols-outlined">shopping_cart_checkout</span></button>
-      </section>
+      </div>
     </form>
    
 

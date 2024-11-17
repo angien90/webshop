@@ -7,7 +7,8 @@
  - Toggla funktioner i beställningsformuläret som ska döljas och synas. 
  - Skapa en timer som räknar ner och deletar innehåll
  - Fält i formuläret ska valideras innan det går att skicka beställningen. 
- -
+ - Lägg in regler för rabatter
+ - 
  */
 
 

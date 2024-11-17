@@ -21,10 +21,28 @@ header {
     width: 100%;
 }
 
-header button {
-    border-radius: 10px;
-    height: 40px;
-    width: 50px;
+.button {
+    text-rendering: auto;
+    color: buttontext;
+    letter-spacing: normal;
+    word-spacing: normal;
+    text-indent: 0px;
+    text-shadow: none;
+    display: inline-block;
+    text-align: center;
+    align-content: center;
+    cursor: pointer;
+    box-sizing: border-box;
+    background-color: buttonface;
+    padding-block: 1px;
+    padding-inline: 6px;
+    border-width: 1px;
+    border-style: outset;
+    border-color: buttonborder;
+    border-image: initial;
+    height: 2.1em;
+    width: 2.5em;
+    border-radius: 2px;
 }
 
 .total-sum {
@@ -92,6 +110,14 @@ header button {
 
 
 /* Produktlistan */
+#product-list {
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
 .eachProduct {
     background-color: white;
     border-radius: 30px;
@@ -200,7 +226,7 @@ form {
 }
 
 .leveransuppgifter input {
-    width: 50%;
+    width: 100%;
     border-radius: 10px;
     height: 25px;
     margin-bottom: 10px;
