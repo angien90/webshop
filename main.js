@@ -1,7 +1,7 @@
 /*
  X Skapa en array med objekt som bär alla produkterna. 
  X Skapa en funktion som loopar ut alla produkterna på sidan/i vår html struktur. 
- - Skapa funktion för plus och minus antal 
+ - Skapa funktion för plus och minus av antal 
  - Skapa funktion som beräknar totalen (och uppdateras vid förändring)
  - Skapa visuell bild av raiting
  - Toggla funktioner i beställningsformuläret som ska döljas och synas. 
@@ -10,6 +10,12 @@
  - Lägg in regler för rabatter
  - Lägg till funktion för varukorg
  - Bekrätfelse ruta vid beställning
+ - Funktion för betalningssätt. 
+ - Validering av formulär + markering vid fel
+ - Visa/dölj beställningsknapp
+ - Rensa knapp för beställningsformulär
+ - Funktion fö rabattkod
+ - Effekt när Totalen uppe på sidan uppdateras
  */
 
 
