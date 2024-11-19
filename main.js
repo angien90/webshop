@@ -26,7 +26,7 @@ const productList = [
     id: 0,
     namn: 'Kolakungen',
     img: {
-      url: '.assets/img/Munk_med_kola_glasyr.png',
+      url: 'img/Munk_med_kola_glasyr.png',
       width: 400,
       height: 400,
       alt: 'Munk med kolaglasyr och kola bitar' 
@@ -41,7 +41,7 @@ const productList = [
     id: 1,
     namn: 'Chokladhjulet',
     img: {
-      url: 'assets/img/Munk_choklad_glasyr.png',
+      url: 'img/Munk_choklad_glasyr.png',
       width: 400,
       height: 400,
       alt: 'Munk med chokladglasyr' 
@@ -71,7 +71,7 @@ const productList = [
     id: 3,
     namn: 'Smurfmunken',
     img: {
-      url: './img/Munk_grön_glasyr_med_musli.png',
+      url: 'img/Munk_grön_glasyr_med_musli.png',
       width: 400,
       height: 400,
       alt: 'Munk med päronglasyr och musli' 
@@ -86,7 +86,7 @@ const productList = [
     id: 4,
     namn: 'Guldklumpen',
     img: {
-      url: './img/Munk_med_honungs_glasyr.png',
+      url: 'img/Munk_med_honungs_glasyr.png',
       width: 400,
       height: 400,
       alt: 'Munk med honungsglasyr och choklad strössel' 
@@ -101,7 +101,7 @@ const productList = [
     id: 5,
     namn: 'Rosa moln',
     img: {
-      url: './img/Munk_rosa_glasyr_med_florsocker.png',
+      url: 'img/Munk_rosa_glasyr_med_florsocker.png',
       width: 400,
       height: 400,
       alt: 'Munk med hallonglasyr och florsocker' 
@@ -116,7 +116,7 @@ const productList = [
     id: 6,
     namn: 'Smaklösa Sven',
     img: {
-      url: './img/Munk_utan_glasyr.png',
+      url: 'img/Munk_utan_glasyr.png',
       width: 400,
       height: 400,
       alt: 'Munk utan glasyr' 
@@ -131,7 +131,7 @@ const productList = [
     id: 7,
     namn: 'Rosa prinsessan',
     img: {
-      url: './img/Munk_rosa_glasyr_med_godis.png',
+      url: 'img/Munk_rosa_glasyr_med_godis.png',
       width: 400,
       height: 400,
       alt: 'Munk med hallonglasyr och godis' 
@@ -146,7 +146,7 @@ const productList = [
     id: 8,
     namn: 'Trollkarlens förtrollning',
     img: {
-      url: './img/Munk_choklad_glasyr_med_nötter__och_bär.png',
+      url: 'img/Munk_choklad_glasyr_med_nötter__och_bär.png',
       width: 400,
       height: 400,
       alt: 'Munk med chokladglasyr samt bär och nötter' 
@@ -161,7 +161,7 @@ const productList = [
     id: 9,
     namn: 'C-vitamin-kungen',
     img: {
-      url: './img/Munk_orange_gasyr_med_apelsin.png',
+      url: 'img/Munk_orange_gasyr_med_apelsin.png',
       width: 400,
       height: 400,
       alt: 'Munk med apelsinglasyr och apelsinbitar' 
@@ -176,7 +176,7 @@ const productList = [
     id: 10,
     namn: 'Rosapantern',
     img: {
-      url: './img/Munk_rosa_glasyr_med_strössel.png',
+      url: 'img/Munk_rosa_glasyr_med_strössel.png',
       width: 400,
       height: 400,
       alt: 'Munk med hallonglasyr och strössel' 
@@ -191,7 +191,7 @@ const productList = [
     id: 11,
     namn: 'Nötskallen',
     img: {
-      url: './img/Munk_choklad_och_nötter.png',
+      url: 'img/Munk_choklad_och_nötter.png',
       width: 400,
       height: 400,
       alt: 'Munk med chokladglasyr och nötter' 
@@ -206,7 +206,7 @@ const productList = [
     id: 12,
     namn: 'Polarbjörnen',
     img: {
-      url: './img/Munk_vit_glasyr_med_choklad_strössel.png',
+      url: 'img/Munk_vit_glasyr_med_choklad_strössel.png',
       width: 400,
       height: 400,
       alt: 'Munk med vit glasyr och choklad strössel' 
@@ -263,20 +263,27 @@ printProductListDiv();
 // Funktion för minus knappar //
 function removeProductCount(e) {
   const removeProductId = Number(e.target.id.replace('remove-', ''));
-  console.log('clicked on button with id', removeProductId);
-  
+  console.log('Du klickade på ID:', removeProductId);
+
   const foundProductIndexRemove = productList.findIndex(eachProduct => eachProduct.id === removeProductId);
-  console.log('found eachProduct at index', foundProductIndexRemove);
+  console.log('Okjetet är:', foundProductIndexRemove);
 
   if (foundProductIndexRemove === -1) {
-    console.error('Det finns ingen sådan produkt i produktlistan! Kolla att id:t är rätt.');
+    console.error('Kolla att id:t är rätt.');
     return;
   }
 
-  productList[foundProductIndexRemove].amount -= 1;
-
-  document.querySelector(`#input-${removeProductId}`).value = productList[foundProductIndexRemove].amount;
+  // Kontrollera om mängden är större än 0 innan man kan minska ännu mer //
+  if (productList[foundProductIndexRemove].amount > 0) {
+    productList[foundProductIndexRemove].amount -= 1;
+    const productContainerRemove = e.target.closest('.eachProduct');
+    const inputRemove = productContainerRemove.querySelector('input');
+    inputRemove.value = productList[foundProductIndexRemove].amount;
+  } else {
+    console.log("Du kan inte ha ett negativt antal produkter.");
+  }
 }
+
 
 // Funktion för plus knappar //
 function addProductCount(e) {
@@ -287,11 +294,13 @@ function addProductCount(e) {
   console.log('found eachProduct at index', foundProductIndexAdd);
 
   if (foundProductIndexAdd === -1) {
-    console.error('Det finns ingen sådan produkt i produktlistan! Kolla att id:t är rätt.');
+    console.error('Kolla att id:t är rätt.');
     return;
   }
 
   productList[foundProductIndexAdd].amount += 1;
 
-  document.querySelector(`#input-${addProductId}`).value = productList[foundProductIndexAdd].amount;
+  const productContainerAdd = e.target.closest('.eachProduct');
+  const inputAdd = productContainerAdd.querySelector('input');
+  inputAdd.value = productList[foundProductIndexAdd].amount;
 }
