@@ -218,6 +218,8 @@ const productList = [
   },
 ];
 
+console.log(hej);
+
 //  Utskrift av produktlistan  //
 const productsListDiv = document.querySelector('#product-list');
 
@@ -265,6 +267,7 @@ function removeProductCount(e) {
   const removeProductId = Number(e.target.id.replace('remove-', ''));
   console.log('Du klickade på ID:', removeProductId);
 
+  // Letar upp produkt med hjälp av id //
   const foundProductIndexRemove = productList.findIndex(eachProduct => eachProduct.id === removeProductId);
   console.log('Okjetet är:', foundProductIndexRemove);
 
@@ -273,7 +276,7 @@ function removeProductCount(e) {
     return;
   }
 
-  // Kontrollera om mängden är större än 0 innan man kan minska ännu mer //
+  // Kontrollera om mängden är större än 0 och uppdatering av fält  //
   if (productList[foundProductIndexRemove].amount > 0) {
     productList[foundProductIndexRemove].amount -= 1;
     const productContainerRemove = e.target.closest('.eachProduct');
@@ -289,7 +292,8 @@ function removeProductCount(e) {
 function addProductCount(e) {
   const addProductId = Number(e.target.id.replace('add-', ''));
   console.log('clicked on button with id', addProductId);
-  
+
+     // Letar upp produkt med hjälp av id //
   const foundProductIndexAdd = productList.findIndex(eachProduct => eachProduct.id === addProductId);
   console.log('found eachProduct at index', foundProductIndexAdd);
 
@@ -298,6 +302,7 @@ function addProductCount(e) {
     return;
   }
 
+   // Uppdatering av fält vid klick //
   productList[foundProductIndexAdd].amount += 1;
 
   const productContainerAdd = e.target.closest('.eachProduct');
