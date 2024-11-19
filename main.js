@@ -218,8 +218,6 @@ const productList = [
   },
 ];
 
-console.log(hej);
-
 //  Utskrift av produktlistan  //
 const productsListDiv = document.querySelector('#product-list');
 
