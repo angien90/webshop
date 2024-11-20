@@ -42,7 +42,7 @@ const productList = [
     id: 1,
     namn: 'Chokladhjulet',
     img: {
-      url: img/munk_choklad_glasyr.png',
+      url: 'img/munk_choklad_glasyr.png',
       width: 400,
       height: 400,
       alt: 'Munk med chokladglasyr' 
