@@ -24,7 +24,7 @@
     <!-- Top meny-->
     <header>
       <a href="#varukorgen" class="button"><span class="material-symbols-outlined">shopping_cart</span></a>
-      <span class="total-sum">kr</span>
+      <span class="total-sum">0 kr</span>
       <button><span class="material-symbols-outlined">menu</span></button>
     </header>
 
@@ -43,7 +43,7 @@
     <!-- Sorterings funktion -->
      <section class="sort-function">
       <h2>Sortering:</h2>
-      <button><span class="material-symbols-outlined">Sort_By_Alpha</span></button>
+      <button id="sortName"><span class="material-symbols-outlined">Sort_By_Alpha</span></button>
       <button><span class="material-symbols-outlined">Category</span></button>
       <button><span class="material-symbols-outlined">Price_Change</span></button>
       <button><span class="material-symbols-outlined">Star</span></button>
@@ -51,7 +51,7 @@
 
     <!-- Produktlista -->
       <article>
-        <div id="product-list"></div>
+        <div class=products id="product-list"></div>
       </article>
 
     </main>
@@ -60,9 +60,9 @@
     <form id="varukorgen">
       <section class="varukorg">
         <h2>Varukorg</h2>
-        <div id="chosen-product"></div>
+        <div id="chosenProduct"></div>
         <hr>
-        <div id="total-cost">Total: </div>
+        <div class=total-cost id="totalCost">Total: </div>
       </section>
 
     <!-- Kunduppgifter -->

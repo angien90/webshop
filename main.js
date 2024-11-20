@@ -1,7 +1,9 @@
+
 /*
  X Skapa en array med objekt som bär alla produkterna. 
  X Skapa en funktion som loopar ut alla produkterna på sidan/i vår html struktur. 
- - Skapa funktion för plus och minus av antal 
+ X Skapa funktion för plus och minus av antal 
+ - Få bilder att fungera. 
  - Skapa funktion som beräknar totalen (och uppdateras vid förändring)
  - Skapa visuell bild av raiting
  - Toggla funktioner i beställningsformuläret som ska döljas och synas. 
@@ -19,14 +21,13 @@
  */
 
 
-
 //  Skapande av produktlista  //
 const productList = [
   {
     id: 0,
     namn: 'Kolakungen',
     img: {
-      url: './img/munk_med_kola_glasyr.png',
+      url: './assets/img/munk_med_kola_glasyr.png',
       width: 400,
       height: 400,
       alt: 'Munk med kolaglasyr och kola bitar' 
@@ -41,7 +42,7 @@ const productList = [
     id: 1,
     namn: 'Chokladhjulet',
     img: {
-      url: './munk_choklad_glasyr.png',
+      url: '../img/munk_choklad_glasyr.png',
       width: 400,
       height: 400,
       alt: 'Munk med chokladglasyr' 
@@ -56,7 +57,7 @@ const productList = [
     id: 2,
     namn: 'Mörkets mysterium',
     img: {
-      url: 'img/munk_extra_choklad.png',
+      url: '../assets/img/munk_extra_choklad.png',
       width: 400,
       height: 400,
       alt: 'Munk med chokladglasyr och chokladbitar' 
@@ -218,6 +219,9 @@ const productList = [
   },
 ];
 
+// Sorteringsfunktion för namn //
+
+
 //  Utskrift av produktlistan  //
 const productsListDiv = document.querySelector('#product-list');
 
@@ -245,6 +249,7 @@ function printProductListDiv() {
     `; 
   });
 
+  
   // Variabler för plus och minus knappar //
   const removeButton = document.querySelectorAll('button.remove');
   removeButton.forEach(button => {
@@ -259,6 +264,9 @@ function printProductListDiv() {
 }
 
 printProductListDiv();
+
+updateAndPrrintCart();
+
 
 // Funktion för minus knappar //
 function removeProductCount(e) {
@@ -306,4 +314,13 @@ function addProductCount(e) {
   const productContainerAdd = e.target.closest('.eachProduct');
   const inputAdd = productContainerAdd.querySelector('input');
   inputAdd.value = productList[foundProductIndexAdd].amount;
+
+
+
+
+// Totalsumma upp i headern //
+
+
+
+
 }

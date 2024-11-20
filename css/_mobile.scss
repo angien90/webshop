@@ -110,7 +110,7 @@ header {
 
 
 /* Produktlistan */
-#product-list {
+.products {
     width: 100vw;
     display: flex;
     flex-direction: column;
@@ -195,14 +195,6 @@ form {
     align-items: center;
 }
 
-#total-cost {
-    text-align:right;
-    padding-right: 100px;
-    margin-bottom: 20px;
-    margin-top: 20px;
-    font-size: 1.2em;
-    font-weight: bold;
-}
 
 /* Kunduppgifter */
 .leveransuppgifter {
