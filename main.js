@@ -1,4 +1,3 @@
-
 /*
  X Skapa en array med objekt som bär alla produkterna. 
  X Skapa en funktion som loopar ut alla produkterna på sidan/i vår html struktur. 
@@ -21,13 +20,14 @@
  */
 
 
+
 //  Skapande av produktlista  //
 const productList = [
   {
     id: 0,
     namn: 'Kolakungen',
     img: {
-      url: './assets/img/munk_med_kola_glasyr.png',
+      url: '../img/munk_med_kola_glasyr.png',
       width: 400,
       height: 400,
       alt: 'Munk med kolaglasyr och kola bitar' 
@@ -57,7 +57,7 @@ const productList = [
     id: 2,
     namn: 'Mörkets mysterium',
     img: {
-      url: '../assets/img/munk_extra_choklad.png',
+      url: './img/munk_extra_choklad.png',
       width: 400,
       height: 400,
       alt: 'Munk med chokladglasyr och chokladbitar' 
@@ -219,17 +219,40 @@ const productList = [
   },
 ];
 
-// Sorteringsfunktion för namn //
+// Variabel för produktlistan //
+const productListDiv = document.querySelector('#product-list');
+
+// Variabel för varukorg //
+const varukorg = document.querySelector('#varukorgen');
+
+
+// Funktion för att addera produkter i varukorgen //
+function updateAndPrintCart() {
+const purchasedProducts = productList.filter((eachProduct) => eachProduct.amount > 0);
+
+  console.log(purchasedProducts);
+
+   // Skriver ut produkterna //
+   varukorg.innerHTML = ''; 
+  purchasedProducts.forEach(eachProduct => {
+    varukorg.innerHTML += `
+      <div>
+        <img src="${eachProduct.img.url}" alt="${eachProduct.img.alt}">
+        ${eachProduct.namn}: ${eachProduct.amount} st - ${eachProduct.amount * eachProduct.pris} kr
+      </div>
+    `;
+  });
+}
+
+// function för raiting FUNGERAR EJ!!!! //
 
 
 //  Utskrift av produktlistan  //
-const productsListDiv = document.querySelector('#product-list');
-
 function printProductListDiv() {
-  productsListDiv.inneHTML = '';
+  productListDiv.inneHTML = '';
 
   productList.forEach(eachProduct => {
-    productsListDiv.innerHTML += `
+    productListDiv.innerHTML += `
       <article class="eachProduct">
         <h2>${eachProduct.namn}</h2>
         <img src="${eachProduct.img.url}" alt="${eachProduct.img.alt}">
@@ -249,59 +272,46 @@ function printProductListDiv() {
     `; 
   });
 
-  
-  // Variabler för plus och minus knappar //
-  const removeButton = document.querySelectorAll('button.remove');
+// Funktion för minus knappar //
+    const removeButton = document.querySelectorAll('button.remove');
   removeButton.forEach(button => {
     button.addEventListener('click', removeProductCount);
   });
-
-  const addButton = document.querySelectorAll('button.add');
-  addButton.forEach(button => {
-    button.addEventListener('click', addProductCount);
-  });
-
 }
 
-printProductListDiv();
-
-updateAndPrrintCart();
-
-
-// Funktion för minus knappar //
 function removeProductCount(e) {
   const removeProductId = Number(e.target.id.replace('remove-', ''));
   console.log('Du klickade på ID:', removeProductId);
 
   // Letar upp produkt med hjälp av id //
   const foundProductIndexRemove = productList.findIndex(eachProduct => eachProduct.id === removeProductId);
-  console.log('Okjetet är:', foundProductIndexRemove);
+  console.log('Objetet är:', foundProductIndexRemove);
 
   if (foundProductIndexRemove === -1) {
     console.error('Kolla att id:t är rätt.');
     return;
   }
 
-  // Kontrollera om mängden är större än 0 och uppdatering av fält  //
-  if (productList[foundProductIndexRemove].amount > 0) {
-    productList[foundProductIndexRemove].amount -= 1;
-    const productContainerRemove = e.target.closest('.eachProduct');
-    const inputRemove = productContainerRemove.querySelector('input');
-    inputRemove.value = productList[foundProductIndexRemove].amount;
-  } else {
-    console.log("Du kan inte ha ett negativt antal produkter.");
-  }
-}
+  productList[foundProductIndexRemove].amount += 1;
 
 
 // Funktion för plus knappar //
+const addButton = document.querySelectorAll('button.add');
+addButton.forEach(button => {
+  button.addEventListener('click', addProductCount);
+});
+}
+
+printProductListDiv();
+
+
 function addProductCount(e) {
   const addProductId = Number(e.target.id.replace('add-', ''));
-  console.log('clicked on button with id', addProductId);
+  console.log('Du klickade på ID:', addProductId);
 
      // Letar upp produkt med hjälp av id //
   const foundProductIndexAdd = productList.findIndex(eachProduct => eachProduct.id === addProductId);
-  console.log('found eachProduct at index', foundProductIndexAdd);
+  console.log('Objetet är:', foundProductIndexAdd);
 
   if (foundProductIndexAdd === -1) {
     console.error('Kolla att id:t är rätt.');
@@ -311,16 +321,8 @@ function addProductCount(e) {
    // Uppdatering av fält vid klick //
   productList[foundProductIndexAdd].amount += 1;
 
-  const productContainerAdd = e.target.closest('.eachProduct');
-  const inputAdd = productContainerAdd.querySelector('input');
-  inputAdd.value = productList[foundProductIndexAdd].amount;
 
+printProductListDiv();
 
-
-
-// Totalsumma upp i headern //
-
-
-
-
+updateAndPrintCart();
 }
