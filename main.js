@@ -2,9 +2,8 @@
  X Skapa en array med objekt som bär alla produkterna. 
  X Skapa en funktion som loopar ut alla produkterna på sidan/i vår html struktur. 
  X Skapa funktion för plus och minus av antal 
- - Få bilder att fungera. 
  - Skapa funktion som beräknar totalen (och uppdateras vid förändring)
- - Skapa visuell bild av raiting
+ - Skapa visuell bild av rating
  - Toggla funktioner i beställningsformuläret som ska döljas och synas. 
  - Skapa en timer som räknar ner och deletar innehåll
  - Fält i formuläret ska valideras innan det går att skicka beställningen. 
@@ -27,7 +26,7 @@ const productList = [
     id: 0,
     namn: 'Kolakungen',
     img: {
-      url: 'img/munk_med_kola_glasyr.png',
+      url: 'img/Munk_med_kola_glasyr.png',
       width: 400,
       height: 400,
       alt: 'Munk med kolaglasyr och kola bitar' 
@@ -42,7 +41,7 @@ const productList = [
     id: 1,
     namn: 'Chokladhjulet',
     img: {
-      url: 'img/munk_choklad_glasyr.png',
+      url: 'img/Munk_choklad_glasyr.png',
       width: 400,
       height: 400,
       alt: 'Munk med chokladglasyr' 
@@ -57,14 +56,14 @@ const productList = [
     id: 2,
     namn: 'Mörkets mysterium',
     img: {
-      url: 'img/munk_extra_choklad.png',
+      url: 'img/Munk_extra_choklad.png',
       width: 400,
       height: 400,
       alt: 'Munk med chokladglasyr och chokladbitar' 
     },
     raiting: 4,
     kategori: 'Choklad',
-    pris: 20,
+    pris: 25,
     amount: 0
   },
 
@@ -72,14 +71,14 @@ const productList = [
     id: 3,
     namn: 'Smurfmunken',
     img: {
-      url: 'img/munk_gron_glasyr_med_musli.png',
+      url: 'img/Munk_grön_glasyr_med_musli.png',
       width: 400,
       height: 400,
       alt: 'Munk med päronglasyr och musli' 
     },
     raiting: 4,
     kategori: 'Glutenfri',
-    pris: 20,
+    pris: 25,
     amount: 0
   },
 
@@ -87,7 +86,7 @@ const productList = [
     id: 4,
     namn: 'Guldklumpen',
     img: {
-      url: 'img/munk_med_honungs_glasyr.png',
+      url: 'img/Munk_med_honungs_glasyr.png',
       width: 400,
       height: 400,
       alt: 'Munk med honungsglasyr och choklad strössel' 
@@ -102,14 +101,14 @@ const productList = [
     id: 5,
     namn: 'Rosa moln',
     img: {
-      url: 'img/munk_rosa_glasyr_med_florsocker.png',
+      url: 'img/Munk_rosa_glasyr_med_florsocker.png',
       width: 400,
       height: 400,
       alt: 'Munk med hallonglasyr och florsocker' 
     },
     raiting: 4,
     kategori: 'Glutenfri',
-    pris: 20,
+    pris: 25,
     amount: 0
   },
 
@@ -117,14 +116,14 @@ const productList = [
     id: 6,
     namn: 'Smaklösa Sven',
     img: {
-      url: 'img/munk_utan_glasyr.png',
+      url: 'img/Munk_utan_glasyr.png',
       width: 400,
       height: 400,
       alt: 'Munk utan glasyr' 
     },
     raiting: 4,
     kategori: 'Övrigt',
-    pris: 20,
+    pris: 10,
     amount: 0
   },
 
@@ -132,14 +131,14 @@ const productList = [
     id: 7,
     namn: 'Rosa prinsessan',
     img: {
-      url: 'img/munk_rosa_glasyr_med_godis.png',
+      url: 'img/Munk_rosa_glasyr_med_godis.png',
       width: 400,
       height: 400,
       alt: 'Munk med hallonglasyr och godis' 
     },
     raiting: 4,
     kategori: 'Hallon',
-    pris: 20,
+    pris: 25,
     amount: 0
   },
 
@@ -147,14 +146,14 @@ const productList = [
     id: 8,
     namn: 'Trollkarlens förtrollning',
     img: {
-      url: 'img/munk_choklad_glasyr_med_notter_och_bar.png',
+      url: 'img/Munk_choklad_glasyr_med_nötter__och_bär.png',
       width: 400,
       height: 400,
       alt: 'Munk med chokladglasyr samt bär och nötter' 
     },
     raiting: 4,
     kategori: 'Choklad',
-    pris: 20,
+    pris: 15,
     amount: 0
   },
 
@@ -162,14 +161,14 @@ const productList = [
     id: 9,
     namn: 'C-vitamin-kungen',
     img: {
-      url: 'img/munk_orange_gasyr_med_apelsin.png',
+      url: 'img/Munk_orange_gasyr_med_apelsin.png',
       width: 400,
       height: 400,
       alt: 'Munk med apelsinglasyr och apelsinbitar' 
     },
     raiting: 4,
     kategori: 'Glutenfri',
-    pris: 20,
+    pris: 25,
     amount: 0
   },
 
@@ -177,7 +176,7 @@ const productList = [
     id: 10,
     namn: 'Rosapantern',
     img: {
-      url: 'img/munk_rosa_glasyr_med_strossel.png',
+      url: 'img/Munk_rosa_glasyr_med_strössel.png',
       width: 400,
       height: 400,
       alt: 'Munk med hallonglasyr och strössel' 
@@ -192,7 +191,7 @@ const productList = [
     id: 11,
     namn: 'Nötskallen',
     img: {
-      url: 'img/munk_choklad_och_notter.png',
+      url: 'img/Munk_choklad_och_nötter.png',
       width: 400,
       height: 400,
       alt: 'Munk med chokladglasyr och nötter' 
@@ -207,52 +206,25 @@ const productList = [
     id: 12,
     namn: 'Polarbjörnen',
     img: {
-      url: 'img/munk_vit_glasyr_med_choklad_strossel.png',
+      url: 'img/Munk_vit_glasyr_med_choklad_strössel.png',
       width: 400,
       height: 400,
       alt: 'Munk med vit glasyr och choklad strössel' 
     },
     raiting: 4,
     kategori: 'Övrigt',
-    pris: 20,
+    pris: 25,
     amount: 0
   },
 ];
 
-// Variabel för produktlistan //
-const productListDiv = document.querySelector('#product-list');
-
-// Variabel för varukorg //
-const varukorg = document.querySelector('#varukorgen');
-
-
-// Funktion för att addera produkter i varukorgen //
-function updateAndPrintCart() {
-const purchasedProducts = productList.filter((eachProduct) => eachProduct.amount > 0);
-
-  console.log(purchasedProducts);
-
-   // Skriver ut produkterna //
-   varukorg.innerHTML = ''; 
-  purchasedProducts.forEach(eachProduct => {
-    varukorg.innerHTML += `
-      <div>
-        <img src="${eachProduct.img.url}" alt="${eachProduct.img.alt}">
-        ${eachProduct.namn}: ${eachProduct.amount} st - ${eachProduct.amount * eachProduct.pris} kr
-      </div>
-    `;
-  });
-}
-
-// function för raiting FUNGERAR EJ!!!! //
-
-
 //  Utskrift av produktlistan  //
+const productsListDiv = document.querySelector('#product-list');
 function printProductListDiv() {
-  productListDiv.inneHTML = '';
+  productsListDiv.inneHTML = '';
 
   productList.forEach(eachProduct => {
-    productListDiv.innerHTML += `
+    productsListDiv.innerHTML += `
       <article class="eachProduct">
         <h2>${eachProduct.namn}</h2>
         <img src="${eachProduct.img.url}" alt="${eachProduct.img.alt}">
@@ -272,57 +244,190 @@ function printProductListDiv() {
     `; 
   });
 
-// Funktion för minus knappar //
-    const removeButton = document.querySelectorAll('button.remove');
+  // Variabler för plus och minus knappar //
+  const removeButton = document.querySelectorAll('button.remove');
   removeButton.forEach(button => {
     button.addEventListener('click', removeProductCount);
   });
+
+  const addButton = document.querySelectorAll('button.add');
+  addButton.forEach(button => {
+    button.addEventListener('click', addProductCount);
+  });
+
 }
 
+printProductListDiv();
+
+// Funktion för minus knappar //
 function removeProductCount(e) {
   const removeProductId = Number(e.target.id.replace('remove-', ''));
   console.log('Du klickade på ID:', removeProductId);
 
-  // Letar upp produkt med hjälp av id //
   const foundProductIndexRemove = productList.findIndex(eachProduct => eachProduct.id === removeProductId);
-  console.log('Objetet är:', foundProductIndexRemove);
+  console.log('Okjetet är:', foundProductIndexRemove);
 
   if (foundProductIndexRemove === -1) {
     console.error('Kolla att id:t är rätt.');
     return;
   }
 
-  productList[foundProductIndexRemove].amount += 1;
-
-
-// Funktion för plus knappar //
-const addButton = document.querySelectorAll('button.add');
-addButton.forEach(button => {
-  button.addEventListener('click', addProductCount);
-});
+  // Kontrollera om mängden är större än 0 innan man kan minska ännu mer //
+  if (productList[foundProductIndexRemove].amount > 0) {
+    productList[foundProductIndexRemove].amount -= 1;
+    const productContainerRemove = e.target.closest('.eachProduct');
+    const inputRemove = productContainerRemove.querySelector('input');
+    inputRemove.value = productList[foundProductIndexRemove].amount;
+  } else {
+    console.log("Du kan inte ha ett negativt antal produkter.");
+  }
 }
 
-printProductListDiv();
-
-
+// Funktion för plus knappar //
 function addProductCount(e) {
   const addProductId = Number(e.target.id.replace('add-', ''));
-  console.log('Du klickade på ID:', addProductId);
-
-     // Letar upp produkt med hjälp av id //
+  console.log('clicked on button with id', addProductId);
+  
   const foundProductIndexAdd = productList.findIndex(eachProduct => eachProduct.id === addProductId);
-  console.log('Objetet är:', foundProductIndexAdd);
+  console.log('found eachProduct at index', foundProductIndexAdd);
 
   if (foundProductIndexAdd === -1) {
     console.error('Kolla att id:t är rätt.');
     return;
   }
 
-   // Uppdatering av fält vid klick //
   productList[foundProductIndexAdd].amount += 1;
 
-
-printProductListDiv();
-
-updateAndPrintCart();
+  const productContainerAdd = e.target.closest('.eachProduct');
+  const inputAdd = productContainerAdd.querySelector('input');
+  inputAdd.value = productList[foundProductIndexAdd].amount;
 }
+
+// Funktion som skriver ut produkter i varukorgen // FUNGERAR INTE!!!!
+const cart = document.querySelector('#cart');
+function updateAndPrintCart() {
+  const chosenProducts = productList.filter((product) => product.amount > 0);
+
+  console.table(chosenProducts);
+
+  cart.innerHTML = ''; 
+  chosenProducts.forEach(eachProduct => {
+    cart.innerHTML += `
+      <article class="product-cart">
+        <img src="${eachProduct.img.url}" alt="${eachProduct.img.alt}">
+        ${eachProduct.namn}: ${eachProduct.amount} st - ${eachProduct.amount * eachProduct.pris} kr
+      </article>
+    `;
+  });
+
+  printProductListDiv();
+  
+  updateAndPrintCart();
+
+  // TODO: Summa av alla produkter, tips: använd reduce
+  // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reduce
+}
+
+
+// -----------------------------------------------------------------//
+// ----------------Soretingsfunktionen för namn-------------------- //
+
+function sortByName(Name) {
+  productList.sort((a, b) => {
+    return Name ? a.namn.localeCompare(b.namn) : b.namn.localeCompare(a.namn);
+  }); // Sorteringsfunktion (stigande)
+
+  const productListElement = document.getElementById('product-list');
+  productListElement.innerHTML = ''; // Rensa listan innan vi fyller på
+
+  productList.forEach(product => {
+    const productElement = document.createElement('div');
+    // ... skapa HTML för varje produkt
+    productListElement.appendChild(productElement);
+  });
+
+  printProductListDiv();
+}
+
+  const sortNameButton = document.getElementById('sortName');
+  sortNameButton.addEventListener('click', () => {
+  sortByName(true); // Koppla funktion till knapp
+});
+
+  let isName = true;
+  sortNameButton.addEventListener('click', () => {
+  sortByName(isName);
+  isName = !isName; // Växla mellan stigande och fallande
+});
+
+
+// -----------------------------------------------------------------//
+// ----------------Soretingsfunktionen för kategori---------------- //
+
+function sortByCategory(Category) {
+  productList.sort((a, b) => {
+    return Category ? a.kategori.localeCompare(b.kategori) : b.kategori.localeCompare(a.kategori);
+  }); // Sorteringsfunktion (stigande)
+
+  const productListElement = document.getElementById('product-list');
+  productListElement.innerHTML = ''; // Rensa listan innan vi fyller på
+
+  productList.forEach(product => {
+    const productElement = document.createElement('div');
+    // ... skapa HTML för varje produkt
+    productListElement.appendChild(productElement);
+  });
+
+  printProductListDiv();
+}
+
+  const sortCategoryButton = document.getElementById('sortCategory');
+  sortCategoryButton.addEventListener('click', () => {
+  sortByCategory(true); // Koppla funktion till knapp
+});
+
+  let isCategory = true;
+  sortCategoryButton.addEventListener('click', () => {
+  sortByCategory(isCategory);
+  isCategory = !isCategory; // Växla mellan stigande och fallande
+});
+
+
+// -----------------------------------------------------------------//
+// ----------------Soretingsfunktionen för pris---------------------//
+
+function sortByPrice(Price) {
+  productList.sort((a, b) => {
+    return Price ? a.pris - b.pris : b.pris - a.pris;
+  }); // Sorteringsfunktion (stigande)
+
+  const productListElement = document.getElementById('product-list');
+  productListElement.innerHTML = ''; // Rensa listan innan vi fyller på
+
+  productList.forEach(product => {
+    const productElement = document.createElement('div');
+    // ... skapa HTML för varje produkt
+    productListElement.appendChild(productElement);
+  });
+
+  printProductListDiv();
+}
+
+const sortPriceButton = document.getElementById('sortPrice');
+sortPriceButton.addEventListener('click', () => {
+  sortByPrice(!isPrice); // Växla mellan stigande och fallande
+  isPrice = !isPrice;
+});
+
+let isPrice = true;
+
+
+// -----------------------------------------------------------------//
+// ----------------Soretingsfunktionen för rating-------------------//
+
+
+
+
+// -----------------------------------------------------------------//
+// ----------------Stäng av soretingsfunktionen---------------------//
+

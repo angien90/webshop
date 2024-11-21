@@ -44,9 +44,10 @@
      <section class="sort-function">
       <h2>Sortering:</h2>
       <button id="sortName"><span class="material-symbols-outlined">Sort_By_Alpha</span></button>
-      <button><span class="material-symbols-outlined">Category</span></button>
-      <button><span class="material-symbols-outlined">Price_Change</span></button>
-      <button><span class="material-symbols-outlined">Star</span></button>
+      <button id="sortCategory"><span class="material-symbols-outlined">Category</span></button>
+      <button id="sortPrice"><span class="material-symbols-outlined">Price_Change</span></button>
+      <button id="sortRating"><span class="material-symbols-outlined">Star</span></button>
+      <button id="sortStop"><span class="material-symbols-outlined">Disabled_by_default</span></button>
      </section>
 
     <!-- Produktlista -->
@@ -60,7 +61,9 @@
     <form>
       <section class="varukorg" >
         <h2>Varukorg</h2>
-        <div id="varukorgen">Din varukorg</div>
+        <article>
+          <div id="cart"></div>
+        </article>
         <hr>
         <div class=total-cost id="totalCost">Total: </div>
       </section>
@@ -70,34 +73,34 @@
         <h2>Leveransuppgifter</h2>
         <p>(* = obligatoriska fält)</p>
         <label for="fname">Förnamn: *</label><br>
-        <input type="text" id="fname" name="fname" placeholder="Gottfrid" value=""><br>
+        <input type="text" id="fname" name="fname" placeholder="Gottfrid" value="" required><br>
 
         <label for="lname">Efternamn: *</label><br>
-        <input type="text" id="lname" name="lname" placeholder="Jästson" value=""><br>
+        <input type="text" id="lname" name="lname" placeholder="Jästson" value="" required><br>
         
         <label for="address">Adress (gata + nr): *</label><br>
-        <input type="text" id="address" name="address" placeholder="Snaskvägen 1" value=""><br>
+        <input type="text" id="address" name="address" placeholder="Snaskvägen 1" value="" required><br>
 
         <label for="portkod">Portkod:</label><br>
         <input type="text" id="portkod" name="portkod" placeholder="1234" value=""><br>
 
         <label for="postnr">Postnummer: *</label><br>
-        <input type="text" id="postnr" name="postnr" placeholder="123 45" value=""><br>
+        <input type="text" id="postnr" name="postnr" placeholder="123 45" value="" required><br>
 
         <label for="postort">Postort: *</label><br>
-        <input type="text" id="postort" name="postort" placeholder="Snaskköping" value=""><br>
+        <input type="text" id="postort" name="postort" placeholder="Snaskköping" value="" required><br>
 
         <label for="phone">Telefon (mobil): *</label><br>
-        <input type="tel" id="phone" name="phone" placeholder="0701 23 45 67" value=""><br>
+        <input type="tel" id="phone" name="phone" placeholder="0701 23 45 67" value="" required><br>
       
         <label for="epost">E-postadress: *</label><br>
-        <input type="email" id="epost" name="epost" placeholder="gottfridsgyllenemunkar@munkar.com" value=""><br>
+        <input type="email" id="epost" name="epost" placeholder="gottfridsgyllenemunkar@munkar.com" value="" required><br>
       
         <label for="text">Rabattkod: </label><br>
-        <input type="sale" id="sale" name="sale" placeholder="ABD_123" value=""><br>
+        <input type="sale" id="sale" name="sale" placeholder="ABD_123" value="" required><br>
 
         **********<label for="....">Betalningssätt: *</label><br>
-        <input type="email" id="epost" name="epost" placeholder="Faktura/Kortbetalning" value=""><br>
+        <input type="email" id="epost" name="epost" placeholder="Faktura/Kortbetalning" value="" required><br>
 
         <div class="checkbox">
           <label>
