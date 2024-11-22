@@ -2,31 +2,31 @@
  X Skapa en array med objekt som bär alla produkterna. 
  X Skapa en funktion som loopar ut alla produkterna på sidan/i vår html struktur. 
  X Skapa funktion för plus och minus av antal 
+ - Skapa funktion för varukorg
  - Skapa funktion som beräknar totalen (och uppdateras vid förändring)
- - Skapa visuell bild av rating
+ X Skapa visuell bild av rating
  - Toggla funktioner i beställningsformuläret som ska döljas och synas. 
  - Skapa en timer som räknar ner och deletar innehåll
  - Fält i formuläret ska valideras innan det går att skicka beställningen. 
  - Lägg in regler för rabatter
- - Lägg till funktion för varukorg
  - Bekrätfelse ruta vid beställning
  - Funktion för betalningssätt. 
  - Validering av formulär + markering vid fel
  - Visa/dölj beställningsknapp
  - Rensa knapp för beställningsformulär
- - Funktion fö rabattkod
  - Effekt när Totalen uppe på sidan uppdateras
  */
 
 
+// -----------------------------------------------------------------//
+// -----------------------Produktlistan------------------------------//
 
-//  Skapande av produktlista  //
 const productList = [
   {
     id: 0,
     namn: 'Kolakungen',
     img: {
-      url: 'img/Munk_med_kola_glasyr.png',
+      url: 'public/img/Munk_med_kola_glasyr.png',
       width: 400,
       height: 400,
       alt: 'Munk med kolaglasyr och kola bitar' 
@@ -41,7 +41,7 @@ const productList = [
     id: 1,
     namn: 'Chokladhjulet',
     img: {
-      url: 'img/Munk_choklad_glasyr.png',
+      url: 'public/img/Munk_choklad_glasyr.png',
       width: 400,
       height: 400,
       alt: 'Munk med chokladglasyr' 
@@ -56,7 +56,7 @@ const productList = [
     id: 2,
     namn: 'Mörkets mysterium',
     img: {
-      url: 'img/Munk_extra_choklad.png',
+      url: 'public/img/Munk_extra_choklad.png',
       width: 400,
       height: 400,
       alt: 'Munk med chokladglasyr och chokladbitar' 
@@ -71,12 +71,12 @@ const productList = [
     id: 3,
     namn: 'Smurfmunken',
     img: {
-      url: 'img/Munk_grön_glasyr_med_musli.png',
+      url: 'public/img/Munk_gron_glasyr_med_musli.png',
       width: 400,
       height: 400,
       alt: 'Munk med päronglasyr och musli' 
     },
-    raiting: 4,
+    raiting: 3,
     kategori: 'Glutenfri',
     pris: 25,
     amount: 0
@@ -86,12 +86,12 @@ const productList = [
     id: 4,
     namn: 'Guldklumpen',
     img: {
-      url: 'img/Munk_med_honungs_glasyr.png',
+      url: 'public/img/Munk_med_honungs_glasyr.png',
       width: 400,
       height: 400,
       alt: 'Munk med honungsglasyr och choklad strössel' 
     },
-    raiting: 4,
+    raiting: 5,
     kategori: 'Övrigt',
     pris: 20,
     amount: 0
@@ -101,12 +101,12 @@ const productList = [
     id: 5,
     namn: 'Rosa moln',
     img: {
-      url: 'img/Munk_rosa_glasyr_med_florsocker.png',
+      url: 'public/img/Munk_rosa_glasyr_med_florsocker.png',
       width: 400,
       height: 400,
       alt: 'Munk med hallonglasyr och florsocker' 
     },
-    raiting: 4,
+    raiting: 5,
     kategori: 'Glutenfri',
     pris: 25,
     amount: 0
@@ -116,12 +116,12 @@ const productList = [
     id: 6,
     namn: 'Smaklösa Sven',
     img: {
-      url: 'img/Munk_utan_glasyr.png',
+      url: 'public/img/Munk_utan_glasyr.png',
       width: 400,
       height: 400,
       alt: 'Munk utan glasyr' 
     },
-    raiting: 4,
+    raiting: 2,
     kategori: 'Övrigt',
     pris: 10,
     amount: 0
@@ -131,12 +131,12 @@ const productList = [
     id: 7,
     namn: 'Rosa prinsessan',
     img: {
-      url: 'img/Munk_rosa_glasyr_med_godis.png',
+      url: 'public/img/Munk_rosa_glasyr_med_godis.png',
       width: 400,
       height: 400,
       alt: 'Munk med hallonglasyr och godis' 
     },
-    raiting: 4,
+    raiting: 3,
     kategori: 'Hallon',
     pris: 25,
     amount: 0
@@ -146,12 +146,12 @@ const productList = [
     id: 8,
     namn: 'Trollkarlens förtrollning',
     img: {
-      url: 'img/Munk_choklad_glasyr_med_nötter__och_bär.png',
+      url: 'public/img/Munk_choklad_glasyr_med_notter_och_bar.png',
       width: 400,
       height: 400,
       alt: 'Munk med chokladglasyr samt bär och nötter' 
     },
-    raiting: 4,
+    raiting: 5,
     kategori: 'Choklad',
     pris: 15,
     amount: 0
@@ -161,7 +161,7 @@ const productList = [
     id: 9,
     namn: 'C-vitamin-kungen',
     img: {
-      url: 'img/Munk_orange_gasyr_med_apelsin.png',
+      url: 'public/img/Munk_orange_gasyr_med_apelsin.png',
       width: 400,
       height: 400,
       alt: 'Munk med apelsinglasyr och apelsinbitar' 
@@ -176,12 +176,12 @@ const productList = [
     id: 10,
     namn: 'Rosapantern',
     img: {
-      url: 'img/Munk_rosa_glasyr_med_strössel.png',
+      url: 'public/img/Munk_rosa_glasyr_med_strossel.png',
       width: 400,
       height: 400,
       alt: 'Munk med hallonglasyr och strössel' 
     },
-    raiting: 4,
+    raiting: 3,
     kategori: 'Övrigt',
     pris: 20,
     amount: 0
@@ -191,12 +191,12 @@ const productList = [
     id: 11,
     namn: 'Nötskallen',
     img: {
-      url: 'img/Munk_choklad_och_nötter.png',
+      url: 'public/img/Munk_choklad_och_notter.png',
       width: 400,
       height: 400,
       alt: 'Munk med chokladglasyr och nötter' 
     },
-    raiting: 4,
+    raiting: 5,
     kategori: 'Glutenfri',
     pris: 20,
     amount: 0
@@ -206,7 +206,7 @@ const productList = [
     id: 12,
     namn: 'Polarbjörnen',
     img: {
-      url: 'img/Munk_vit_glasyr_med_choklad_strössel.png',
+      url: 'public/img/Munk_vit_glasyr_med_choklad_strossel.png',
       width: 400,
       height: 400,
       alt: 'Munk med vit glasyr och choklad strössel' 
@@ -218,7 +218,9 @@ const productList = [
   },
 ];
 
-//  Utskrift av produktlistan  //
+// -----------------------------------------------------------------//
+// -----------Skapande av produktlista i HTML-----------------------//
+
 const productsListDiv = document.querySelector('#product-list');
 function printProductListDiv() {
   productsListDiv.inneHTML = '';
@@ -230,7 +232,7 @@ function printProductListDiv() {
         <img src="${eachProduct.img.url}" alt="${eachProduct.img.alt}">
         <p>${eachProduct.img.alt}</p>
         <div class="product-information">
-          <h3>${eachProduct.raiting}</h3>
+          <h3>${getRatingHtml(eachProduct.raiting)}</h3>
           <h3>Kategori: ${eachProduct.kategori}</h3>
           <h3>${eachProduct.pris} kr/st</h3>
         </div>
@@ -259,7 +261,49 @@ function printProductListDiv() {
 
 printProductListDiv();
 
-// Funktion för minus knappar //
+// -----------------------------------------------------------------//
+// ----------------Funktion för att fylla varukorg------------------//
+function updateCart() {
+  const cartItems = productList.filter(eachProduct => eachProduct.amount > 0);
+
+  const cartElement = document.getElementById('cart');
+  cartElement.innerHTML = '';
+
+  cartItems.forEach(eachProduct => {
+    cartElement.innerHTML += `
+      <article class="product-cart">
+        <img src="${eachProduct.img.url}" alt="${eachProduct.img.alt}">
+        ${eachProduct.namn}: ${eachProduct.amount} st - ${eachProduct.amount * eachProduct.pris} kr
+      </article>
+    `;
+  });
+
+  // Update total cost
+  updateTotal();
+}
+
+
+
+
+
+// Function to update the total cost
+function updateTotal() {
+  const cartItems = productList.filter(eachproduct => eachproduct.amount > 0);
+  let totalCost = 0;
+
+  cartItems.forEach(eachProduct => {
+    totalCost += eachProduct.amount * eachProduct.pris;
+  });
+
+  document.getElementById('totalCost').textContent = `Totalt: ${totalCost} kr`;
+}
+
+  updateCart();
+
+
+// -----------------------------------------------------------------//
+// ----------------Funktion för minus knappar-----------------------//
+
 function removeProductCount(e) {
   const removeProductId = Number(e.target.id.replace('remove-', ''));
   console.log('Du klickade på ID:', removeProductId);
@@ -283,7 +327,9 @@ function removeProductCount(e) {
   }
 }
 
-// Funktion för plus knappar //
+// -----------------------------------------------------------------//
+// ----------------Funktion för plus knappar-----------------------//
+
 function addProductCount(e) {
   const addProductId = Number(e.target.id.replace('add-', ''));
   console.log('clicked on button with id', addProductId);
@@ -303,31 +349,21 @@ function addProductCount(e) {
   inputAdd.value = productList[foundProductIndexAdd].amount;
 }
 
-// Funktion som skriver ut produkter i varukorgen // FUNGERAR INTE!!!!
-const cart = document.querySelector('#cart');
-function updateAndPrintCart() {
-  const chosenProducts = productList.filter((product) => product.amount > 0);
 
-  console.table(chosenProducts);
+// -----------------------------------------------------------------//
+// -----------Funktion för att skapa emojis för rating--------------//
+function getRatingHtml(rating) {
+  const isHalf = String(rating).indexOf('.');
 
-  cart.innerHTML = ''; 
-  chosenProducts.forEach(eachProduct => {
-    cart.innerHTML += `
-      <article class="product-cart">
-        <img src="${eachProduct.img.url}" alt="${eachProduct.img.alt}">
-        ${eachProduct.namn}: ${eachProduct.amount} st - ${eachProduct.amount * eachProduct.pris} kr
-      </article>
-    `;
-  });
-
-  printProductListDiv();
-  
-  updateAndPrintCart();
-
-  // TODO: Summa av alla produkter, tips: använd reduce
-  // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reduce
+  let html = '';
+  for (let i = 0; i < rating; i++) {
+    html += `<span>⭐</span>`;
+  }
+  if (isHalf !== -1) {
+    html += `<span></span>`; // Avrundar uppåt så att en 3.5 får 4 stjärnor
+  }
+  return html;
 }
-
 
 // -----------------------------------------------------------------//
 // ----------------Soretingsfunktionen för namn-------------------- //
@@ -423,11 +459,73 @@ let isPrice = true;
 
 
 // -----------------------------------------------------------------//
-// ----------------Soretingsfunktionen för rating-------------------//
+// ----------------Sorteingsfunktionen för rating-------------------//
+function sortByRating(Rating) {
+  productList.sort((a, b) => {
+    return Rating ? a.raiting - b.raiting : b.raiting - a.raiting;
+  }); // Sorteringsfunktion (stigande)
 
+  const productListElement = document.getElementById('product-list');
+  productListElement.innerHTML = ''; // Rensa listan innan vi fyller på
 
+  productList.forEach(eachProduct => {
+    const productElement = document.createElement('div');
+    // ... skapa HTML för varje produkt
+    productListElement.appendChild(productElement);
+  });
 
+  printProductListDiv();
+}
+
+const sortRatingButton = document.getElementById('sortRating');
+sortRatingButton.addEventListener('click', () => {
+  sortByRating(!isRating); // Växla mellan stigande och fallande
+  isRating = !isRating;
+});
+
+let isRating = true;
 
 // -----------------------------------------------------------------//
 // ----------------Stäng av soretingsfunktionen---------------------//
 
+
+
+// ----------------------------FUNGERAR EJ !!!----------------------//
+// -------Funktion som skriver ut produkter i varikorgen------------//
+
+const cart = document.querySelector('#cart');
+function updateAndPrintCart() {
+  const chosenProducts = productList.filter((product) => product.amount > 0);
+
+  console.table(chosenProducts);
+
+  cart.innerHTML = ''; 
+  chosenProducts.forEach(eachProduct => {
+    cart.innerHTML += `
+      <article class="product-cart">
+        <img src="${eachProduct.img.url}" alt="${eachProduct.img.alt}">
+        ${eachProduct.namn}: ${eachProduct.amount} st - ${eachProduct.amount * eachProduct.pris} kr
+      </article>
+    `;
+  });
+
+  printProductListDiv();
+  
+  updateAndPrintCart();
+
+
+  // -----------------------------------------------------------------//
+  // ------------------Totalsumma i varukorgen------------------------//
+  function calculateTotal() {
+    let totalCost = 0;
+  
+    productList.forEach(product => {
+      totalCost += product.amount * product.pris;
+    });
+  
+    const totalElement = document.getElementById('totalCost');
+    totalElement.textContent = `Totalt: ${totalCost} kr`;
+  }
+
+  console.log(calculateTotal);
+}

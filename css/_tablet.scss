@@ -23,7 +23,8 @@ main {
 .sort-function {
     grid-column: 1 / span 4;
     flex-direction: row;
-    margin-right: 150px;
+    margin-right: 40px;
+    justify-content: right;
 }
 
 .sort-function h2 {
