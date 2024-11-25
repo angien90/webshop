@@ -49,7 +49,6 @@ header {
     font-size: larger;
 }
 
-
 /* Top bar */
 .top-bar {
     display: flex;
@@ -117,6 +116,7 @@ header {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin-top: 10px;
 }
 
 .eachProduct {
@@ -152,7 +152,7 @@ article p {
 }
 
 .product-information {
-    text-align:center;
+    text-align: center;
 }
 
 .product-counter {
@@ -181,21 +181,48 @@ form {
     width: 95%;
 }
 
-.varukorg {
+.varukorgen {
     background-color: white;
     width: 80%;
     margin-top: 30px;
     border-radius: 20px;
     padding-left: 20px;
     padding-right: 20px;
+    padding-bottom: 30px;
 }
 
-.varukorg h2 {
+.varukorgen h2 {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    text-align: center;
 }
 
+.product-cart {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-bottom: 10px;
+}
+
+.product-cart img {
+    height: 100px;
+    width: auto;
+}
+
+.product-cart h2 {
+    text-transform: capitalize;
+    font-size: 1.2em;
+    margin-top: 16px;
+    margin-bottom: 0px;
+}
+
+.total-cost {
+    text-align: end;
+    font-size: 1.2em;
+    padding-right: 10px;
+}
 
 /* Kunduppgifter */
 .leveransuppgifter {

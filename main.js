@@ -1,17 +1,17 @@
 /*
  X Skapa en array med objekt som bär alla produkterna. 
- X Skapa en funktion som loopar ut alla produkterna på sidan/i vår html struktur. 
+ X Skapa en funktion som loopar ut alla produkterna på sidan/i vår html struktur.
+ X Skapa visuell bild av rating 
  X Skapa funktion för plus och minus av antal 
+ X Skapa sorteringsfunktioner
  - Skapa funktion för varukorg
  - Skapa funktion som beräknar totalen (och uppdateras vid förändring)
- X Skapa visuell bild av rating
  - Toggla funktioner i beställningsformuläret som ska döljas och synas. 
  - Skapa en timer som räknar ner och deletar innehåll
  - Fält i formuläret ska valideras innan det går att skicka beställningen. 
  - Lägg in regler för rabatter
  - Bekrätfelse ruta vid beställning
  - Funktion för betalningssätt. 
- - Validering av formulär + markering vid fel
  - Visa/dölj beställningsknapp
  - Rensa knapp för beställningsformulär
  - Effekt när Totalen uppe på sidan uppdateras
@@ -256,50 +256,9 @@ function printProductListDiv() {
   addButton.forEach(button => {
     button.addEventListener('click', addProductCount);
   });
-
 }
 
 printProductListDiv();
-
-// -----------------------------------------------------------------//
-// ----------------Funktion för att fylla varukorg------------------//
-function updateCart() {
-  const cartItems = productList.filter(eachProduct => eachProduct.amount > 0);
-
-  const cartElement = document.getElementById('cart');
-  cartElement.innerHTML = '';
-
-  cartItems.forEach(eachProduct => {
-    cartElement.innerHTML += `
-      <article class="product-cart">
-        <img src="${eachProduct.img.url}" alt="${eachProduct.img.alt}">
-        ${eachProduct.namn}: ${eachProduct.amount} st - ${eachProduct.amount * eachProduct.pris} kr
-      </article>
-    `;
-  });
-
-  // Update total cost
-  updateTotal();
-}
-
-
-
-
-
-// Function to update the total cost
-function updateTotal() {
-  const cartItems = productList.filter(eachproduct => eachproduct.amount > 0);
-  let totalCost = 0;
-
-  cartItems.forEach(eachProduct => {
-    totalCost += eachProduct.amount * eachProduct.pris;
-  });
-
-  document.getElementById('totalCost').textContent = `Totalt: ${totalCost} kr`;
-}
-
-  updateCart();
-
 
 // -----------------------------------------------------------------//
 // ----------------Funktion för minus knappar-----------------------//
@@ -319,6 +278,7 @@ function removeProductCount(e) {
   // Kontrollera om mängden är större än 0 innan man kan minska ännu mer //
   if (productList[foundProductIndexRemove].amount > 0) {
     productList[foundProductIndexRemove].amount -= 1;
+
     const productContainerRemove = e.target.closest('.eachProduct');
     const inputRemove = productContainerRemove.querySelector('input');
     inputRemove.value = productList[foundProductIndexRemove].amount;
@@ -332,22 +292,93 @@ function removeProductCount(e) {
 
 function addProductCount(e) {
   const addProductId = Number(e.target.id.replace('add-', ''));
-  console.log('clicked on button with id', addProductId);
+
   
   const foundProductIndexAdd = productList.findIndex(eachProduct => eachProduct.id === addProductId);
-  console.log('found eachProduct at index', foundProductIndexAdd);
+  console.log('Okjetet är:', foundProductIndexAdd);
 
   if (foundProductIndexAdd === -1) {
-    console.error('Kolla att id:t är rätt.');
-    return;
-  }
-
-  productList[foundProductIndexAdd].amount += 1;
+    productList[foundProductIndexAdd].amount += 1;
 
   const productContainerAdd = e.target.closest('.eachProduct');
   const inputAdd = productContainerAdd.querySelector('input');
   inputAdd.value = productList[foundProductIndexAdd].amount;
 }
+}
+
+// -----------------------------------------------------------------//
+// ----------------Funktion för att fylla varukorg------------------//
+// ------------------------FUNGERAR EJ!!----------------------------//
+
+function updateCart() {
+  const cartItems = productList.filter(eachProduct => eachProduct.amount > 0);
+
+  console.log(cartItems);
+
+  const cartElement = document.getElementById('cart');
+  cartElement.innerHTML = '';
+
+  cartItems.forEach(eachProduct => {
+    const productElement = document.createElement('article');
+    productElement.classList.add('product-cart');
+    productElement.innerHTML += `
+      <img src="${eachProduct.img.url}" alt="${eachProduct.img.alt}">
+      <h2>${eachProduct.namn}</h2>
+      <h3>${eachProduct.amount} st</h3>
+      <h3>${eachProduct.amount * eachProduct.pris} kr</h3>
+    `;
+    cartElement.appendChild(productElement);
+  });
+
+  
+  updateTotal();
+}
+
+// -----------------------------------------------------------------//
+// ----------Funktion för att beräkna totalen i varukorgen----------//
+// ------------------------FUNGERAR EJ!!----------------------------//
+
+function updateTotal() {
+  const cartItemsTotal = productList.filter(eachproduct => eachproduct.amount > 0);
+  let totalCost = 0;
+
+  cartItemsTotal.forEach(eachProduct => {
+      totalCost += eachProduct.amount * eachProduct.pris;
+  });
+
+  const totalElement = document.getElementById('totalCost');
+  if (totalElement) {
+      totalElement.textContent = `Totalt: ${totalCost} kr`;
+  } else {
+      console.error('Element with ID "totalCost" not found.');
+  }
+}
+
+
+updateCart();
+
+
+// -----------------------------------------------------------------//
+// --------------------Totalsumma upp på sidan--------------------- //
+// -------------------------FUNGERAR EJ-----------------------------//
+
+function updateSum() {
+  const TotalSum = productList.filter(eachproduct => eachproduct.amount > 0);
+  let totalSum = 0;
+
+  TotalSum.forEach(eachProduct => {
+      totalSum += eachProduct.amount * eachProduct.pris;
+  });
+
+  const totalSumElement = document.getElementById('totalSum');
+  if (totalSumElement) {
+      totalSumElement.textContent = `${totalSum} kr`;
+  } else {
+      console.error('Element with ID "totalSum" not found.');
+  }
+}
+
+updateSum();
 
 
 // -----------------------------------------------------------------//
@@ -365,6 +396,7 @@ function getRatingHtml(rating) {
   return html;
 }
 
+
 // -----------------------------------------------------------------//
 // ----------------Soretingsfunktionen för namn-------------------- //
 
@@ -376,7 +408,7 @@ function sortByName(Name) {
   const productListElement = document.getElementById('product-list');
   productListElement.innerHTML = ''; // Rensa listan innan vi fyller på
 
-  productList.forEach(product => {
+  productList.forEach(eachProduct => {
     const productElement = document.createElement('div');
     // ... skapa HTML för varje produkt
     productListElement.appendChild(productElement);
@@ -395,7 +427,6 @@ function sortByName(Name) {
   sortByName(isName);
   isName = !isName; // Växla mellan stigande och fallande
 });
-
 
 // -----------------------------------------------------------------//
 // ----------------Soretingsfunktionen för kategori---------------- //
@@ -486,46 +517,28 @@ sortRatingButton.addEventListener('click', () => {
 let isRating = true;
 
 // -----------------------------------------------------------------//
-// ----------------Stäng av soretingsfunktionen---------------------//
+// -----------------------Sortera efter ID--------------------------//
+function sortById(Id) {
+  productList.sort((a, b) => {
+    return Id ? a.id - b.id : a.id - b.id;
+  }); // Sorteringsfunktion (stigande)
 
+  const productListElement = document.getElementById('product-list');
+  productListElement.innerHTML = ''; // Rensa listan innan vi fyller på
 
-
-// ----------------------------FUNGERAR EJ !!!----------------------//
-// -------Funktion som skriver ut produkter i varikorgen------------//
-
-const cart = document.querySelector('#cart');
-function updateAndPrintCart() {
-  const chosenProducts = productList.filter((product) => product.amount > 0);
-
-  console.table(chosenProducts);
-
-  cart.innerHTML = ''; 
-  chosenProducts.forEach(eachProduct => {
-    cart.innerHTML += `
-      <article class="product-cart">
-        <img src="${eachProduct.img.url}" alt="${eachProduct.img.alt}">
-        ${eachProduct.namn}: ${eachProduct.amount} st - ${eachProduct.amount * eachProduct.pris} kr
-      </article>
-    `;
+  productList.forEach(eachProduct => {
+    const productElement = document.createElement('div');
+    // ... skapa HTML för varje produkt
+    productListElement.appendChild(productElement);
   });
 
   printProductListDiv();
-  
-  updateAndPrintCart();
-
-
-  // -----------------------------------------------------------------//
-  // ------------------Totalsumma i varukorgen------------------------//
-  function calculateTotal() {
-    let totalCost = 0;
-  
-    productList.forEach(product => {
-      totalCost += product.amount * product.pris;
-    });
-  
-    const totalElement = document.getElementById('totalCost');
-    totalElement.textContent = `Totalt: ${totalCost} kr`;
-  }
-
-  console.log(calculateTotal);
 }
+
+const sortIdButton = document.getElementById('sortStop');
+sortIdButton.addEventListener('click', () => {
+  sortById(!isId); // Växla mellan stigande och fallande
+  isId = !isId;
+});
+
+let isId = true;

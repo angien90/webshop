@@ -24,7 +24,7 @@
     <!-- Top meny-->
     <header>
       <a href="#varukorgen" class="button"><span class="material-symbols-outlined">shopping_cart</span></a>
-      <span class="total-sum">0 kr</span>
+      <span class="total-sum" id="totalSum"></span>
       <button><span class="material-symbols-outlined">menu</span></button>
     </header>
 
@@ -52,20 +52,20 @@
 
     <!-- Produktlista -->
       <article>
-        <div class=products id="product-list"></div>
+        <div class="products" id="product-list"></div>
       </article>
 
     </main>
 
     <!-- Varukorg -->
     <form>
-      <section id="varukorgen" >
+      <section class="varukorgen" id="varukorgen">
         <h2>Varukorg</h2>
         <article>
           <div id="cart"></div>
         </article>
         <hr>
-        <div class=total-cost id="totalCost"></div>
+        <div class="total-cost" id="totalCost"></div>
       </section>
 
     <!-- Kunduppgifter -->
@@ -97,7 +97,7 @@
         <input type="email" id="epost" name="epost" placeholder="gottfridsgyllenemunkar@munkar.com" value="" required><br>
       
         <label for="text">Rabattkod: </label><br>
-        <input type="sale" id="sale" name="sale" placeholder="ABD_123" value="" required><br>
+        <input type="sale" id="sale" name="sale" placeholder="ABC_123" value="" required><br>
 
         **********<label for="....">Betalningssätt: *</label><br>
         <input type="email" id="epost" name="epost" placeholder="Faktura/Kortbetalning" value="" required><br>
