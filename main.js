@@ -5,15 +5,15 @@
  X Skapa funktion för plus och minus av antal 
  X Skapa sorteringsfunktioner
  X Skapa funktion för varukorg
- \ Skapa funktion som beräknar totalen (och uppdateras vid förändring)
- - Toggla funktioner i beställningsformuläret som ska döljas och synas. 
- - Skapa en timer som räknar ner och deletar innehåll
+ X Skapa funktion som beräknar totalen (och uppdateras vid förändring)
  - Fält i formuläret ska valideras innan det går att skicka beställningen. 
- - Lägg in regler för rabatter
- - Bekrätfelse ruta vid beställning
- - Funktion för betalningssätt. 
+ - Funktion för betalningssätt. Toggla funktioner i beställningsformuläret som ska döljas och synas. 
  - Visa/dölj beställningsknapp
  - Rensa knapp för beställningsformulär
+ - Skapa en timer som räknar ner och deletar innehåll
+ - Lägg in regler för rabatter
+ - Bekrätfelse ruta vid beställning
+
  - Effekt när Totalen uppe på sidan uppdateras
  */
 
@@ -339,7 +339,7 @@ function updateTotal() {
   totalElement.textContent = `Totalt: ${totalCost} kr`;
 
   const totalSum = document.getElementById('totalSum');
-  totalSum.textContent = `${totalCost}kr`;
+  totalSum.textContent = `${totalCost} kr`;
 }
 
 // -----------------------------------------------------------------//
@@ -521,8 +521,19 @@ function validateEmail(email) {
 }
 
 function validateCardDetails(cardName, cardNumber, expMonth, expYear, cvv) {
-  // Implement basic card details validation here
-  // Check card number length, expiry date format, etc.
-  // You can find libraries for more advanced card validation
-  return true; // Replace with actual validation logic
+  return true;
 }
+
+
+// -----------------------------------------------------------------//
+// --------------Visa & dölj betalningsuppgifter--------------------//
+const paymentMethodSelect = document.getElementById('payment-method');
+const paymentDetailsSection = document.querySelector('.betalningsuppgifter');
+
+paymentMethodSelect.addEventListener('change', () => {
+  if (paymentMethodSelect.value !== 'invoice') {
+    paymentDetailsSection.style.display = 'none';
+  } else {
+    paymentDetailsSection.style.display = 'block';
+  }
+});

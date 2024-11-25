@@ -24,7 +24,7 @@
     <!-- Top meny-->
     <header>
       <a href="#varukorgen" class="button"><span class="material-symbols-outlined">shopping_cart</span></a>
-      <span class="total-sum" id="totalSum"></span>
+      <span class="total-sum" id="totalSum">0 kr</span>
       <button><span class="material-symbols-outlined">menu</span></button>
     </header>
 
@@ -101,7 +101,7 @@
 
         <label for="payment-method">Betalningssätt:</label>
         <select id="payment-method" name="payment-method" required>
-          <option value="empty">Gör ditt val här</option>
+          <option value="empty" selected>Gör ditt val här</option>
           <option value="invoice">Kortbetalning</option>
           <option value="card">Faktura</option>
         </select>
@@ -118,7 +118,7 @@
       </section>
 
     <!-- Betalningsuppgifter -->
-      <section class="betalningsuppgifter">
+      <section class="betalningsuppgifter" style="display: none;">
         <h3>Betalningsuppgifter</h3>
           <p>Accepterade kort</p>
           <div class="kort-ikoner">
