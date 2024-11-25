@@ -2,9 +2,9 @@
  X Skapa en array med objekt som bär alla produkterna. 
  X Skapa en funktion som loopar ut alla produkterna på sidan/i vår html struktur.
  X Skapa visuell bild av rating 
- \ Skapa funktion för plus och minus av antal 
+ X Skapa funktion för plus och minus av antal 
  X Skapa sorteringsfunktioner
- \ Skapa funktion för varukorg
+ X Skapa funktion för varukorg
  \ Skapa funktion som beräknar totalen (och uppdateras vid förändring)
  - Toggla funktioner i beställningsformuläret som ska döljas och synas. 
  - Skapa en timer som räknar ner och deletar innehåll
@@ -20,7 +20,6 @@
 
 // -----------------------------------------------------------------//
 // -----------------------Produktlistan------------------------------//
-
 const productList = [
   {
     id: 0,
@@ -220,7 +219,6 @@ const productList = [
 
 // -----------------------------------------------------------------//
 // -----------Skapande av produktlista i HTML-----------------------//
-
 const productsListDiv = document.querySelector('#product-list');
 function printProductListDiv() {
   productsListDiv.inneHTML = '';
@@ -262,7 +260,6 @@ printProductListDiv();
 
 // -----------------------------------------------------------------//
 // ----------------Funktion för minus knappar-----------------------//
-
 function removeProductCount(e) {
   const removeProductId = Number(e.target.id.replace('remove-', ''));
   console.log('Du klickade på ID:', removeProductId);
@@ -292,7 +289,6 @@ function removeProductCount(e) {
 
 // -----------------------------------------------------------------//
 // ----------------Funktion för plus knappar-----------------------//
-
 function addProductCount(e) {
   const addProductId = Number(e.target.id.replace('add-', ''));
   
@@ -314,7 +310,6 @@ function addProductCount(e) {
 
 // -----------------------------------------------------------------//
 // ----------------Funktion för att fylla varukorg------------------//
-// ------------------------FUNGERAR EJ!!----------------------------//
 
 function updateCart() {
   const cartItems = productList.filter(eachProduct => eachProduct.amount > 0);
@@ -325,49 +320,27 @@ function updateCart() {
     const productElement = document.createElement('div');
     productElement.classList.add('cart-item');
     productElement.innerHTML = `
+    <div class="product-cart">
       <img src="${eachProduct.img.url}" alt="${eachProduct.img.alt}">
-      <p>${eachProduct.namn}</p>
-      <p>${eachProduct.amount}</p>
-      <p>Pris: ${eachProduct.amount * eachProduct.pris} kr</p>
+      <h2>${eachProduct.namn}</h2>
+      <h3>${eachProduct.amount} st á ${eachProduct.pris} kr </h3>
+      <h3>Pris: ${eachProduct.amount * eachProduct.pris} kr</h3>
+    </div>
     `;
     cartElement.appendChild(productElement);
   });
 }
 
-// -----------------------------------------------------------------//
-// ----------Funktion för att beräkna totalen i varukorgen----------//
-// ------------------------FUNGERAR EJ!!----------------------------//
-
+// --------------------------------------------------------------------------//
+// ----Funktion för att beräkna totalen i varukorgen & högst upp på sidan----//
 function updateTotal() {
-  const totalCost = productList.reduce((total, product) => total + product.amount * product.pris, 0);
+  const totalCost = productList.reduce((total, eachProduct) => total + eachProduct.amount * eachProduct.pris, 0);
   const totalElement = document.getElementById('totalCost');
   totalElement.textContent = `Totalt: ${totalCost} kr`;
+
+  const totalSum = document.getElementById('totalSum');
+  totalSum.textContent = `${totalCost}kr`;
 }
-
-
-
-// -----------------------------------------------------------------//
-// --------------------Totalsumma upp på sidan--------------------- //
-// -------------------------FUNGERAR EJ-----------------------------//
-
-function updateSum() {
-  const TotalSum = productList.filter(eachproduct => eachproduct.amount > 0);
-  let totalSum = 0;
-
-  TotalSum.forEach(eachProduct => {
-      totalSum += eachProduct.amount * eachProduct.pris;
-  });
-
-  const totalSumElement = document.getElementById('totalSum');
-  if (totalSumElement) {
-      totalSumElement.textContent = `${totalSum} kr`;
-  } else {
-      console.error('Element with ID "totalSum" not found.');
-  }
-}
-
-updateSum();
-
 
 // -----------------------------------------------------------------//
 // -----------Funktion för att skapa emojis för rating--------------//
@@ -384,10 +357,8 @@ function getRatingHtml(rating) {
   return html;
 }
 
-
 // -----------------------------------------------------------------//
 // ----------------Soretingsfunktionen för namn-------------------- //
-
 function sortByName(Name) {
   productList.sort((a, b) => {
     return Name ? a.namn.localeCompare(b.namn) : b.namn.localeCompare(a.namn);
@@ -418,7 +389,6 @@ function sortByName(Name) {
 
 // -----------------------------------------------------------------//
 // ----------------Soretingsfunktionen för kategori---------------- //
-
 function sortByCategory(Category) {
   productList.sort((a, b) => {
     return Category ? a.kategori.localeCompare(b.kategori) : b.kategori.localeCompare(a.kategori);
@@ -450,7 +420,6 @@ function sortByCategory(Category) {
 
 // -----------------------------------------------------------------//
 // ----------------Soretingsfunktionen för pris---------------------//
-
 function sortByPrice(Price) {
   productList.sort((a, b) => {
     return Price ? a.pris - b.pris : b.pris - a.pris;

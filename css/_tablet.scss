@@ -47,6 +47,22 @@ article {
 }
 
 
+/* Varukorgen */
+.product-cart {
+    display: flex;
+    flex-direction: row;
+}
+
+.product-cart h2 {
+    font-size: 1.2em;
+    margin-top: 16px;
+}
+
+.product-cart h3 {
+    font-size: 1.2em;
+}
+
+
 /* Kunduppgifter */
 .leveransuppgifter input {
     width: 60%;
