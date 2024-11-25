@@ -2,10 +2,10 @@
  X Skapa en array med objekt som bär alla produkterna. 
  X Skapa en funktion som loopar ut alla produkterna på sidan/i vår html struktur.
  X Skapa visuell bild av rating 
- X Skapa funktion för plus och minus av antal 
+ \ Skapa funktion för plus och minus av antal 
  X Skapa sorteringsfunktioner
- - Skapa funktion för varukorg
- - Skapa funktion som beräknar totalen (och uppdateras vid förändring)
+ \ Skapa funktion för varukorg
+ \ Skapa funktion som beräknar totalen (och uppdateras vid förändring)
  - Toggla funktioner i beställningsformuläret som ska döljas och synas. 
  - Skapa en timer som räknar ner och deletar innehåll
  - Fält i formuläret ska valideras innan det går att skicka beställningen. 
@@ -238,9 +238,9 @@ function printProductListDiv() {
         </div>
         
         <div class="product-counter">
-          <button class="remove" id="remove-${eachProduct.id}"><span class="material-symbols-outlined">remove_shopping_cart</span></button>
+          <button class="remove material-symbols-outlined" id="remove-${eachProduct.id}">remove_shopping_cart</button>
           <input type="number" min="0" value="${eachProduct.amount}" id="input-${eachProduct.id}">
-          <button class="add" id="add-${eachProduct.id}"><span class="material-symbols-outlined">add_shopping_cart</span></button>
+          <button class="add material-symbols-outlined" id="add-${eachProduct.id}">add_shopping_cart</button>
         </div>
       </article>
     `; 
@@ -285,6 +285,9 @@ function removeProductCount(e) {
   } else {
     console.log("Du kan inte ha ett negativt antal produkter.");
   }
+
+  updateCart();
+  updateTotal();
 }
 
 // -----------------------------------------------------------------//
@@ -292,18 +295,21 @@ function removeProductCount(e) {
 
 function addProductCount(e) {
   const addProductId = Number(e.target.id.replace('add-', ''));
-
   
   const foundProductIndexAdd = productList.findIndex(eachProduct => eachProduct.id === addProductId);
-  console.log('Okjetet är:', foundProductIndexAdd);
 
-  if (foundProductIndexAdd === -1) {
+  if (foundProductIndexAdd !== -1) {
     productList[foundProductIndexAdd].amount += 1;
 
-  const productContainerAdd = e.target.closest('.eachProduct');
-  const inputAdd = productContainerAdd.querySelector('input');
-  inputAdd.value = productList[foundProductIndexAdd].amount;
-}
+    const productContainerAdd = e.target.closest('.eachProduct');
+    const inputAdd = productContainerAdd.querySelector('input');
+    inputAdd.value = productList[foundProductIndexAdd].amount;
+  } else {
+    console.error('Kunde inte hitta produkten med ID:', addProductId);
+  }
+
+  updateCart();
+  updateTotal();
 }
 
 // -----------------------------------------------------------------//
@@ -312,26 +318,20 @@ function addProductCount(e) {
 
 function updateCart() {
   const cartItems = productList.filter(eachProduct => eachProduct.amount > 0);
-
-  console.log(cartItems);
-
   const cartElement = document.getElementById('cart');
   cartElement.innerHTML = '';
 
   cartItems.forEach(eachProduct => {
-    const productElement = document.createElement('article');
-    productElement.classList.add('product-cart');
-    productElement.innerHTML += `
+    const productElement = document.createElement('div');
+    productElement.classList.add('cart-item');
+    productElement.innerHTML = `
       <img src="${eachProduct.img.url}" alt="${eachProduct.img.alt}">
-      <h2>${eachProduct.namn}</h2>
-      <h3>${eachProduct.amount} st</h3>
-      <h3>${eachProduct.amount * eachProduct.pris} kr</h3>
+      <p>${eachProduct.namn}</p>
+      <p>${eachProduct.amount}</p>
+      <p>Pris: ${eachProduct.amount * eachProduct.pris} kr</p>
     `;
     cartElement.appendChild(productElement);
   });
-
-  
-  updateTotal();
 }
 
 // -----------------------------------------------------------------//
@@ -339,23 +339,11 @@ function updateCart() {
 // ------------------------FUNGERAR EJ!!----------------------------//
 
 function updateTotal() {
-  const cartItemsTotal = productList.filter(eachproduct => eachproduct.amount > 0);
-  let totalCost = 0;
-
-  cartItemsTotal.forEach(eachProduct => {
-      totalCost += eachProduct.amount * eachProduct.pris;
-  });
-
+  const totalCost = productList.reduce((total, product) => total + product.amount * product.pris, 0);
   const totalElement = document.getElementById('totalCost');
-  if (totalElement) {
-      totalElement.textContent = `Totalt: ${totalCost} kr`;
-  } else {
-      console.error('Element with ID "totalCost" not found.');
-  }
+  totalElement.textContent = `Totalt: ${totalCost} kr`;
 }
 
-
-updateCart();
 
 
 // -----------------------------------------------------------------//
@@ -542,3 +530,30 @@ sortIdButton.addEventListener('click', () => {
 });
 
 let isId = true;
+
+
+// -----------------------------------------------------------------//
+// -----------------Validering av formulär--------------------------//
+// -------------------------EJ KLAR!!!------------------------------//
+
+function validateRequired(...fields) {
+  for (const field of fields) {
+    if (field.value.trim() === "") {
+      alert(`Vänligen fyll i ditt namn i ${field.name}.`);
+      return false;
+    }
+  }
+  return true;
+}
+
+function validateEmail(email) {
+  const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+  return emailRegex.test(email.value);
+}
+
+function validateCardDetails(cardName, cardNumber, expMonth, expYear, cvv) {
+  // Implement basic card details validation here
+  // Check card number length, expiry date format, etc.
+  // You can find libraries for more advanced card validation
+  return true; // Replace with actual validation logic
+}

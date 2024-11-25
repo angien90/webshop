@@ -58,7 +58,7 @@
     </main>
 
     <!-- Varukorg -->
-    <form>
+    <form onsubmit="return validateForm()">
       <section class="varukorgen" id="varukorgen">
         <h2>Varukorg</h2>
         <article>
@@ -99,16 +99,20 @@
         <label for="text">Rabattkod: </label><br>
         <input type="sale" id="sale" name="sale" placeholder="ABC_123" value="" required><br>
 
-        **********<label for="....">Betalningssätt: *</label><br>
-        <input type="email" id="epost" name="epost" placeholder="Faktura/Kortbetalning" value="" required><br>
+        <label for="payment-method">Betalningssätt:</label>
+        <select id="payment-method" name="payment-method" required>
+          <option value="empty">Gör ditt val här</option>
+          <option value="invoice">Kortbetalning</option>
+          <option value="card">Faktura</option>
+        </select>
 
         <div class="checkbox">
           <label>
-            <input type="checkbox" checked="" name="personnummer"> Jag godkänner att Gottrids Gyllene Munkar behandlar mina personuppgifter
+            <input type="checkbox" name="personnummer"> Jag godkänner att Gottrids Gyllene Munkar behandlar mina personuppgifter
           </label><br>
 
           <label>
-            <input type="checkbox" checked="checked" name="nyhetsbrev"> Jag vill ta emot Gottrids Gyllene Munkars nyhetsbrev
+            <input type="checkbox" checked="checked" name="nyhetsbrev"> Jag vill ta del av Gottrids Gyllene Munkars nyhetsbrev
           </label><br>
         </div>
       </section>
