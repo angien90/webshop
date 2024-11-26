@@ -58,7 +58,7 @@
     </main>
 
     <!-- Varukorg -->
-    <form onsubmit="return validateForm()">
+    <form id="myForm">
       <section class="varukorgen" id="varukorgen">
         <h2>Varukorg</h2>
         <article>
@@ -95,6 +95,7 @@
       
         <label for="epost">E-postadress: *</label><br>
         <input type="email" id="epost" name="epost" placeholder="gottfridsgyllenemunkar@munkar.com" value="" required><br>
+        <p id="emailError"></p>
       
         <label for="text">Rabattkod: </label><br>
         <input type="sale" id="sale" name="sale" placeholder="ABC_123" value="" required><br>
@@ -144,8 +145,8 @@
       </section>
 
       <div class="beställningsknappar">
-        <button>Ta bort beställning<br><span class="material-symbols-outlined">Delete</span></button>
-        <button class="submit-button">Skicka beställning<br><span class="material-symbols-outlined">shopping_cart_checkout</span></button>
+        <button id="clearButton">Ta bort beställning<br><span class="material-symbols-outlined">Delete</span></button>
+        <button type="submit" class="submit-button" id="submitButton">Skicka beställning<br><span class="material-symbols-outlined">shopping_cart_checkout</span></button>
       </div>
     </form>
    

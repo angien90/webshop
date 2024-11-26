@@ -9,11 +9,10 @@
  - Fält i formuläret ska valideras innan det går att skicka beställningen. 
  - Funktion för betalningssätt. Toggla funktioner i beställningsformuläret som ska döljas och synas. 
  - Visa/dölj beställningsknapp
- - Rensa knapp för beställningsformulär
  - Skapa en timer som räknar ner och deletar innehåll
  - Lägg in regler för rabatter
- - Bekrätfelse ruta vid beställning
-
+ X Bekrätfelse ruta vid beställning
+ X Rensa knapp för beställningsformulär
  - Effekt när Totalen uppe på sidan uppdateras
  */
 
@@ -516,9 +515,17 @@ function validateRequired(...fields) {
 }
 
 function validateEmail(email) {
-  const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-  return emailRegex.test(email.value);
+  const emailRegEx = new RegExp(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/);
+  const result = emailRegEx.exec(email);
+  const emailError = document.getElementById('emailError');
+
+  if (result === null) {
+    emailError.textContent = 'E-post är inte giltig';
+  } else {
+    emailError.textContent = '';
+  }
 }
+  
 
 function validateCardDetails(cardName, cardNumber, expMonth, expYear, cvv) {
   return true;
@@ -535,5 +542,34 @@ paymentMethodSelect.addEventListener('change', () => {
     paymentDetailsSection.style.display = 'none';
   } else {
     paymentDetailsSection.style.display = 'block';
+  }
+});
+
+
+// -----------------------------------------------------------------//
+// ------------------Knapp för att tömma formulär-------------------//
+function clearForm() {
+   const form = document.getElementById("myForm");
+
+  form.reset();
+}
+
+const removeButton = document.getElementById("clearButton");
+removeButton.addEventListener("click", clearForm);
+
+
+// -----------------------------------------------------------------//
+// ------------------Beställningsbekräftelse------------------------//
+const submitButton = document.getElementById('submitButton');
+
+submitButton.addEventListener('click', (event) => {
+  event.preventDefault(); // Förhindra standardskickning
+
+  const confirmed = confirm('Är du säker på att du vill skicka beställningen?');
+
+  if (confirmed) {
+    alert('Tack för din beställning! Vår leveranstid är för närvarande 8 dagar.');
+  } else {
+    alert('Beställningen avbröts.');
   }
 });
