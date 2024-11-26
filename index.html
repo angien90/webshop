@@ -82,7 +82,7 @@
         <input type="text" id="address" name="address" placeholder="Snaskvägen 1" value="" required><br>
 
         <label for="portkod">Portkod:</label><br>
-        <input type="text" id="portkod" name="portkod" placeholder="1234" value=""><br>
+        <input type="text" id="portkod" name="portkod" placeholder="1234#" value=""><br>
 
         <label for="postnr">Postnummer: *</label><br>
         <input type="text" id="postnr" name="postnr" placeholder="123 45" value="" required><br>
@@ -98,11 +98,11 @@
         <p id="emailError"></p>
       
         <label for="text">Rabattkod: </label><br>
-        <input type="sale" id="sale" name="sale" placeholder="ABC_123" value="" required><br>
+        <input type="sale" id="sale" name="sale" placeholder="ABC_123" value=""><br>
 
-        <label for="payment-method">Betalningssätt:</label>
+        <label for="payment-method">Betalningssätt: *</label>
         <select id="payment-method" name="payment-method" required>
-          <option value="empty" selected>Gör ditt val här</option>
+          <option value="" disabled selected>Gör ditt val här</option>
           <option value="invoice">Kortbetalning</option>
           <option value="card">Faktura</option>
         </select>

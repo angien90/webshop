@@ -545,6 +545,38 @@ paymentMethodSelect.addEventListener('change', () => {
   }
 });
 
+// -----------------------------------------------------------------//
+// ------------------Visa & dölj beställningsknapp------------------//
+const submitButtonHide = document.getElementById("submitButton");
+const requiredFields = document.querySelectorAll("input[required]:not([type='checkbox']), select[required]");
+const optionalFields = document.querySelectorAll("input:not([required]), select:not([required])");
+
+function checkRequiredFields() {
+  let allRequiredFilled = true;
+  for (const field of requiredFields) {
+    if (!field.value.trim()) {
+      allRequiredFilled = false;
+      break;
+    }
+  }
+
+  let atLeastOneOptionalFilled = false;
+  for (const field of optionalFields) {
+    if (field.value.trim()) {
+      atLeastOneOptionalFilled = true;
+      break;
+    }
+  }
+
+  submitButtonHide.disabled = !allRequiredFilled || !atLeastOneOptionalFilled;
+}
+
+checkRequiredFields();
+
+for (const field of [...requiredFields, ...optionalFields]) {
+  field.addEventListener("change", checkRequiredFields);
+}
+
 
 // -----------------------------------------------------------------//
 // ------------------Knapp för att tömma formulär-------------------//
