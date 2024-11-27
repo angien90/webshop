@@ -223,6 +223,8 @@ const productList = [
 // -----------------------------------------------------------------//
 // -----------Skapande av produktlista i HTML-----------------------//
 
+/* 🦄🦄🦄🦄🦄🦄 JENNI: Kolla på {{Varför mina bilder visas i min localhost men på github pages}}, tack!*/
+
 /**
  * Hämta en referens till DOM-elementet med id "product-list".
  * Rensa befintlig lista
@@ -237,7 +239,7 @@ function printProductListDiv() {
     productsListDiv.innerHTML += `
       <article class="eachProduct">
         <h2>${eachProduct.namn}</h2>
-        <img src="${eachProduct.img.url}" alt="${eachProduct.img.alt}">
+        <img src="${eachProduct.img.url}" alt="${eachProduct.img.alt}"> 
         <p>${eachProduct.img.alt}</p>
         <div class="product-information">
           <h3>${getRatingHtml(eachProduct.raiting)}</h3>
