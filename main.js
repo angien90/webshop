@@ -704,12 +704,12 @@ let isId = true;
  * Skapa en variabel för input fältet med id fname
  * Skapa en event listener som kollar av värdet i input fältet och kör funktionen
  */
-function validateFirstName(Name) {
-  const FirstNameRegEx = /^[a-zA-Z][a-zA-Z '-]+$/;
+function validateFirstName(FirstName) {
+  const FirstNameRegEx = /^[a-öA-Ö][a-öA-Ö '-]+$/;
   const FirstNameError = document.getElementById('firstNameError');
 
-  if (!FirstNameRegEx.test(Name)) {
-    FirstNameError.textContent = "Förnamnet får enbart innehålla bokstäver, mellanslag, apostrof och bindestreck.";
+  if (!FirstNameRegEx.test(FirstName)) {
+    FirstNameError.textContent = " Förnamnet får enbart innehålla bokstäver, mellanslag, apostrof och bindestreck.";
   } else {
     FirstNameError.textContent = '';
   }
@@ -721,6 +721,58 @@ firstNameInput.addEventListener('input', () => {
 });
 
 
+// -----------------------------------------------------------------//
+// --------------Validering av formulär - Efternamn-----------------//
+
+/**
+ * Skapa en variabel för RegEx valideringen
+ * Skapa en variabel för fältet för felmeddelande med id lastNameError
+ * Skapa en if else sats som kollar om input fältet uppfyller RegEx valideringen
+ * Skapa en variabel för input fältet med id lname
+ * Skapa en event listener som kollar av värdet i input fältet och kör funktionen
+ */
+function validateLastName(LastName) {
+  const LastNameRegEx = /^[a-öA-Ö][a-öA-Ö '-]+$/;
+  const LastNameError = document.getElementById('lastNameError');
+
+  if (!LastNameRegEx.test(LastName)) {
+    LastNameError.textContent = " Efternamn får enbart innehålla bokstäver, mellanslag, apostrof och bindestreck.";
+  } else {
+    LastNameError.textContent = '';
+  }
+}
+
+const lastNameInput = document.getElementById('lname');
+lastNameInput.addEventListener('input', () => {
+  validateLastName(lastNameInput.value);
+});
+
+// -----------------------------------------------------------------//
+// --------------Validering av formulär - Adressfält----------------//
+// ----------------------UNDER ARBETE!!!!---------------------------//
+
+/**
+ * Skapa en variabel för RegEx valideringen
+ * Skapa en variabel för fältet för felmeddelande med id addressError
+ * Skapa en if else sats som kollar om input fältet uppfyller RegEx valideringen
+ * Skapa en variabel för input fältet med id address
+ * Skapa en event listener som kollar av värdet i input fältet och kör funktionen
+ */
+function validateAddress(Address) {
+  const AddressRegEx = /^[a-öA-Ö][a-öA-Ö '-]+$/;
+  const AddressError = document.getElementById('addressError');
+
+  if (!AddressRegEx.test(Address)) {
+    AddressError.textContent = " Du har inte angett en giltig adress";
+  } else {
+    AddressError.textContent = '';
+  }
+}
+
+const addressInput = document.getElementById('address');
+addressInput.addEventListener('input', () => {
+  validateAddress(addressInput.value);
+});
 
 // -----------------------------------------------------------------//
 // --------------Visa & dölj betalningsuppgifter--------------------//
