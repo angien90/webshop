@@ -6,9 +6,9 @@
  X Skapa sorteringsfunktioner
  X Skapa funktion för varukorg
  X Skapa funktion som beräknar totalen (och uppdateras vid förändring)
+ X Funktion för betalningssätt. Toggla funktioner i beställningsformuläret som ska döljas och synas. 
+ X Visa/dölj beställningsknapp
  - Fält i formuläret ska valideras innan det går att skicka beställningen. 
- - Funktion för betalningssätt. Toggla funktioner i beställningsformuläret som ska döljas och synas. 
- - Visa/dölj beställningsknapp
  - Skapa en timer som räknar ner och deletar innehåll
  - Lägg in regler för rabatter
  X Bekrätfelse ruta vid beställning
@@ -19,6 +19,10 @@
 
 // -----------------------------------------------------------------//
 // -----------------------Produktlistan------------------------------//
+
+/**
+ * Skapa upp en array där varje artikel är ett objekt
+ */
 const productList = [
   {
     id: 0,
@@ -218,6 +222,13 @@ const productList = [
 
 // -----------------------------------------------------------------//
 // -----------Skapande av produktlista i HTML-----------------------//
+
+/**
+ * Hämta en referens till DOM-elementet med id "product-list".
+ * Rensa befintlig lista
+ * Skriv ut varje artikel på nytt
+ * Skapa en variabel för plus och minusknapp och koppla dessa ihop med html elmenten. 
+ */
 const productsListDiv = document.querySelector('#product-list');
 function printProductListDiv() {
   productsListDiv.inneHTML = '';
@@ -243,12 +254,13 @@ function printProductListDiv() {
     `; 
   });
 
-  // Variabler för plus och minus knappar //
+  // Variabler för minus knappar //
   const removeButton = document.querySelectorAll('button.remove');
   removeButton.forEach(button => {
     button.addEventListener('click', removeProductCount);
   });
 
+  // Variabler för plus knappar //
   const addButton = document.querySelectorAll('button.add');
   addButton.forEach(button => {
     button.addEventListener('click', addProductCount);
@@ -259,6 +271,17 @@ printProductListDiv();
 
 // -----------------------------------------------------------------//
 // ----------------Funktion för minus knappar-----------------------//
+
+/**
+ * Skapa en variabel som tar reda på Id:t
+ * Skapa en variabel som hittar index för Id:t
+ * Om index hittades (inte är lika med -1) ska följande ske;
+     Kontrollera om mängden är större än 0 innan man kan minska ännu mer
+     Minska antalet (amount) av den produkten i vår lista med en.
+     Leta upp den närmsta föräldern som utlöste händelsen
+     Leta upp input fältet och visa antalet där
+ * Om index inte hittades ska du bara skriva ut i konsollen att den inte hittades.
+ */
 function removeProductCount(e) {
   const removeProductId = Number(e.target.id.replace('remove-', ''));
   console.log('Du klickade på ID:', removeProductId);
@@ -271,7 +294,6 @@ function removeProductCount(e) {
     return;
   }
 
-  // Kontrollera om mängden är större än 0 innan man kan minska ännu mer //
   if (productList[foundProductIndexRemove].amount > 0) {
     productList[foundProductIndexRemove].amount -= 1;
 
@@ -288,6 +310,16 @@ function removeProductCount(e) {
 
 // -----------------------------------------------------------------//
 // ----------------Funktion för plus knappar-----------------------//
+
+/**
+ * Skapa en variabel som tar reda på Id:t
+ * Skapa en variabel som hittar index för Id:t
+ * Om index hittades (inte är lika med -1) ska följande ske; 
+     Öka antalet (amount) av den produkten i vår lista med en.
+     Leta upp den närmsta föräldern som utlöste händelsen
+     Leta upp input fältet och visa antalet där
+ * Om index inte hittades ska du bara skriva ut i konsollen att den inte hittades.
+ */
 function addProductCount(e) {
   const addProductId = Number(e.target.id.replace('add-', ''));
   
@@ -310,6 +342,12 @@ function addProductCount(e) {
 // -----------------------------------------------------------------//
 // ----------------Funktion för att fylla varukorg------------------//
 
+/**
+ * Skapa en variabel för att kontrollera att amount är större än 0 
+ * Skapa en variabel för html elementet med id cart
+ * Töm innehållet i html elementet
+ * Skapa ett html elmement i varukorgen för varje artikel som har ett amount som är större än 0.
+ */
 function updateCart() {
   const cartItems = productList.filter(eachProduct => eachProduct.amount > 0);
   const cartElement = document.getElementById('cart');
@@ -332,6 +370,14 @@ function updateCart() {
 
 // --------------------------------------------------------------------------//
 // ----Funktion för att beräkna totalen i varukorgen & högst upp på sidan----//
+
+/**
+ * Skapa en variabel och räkna ut totalkostanden
+ * Skapa en variabel för att visa totalkostanden på html element med id totalCost (totalen i varukrogen)
+ * Skriv ut värdet. 
+ * Skapa en variabel för att visa totalkostanden på html elementet med id totalSum (totalen högst upp på sidan)
+ * Skriv ut värdet.
+ */
 function updateTotal() {
   const totalCost = productList.reduce((total, eachProduct) => total + eachProduct.amount * eachProduct.pris, 0);
   const totalElement = document.getElementById('totalCost');
@@ -343,6 +389,15 @@ function updateTotal() {
 
 // -----------------------------------------------------------------//
 // -----------Funktion för att skapa emojis för rating--------------//
+
+/**
+ * Skapa en variabel för raiting och kontrollera om det är ett heltal eller har decimaler
+ * Skapa en tom html sträng
+ * Uppreda följande;
+    För heltal: Lägg till en stjärna för varje heltal med start från 0
+    För decimaltal: Lägg till en tom stjärna för att avrunda uppåt. 
+ * Retunera en färdig HTML-sträng
+ */
 function getRatingHtml(rating) {
   const isHalf = String(rating).indexOf('.');
 
@@ -351,94 +406,176 @@ function getRatingHtml(rating) {
     html += `<span>⭐</span>`;
   }
   if (isHalf !== -1) {
-    html += `<span></span>`; // Avrundar uppåt så att en 3.5 får 4 stjärnor
+    html += `<span></span>`;
   }
   return html;
 }
 
 // -----------------------------------------------------------------//
 // ----------------Soretingsfunktionen för namn-------------------- //
+
+/**
+ * Skapa en kopia på befintlig produktlista
+ * Skapa en sortering i stigande ordning på namn
+ * Skapa en variabel som hämtar produktlistan
+ * Rensa befintlig lista
+ * Skriv ut varje artikel på nytt
+ * Skapa en variabel för sorteringsknappen med id sortName
+ * Skapa en event lyssnare som kollar om man klickar på sorteringsknappen och byt riktning varannan gång
+ */
 function sortByName(Name) {
-  productList.sort((a, b) => {
+  const copiedProductList = [...productList];
+
+  copiedProductList.sort((a, b) => {
     return Name ? a.namn.localeCompare(b.namn) : b.namn.localeCompare(a.namn);
-  }); // Sorteringsfunktion (stigande)
-
-  const productListElement = document.getElementById('product-list');
-  productListElement.innerHTML = ''; // Rensa listan innan vi fyller på
-
-  productList.forEach(eachProduct => {
-    const productElement = document.createElement('div');
-    // ... skapa HTML för varje produkt
-    productListElement.appendChild(productElement);
   });
 
-  printProductListDiv();
+  const productListElement = document.getElementById('product-list');
+  productListElement.innerHTML = '';
+
+  copiedProductList.forEach(eachProduct => {
+    const productElement = document.createElement('div');
+    productsListDiv.innerHTML += `
+      <article class="eachProduct">
+        <h2>${eachProduct.namn}</h2>
+        <img src="${eachProduct.img.url}" alt="${eachProduct.img.alt}">
+        <p>${eachProduct.img.alt}</p>
+        <div class="product-information">
+          <h3>${getRatingHtml(eachProduct.raiting)}</h3>
+          <h3>Kategori: ${eachProduct.kategori}</h3>
+          <h3>${eachProduct.pris} kr/st</h3>
+        </div>
+        
+        <div class="product-counter">
+          <button class="remove material-symbols-outlined" id="remove-${eachProduct.id}">remove_shopping_cart</button>
+          <input type="number" min="0" value="${eachProduct.amount}" id="input-${eachProduct.id}">
+          <button class="add material-symbols-outlined" id="add-${eachProduct.id}">add_shopping_cart</button>
+        </div>
+      </article>
+    `; 
+    productListElement.appendChild(productElement);
+  });
 }
 
   const sortNameButton = document.getElementById('sortName');
   sortNameButton.addEventListener('click', () => {
-  sortByName(true); // Koppla funktion till knapp
-});
+  sortByName(true); 
+}); 
 
   let isName = true;
   sortNameButton.addEventListener('click', () => {
   sortByName(isName);
-  isName = !isName; // Växla mellan stigande och fallande
-});
+  isName = !isName; 
+}); 
 
 // -----------------------------------------------------------------//
-// ----------------Soretingsfunktionen för kategori---------------- //
+// ----------------Sorteringsfunktionen för kategori---------------- //
+
+/**
+ * Skapa en kopia på befintlig produktlista
+ * Skapa en sortering i stigande ordning på kategori
+ * Skapa en variabel som hämtar produktlistan
+ * Rensa befintlig lista
+ * Skriv ut varje artikel på nytt
+ * Skapa en variabel för sorteringsknappen med id sortCategory
+ * Skapa en event lyssnare som kollar om man klickar på sorteringsknappen och byt riktning varannan gång
+ */
 function sortByCategory(Category) {
-  productList.sort((a, b) => {
+  const copiedProductList = [...productList];
+
+  copiedProductList.sort((a, b) => {
     return Category ? a.kategori.localeCompare(b.kategori) : b.kategori.localeCompare(a.kategori);
-  }); // Sorteringsfunktion (stigande)
-
-  const productListElement = document.getElementById('product-list');
-  productListElement.innerHTML = ''; // Rensa listan innan vi fyller på
-
-  productList.forEach(product => {
-    const productElement = document.createElement('div');
-    // ... skapa HTML för varje produkt
-    productListElement.appendChild(productElement);
   });
 
-  printProductListDiv();
+  const productListElement = document.getElementById('product-list');
+  productListElement.innerHTML = '';
+
+  copiedProductList.forEach(eachProduct => {
+    const productElement = document.createElement('div');
+    productsListDiv.innerHTML += `
+      <article class="eachProduct">
+        <h2>${eachProduct.namn}</h2>
+        <img src="${eachProduct.img.url}" alt="${eachProduct.img.alt}">
+        <p>${eachProduct.img.alt}</p>
+        <div class="product-information">
+          <h3>${getRatingHtml(eachProduct.raiting)}</h3>
+          <h3>Kategori: ${eachProduct.kategori}</h3>
+          <h3>${eachProduct.pris} kr/st</h3>
+        </div>
+        
+        <div class="product-counter">
+          <button class="remove material-symbols-outlined" id="remove-${eachProduct.id}">remove_shopping_cart</button>
+          <input type="number" min="0" value="${eachProduct.amount}" id="input-${eachProduct.id}">
+          <button class="add material-symbols-outlined" id="add-${eachProduct.id}">add_shopping_cart</button>
+        </div>
+      </article>
+    `; 
+    productListElement.appendChild(productElement);
+  });
 }
 
   const sortCategoryButton = document.getElementById('sortCategory');
   sortCategoryButton.addEventListener('click', () => {
-  sortByCategory(true); // Koppla funktion till knapp
+  sortByCategory(true); 
 });
 
   let isCategory = true;
   sortCategoryButton.addEventListener('click', () => {
   sortByCategory(isCategory);
-  isCategory = !isCategory; // Växla mellan stigande och fallande
+  isCategory = !isCategory; 
 });
 
 
 // -----------------------------------------------------------------//
 // ----------------Soretingsfunktionen för pris---------------------//
+
+/**
+ * Skapa en kopia på befintlig produktlista
+ * Skapa en sortering i stigande ordning på pris
+ * Skapa en variabel som hämtar produktlistan
+ * Rensa befintlig lista
+ * Skriv ut varje artikel på nytt
+ * Skapa en variabel för sorteringsknappen med id sortPrice
+ * Skapa en event lyssnare som kollar om man klickar på sorteringsknappen och byt riktning varannan gång
+ */
 function sortByPrice(Price) {
-  productList.sort((a, b) => {
+  const copiedProductList = [...productList];
+
+  copiedProductList.sort((a, b) => {
     return Price ? a.pris - b.pris : b.pris - a.pris;
-  }); // Sorteringsfunktion (stigande)
+  }); 
 
   const productListElement = document.getElementById('product-list');
-  productListElement.innerHTML = ''; // Rensa listan innan vi fyller på
+  productListElement.innerHTML = '';
 
-  productList.forEach(product => {
+  copiedProductList.forEach(eachProduct => {
     const productElement = document.createElement('div');
-    // ... skapa HTML för varje produkt
+    productsListDiv.innerHTML += `
+      <article class="eachProduct">
+        <h2>${eachProduct.namn}</h2>
+        <img src="${eachProduct.img.url}" alt="${eachProduct.img.alt}">
+        <p>${eachProduct.img.alt}</p>
+        <div class="product-information">
+          <h3>${getRatingHtml(eachProduct.raiting)}</h3>
+          <h3>Kategori: ${eachProduct.kategori}</h3>
+          <h3>${eachProduct.pris} kr/st</h3>
+        </div>
+        
+        <div class="product-counter">
+          <button class="remove material-symbols-outlined" id="remove-${eachProduct.id}">remove_shopping_cart</button>
+          <input type="number" min="0" value="${eachProduct.amount}" id="input-${eachProduct.id}">
+          <button class="add material-symbols-outlined" id="add-${eachProduct.id}">add_shopping_cart</button>
+        </div>
+      </article>
+    `; 
     productListElement.appendChild(productElement);
   });
 
-  printProductListDiv();
 }
 
 const sortPriceButton = document.getElementById('sortPrice');
 sortPriceButton.addEventListener('click', () => {
-  sortByPrice(!isPrice); // Växla mellan stigande och fallande
+  sortByPrice(!isPrice);
   isPrice = !isPrice;
 });
 
@@ -447,26 +584,53 @@ let isPrice = true;
 
 // -----------------------------------------------------------------//
 // ----------------Sorteingsfunktionen för rating-------------------//
+
+/**
+ * Skapa en kopia på befintlig produktlista
+ * Skapa en sortering i fallande ordning på betyg
+ * Skapa en variabel som hämtar produktlistan
+ * Rensa befintlig lista
+ * Skriv ut varje artikel på nytt
+ * Skapa en variabel för sorteringsknappen med id sortRating
+ * Skapa en event lyssnare som kollar om man klickar på sorteringsknappen och byt riktning varannan gång
+ */
 function sortByRating(Rating) {
-  productList.sort((a, b) => {
+  const copiedProductList = [...productList];
+
+  copiedProductList.sort((a, b) => {
     return Rating ? a.raiting - b.raiting : b.raiting - a.raiting;
-  }); // Sorteringsfunktion (stigande)
-
-  const productListElement = document.getElementById('product-list');
-  productListElement.innerHTML = ''; // Rensa listan innan vi fyller på
-
-  productList.forEach(eachProduct => {
-    const productElement = document.createElement('div');
-    // ... skapa HTML för varje produkt
-    productListElement.appendChild(productElement);
   });
 
-  printProductListDiv();
+  const productListElement = document.getElementById('product-list');
+  productListElement.innerHTML = '';
+
+  copiedProductList.forEach(eachProduct => {
+    const productElement = document.createElement('div');
+    productsListDiv.innerHTML += `
+      <article class="eachProduct">
+        <h2>${eachProduct.namn}</h2>
+        <img src="${eachProduct.img.url}" alt="${eachProduct.img.alt}">
+        <p>${eachProduct.img.alt}</p>
+        <div class="product-information">
+          <h3>${getRatingHtml(eachProduct.raiting)}</h3>
+          <h3>Kategori: ${eachProduct.kategori}</h3>
+          <h3>${eachProduct.pris} kr/st</h3>
+        </div>
+        
+        <div class="product-counter">
+          <button class="remove material-symbols-outlined" id="remove-${eachProduct.id}">remove_shopping_cart</button>
+          <input type="number" min="0" value="${eachProduct.amount}" id="input-${eachProduct.id}">
+          <button class="add material-symbols-outlined" id="add-${eachProduct.id}">add_shopping_cart</button>
+        </div>
+      </article>
+    `; 
+    productListElement.appendChild(productElement);
+  });
 }
 
 const sortRatingButton = document.getElementById('sortRating');
 sortRatingButton.addEventListener('click', () => {
-  sortByRating(!isRating); // Växla mellan stigande och fallande
+  sortByRating(!isRating); 
   isRating = !isRating;
 });
 
@@ -474,26 +638,54 @@ let isRating = true;
 
 // -----------------------------------------------------------------//
 // -----------------------Sortera efter ID--------------------------//
+
+/**
+ * Skapa en kopia på befintlig produktlista
+ * Skapa en sortering på id
+ * Skapa en variabel som hämtar produktlistan
+ * Rensa befintlig lista
+ * Skriv ut varje artikel på nytt
+ * Skapa en variabel för sorteringsknappen med id sortStop
+ * Skapa en event lyssnare som kollar om man klickar på sorteringsknappen
+ */
 function sortById(Id) {
-  productList.sort((a, b) => {
+  const copiedProductList = [...productList];
+  
+  copiedProductList.sort((a, b) => {
     return Id ? a.id - b.id : a.id - b.id;
-  }); // Sorteringsfunktion (stigande)
+  });
 
   const productListElement = document.getElementById('product-list');
-  productListElement.innerHTML = ''; // Rensa listan innan vi fyller på
+  productListElement.innerHTML = '';
 
-  productList.forEach(eachProduct => {
+  copiedProductList.forEach(eachProduct => {
     const productElement = document.createElement('div');
-    // ... skapa HTML för varje produkt
+    productsListDiv.innerHTML += `
+      <article class="eachProduct">
+        <h2>${eachProduct.namn}</h2>
+        <img src="${eachProduct.img.url}" alt="${eachProduct.img.alt}">
+        <p>${eachProduct.img.alt}</p>
+        <div class="product-information">
+          <h3>${getRatingHtml(eachProduct.raiting)}</h3>
+          <h3>Kategori: ${eachProduct.kategori}</h3>
+          <h3>${eachProduct.pris} kr/st</h3>
+        </div>
+        
+        <div class="product-counter">
+          <button class="remove material-symbols-outlined" id="remove-${eachProduct.id}">remove_shopping_cart</button>
+          <input type="number" min="0" value="${eachProduct.amount}" id="input-${eachProduct.id}">
+          <button class="add material-symbols-outlined" id="add-${eachProduct.id}">add_shopping_cart</button>
+        </div>
+      </article>
+    `; 
     productListElement.appendChild(productElement);
   });
 
-  printProductListDiv();
 }
 
 const sortIdButton = document.getElementById('sortStop');
 sortIdButton.addEventListener('click', () => {
-  sortById(!isId); // Växla mellan stigande och fallande
+  sortById(!isId);
   isId = !isId;
 });
 
@@ -534,8 +726,16 @@ function validateCardDetails(cardName, cardNumber, expMonth, expYear, cvv) {
 
 // -----------------------------------------------------------------//
 // --------------Visa & dölj betalningsuppgifter--------------------//
+
+/**
+ * Skapa variabel för att hämta HTML elementet med rullistan för betalningsmetod (id payment-method)
+ * Skapa en variabel för att hämta sektionen med alla fält för betalning med kort (is payment-details) 
+ * Skapa en event lyssnare som kollar efter ändringar i rullistan
+    Om valet är invoice/faktura visa inget
+    Om valt är något annat så visa betalningsuppgifter
+ */
 const paymentMethodSelect = document.getElementById('payment-method');
-const paymentDetailsSection = document.querySelector('.betalningsuppgifter');
+const paymentDetailsSection = document.getElementById('payment-details');
 
 paymentMethodSelect.addEventListener('change', () => {
   if (paymentMethodSelect.value !== 'invoice') {
@@ -545,8 +745,19 @@ paymentMethodSelect.addEventListener('change', () => {
   }
 });
 
+
 // -----------------------------------------------------------------//
 // ------------------Visa & dölj beställningsknapp------------------//
+
+/**
+ * Skapa en variabel för knappen med id "submitButton"
+ * Skapa en variabel för att kontrollera obligatoriska fält
+ * Skapa en variabel för att kontrollera ej obligatoriska fält
+ * Skapa en funktion för att konrollera att obligatoriska fält är ifyllda
+    Om det är sant: Visa knappen
+    Om det är falskt: Dölj knappen
+ * Skapa en event lyssnare som kollar efter ändringar på obligatoriska fält
+ */
 const submitButtonHide = document.getElementById("submitButton");
 const requiredFields = document.querySelectorAll("input[required]:not([type='checkbox']), select[required]");
 const optionalFields = document.querySelectorAll("input:not([required]), select:not([required])");
@@ -580,6 +791,13 @@ for (const field of [...requiredFields, ...optionalFields]) {
 
 // -----------------------------------------------------------------//
 // ------------------Knapp för att tömma formulär-------------------//
+
+/**
+ * Skapa en variabel för formuläret med id "myForm" 
+ * Återställ formuläret
+ * Skapa en variabel för knappen med id "clearButton"
+ * Skapa ett klick event för knappen
+ */
 function clearForm() {
    const form = document.getElementById("myForm");
 
@@ -592,10 +810,21 @@ removeButton.addEventListener("click", clearForm);
 
 // -----------------------------------------------------------------//
 // ------------------Beställningsbekräftelse------------------------//
+
+/**
+ * Skapa en variabel för knappen med id "submitButton"
+ * Skapa ett klick event på knappen
+ * Förhindra standardbeteendet för knappen (t.ex. att skicka formuläret)
+ * Visa en bekräftelsedialogruta med frågan "Är du säker på att du vill skicka beställningen?"
+    Om användaren klickar på "OK" i dialogrutan:
+        Visa ett meddelande som säger "Tack för din beställning! Vår leveranstid är för närvarande 8 dagar."
+    Annars:
+        Visa ett meddelande som säger "Beställningen avbröts."
+ */
 const submitButton = document.getElementById('submitButton');
 
 submitButton.addEventListener('click', (event) => {
-  event.preventDefault(); // Förhindra standardskickning
+  event.preventDefault();
 
   const confirmed = confirm('Är du säker på att du vill skicka beställningen?');
 

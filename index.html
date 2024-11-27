@@ -43,11 +43,11 @@
     <!-- Sorterings funktion -->
      <section class="sort-function">
       <h2>Sortering:</h2>
-      <button id="sortName"><span class="material-symbols-outlined">Sort_By_Alpha</span></button>
-      <button id="sortCategory"><span class="material-symbols-outlined">Category</span></button>
-      <button id="sortPrice"><span class="material-symbols-outlined">Price_Change</span></button>
-      <button id="sortRating"><span class="material-symbols-outlined">Star</span></button>
-      <button id="sortStop"><span class="material-symbols-outlined">Disabled_by_default</span></button>
+      <button id="sortName" title="Sortera på namn"><span class="material-symbols-outlined">Sort_By_Alpha</span></button>
+      <button id="sortCategory" title="Sortera på kategori"><span class="material-symbols-outlined">Category</span></button>
+      <button id="sortPrice" title="Sortera på pris"><span class="material-symbols-outlined">Price_Change</span></button>
+      <button id="sortRating" title="Sortera på betyg"><span class="material-symbols-outlined">Star</span></button>
+      <button id="sortStop" title="Återgå till standardlistan"><span class="material-symbols-outlined">Disabled_by_default</span></button>
      </section>
 
     <!-- Produktlista -->
@@ -119,7 +119,7 @@
       </section>
 
     <!-- Betalningsuppgifter -->
-      <section class="betalningsuppgifter" style="display: none;">
+      <section class="betalningsuppgifter" id="payment-details" style="display: none;">
         <h3>Betalningsuppgifter</h3>
           <p>Accepterade kort</p>
           <div class="kort-ikoner">
