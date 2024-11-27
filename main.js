@@ -695,35 +695,31 @@ let isId = true;
 
 
 // -----------------------------------------------------------------//
-// -----------------Validering av formulär--------------------------//
-// -------------------------EJ KLAR!!!------------------------------//
+// --------------Validering av formulär - Förnamn-------------------//
 
-function validateRequired(...fields) {
-  for (const field of fields) {
-    if (field.value.trim() === "") {
-      alert(`Vänligen fyll i ditt namn i ${field.name}.`);
-      return false;
-    }
-  }
-  return true;
-}
+/**
+ * Skapa en variabel för RegEx valideringen
+ * Skapa en variabel för fältet för felmeddelande med id firstNameError
+ * Skapa en if else sats som kollar om input fältet uppfyller RegEx valideringen
+ * Skapa en variabel för input fältet med id fname
+ * Skapa en event listener som kollar av värdet i input fältet och kör funktionen
+ */
+function validateFirstName(Name) {
+  const FirstNameRegEx = /^[a-zA-Z][a-zA-Z '-]+$/;
+  const FirstNameError = document.getElementById('firstNameError');
 
-function validateEmail(email) {
-  const emailRegEx = new RegExp(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/);
-  const result = emailRegEx.exec(email);
-  const emailError = document.getElementById('emailError');
-
-  if (result === null) {
-    emailError.textContent = 'E-post är inte giltig';
+  if (!FirstNameRegEx.test(Name)) {
+    FirstNameError.textContent = "Förnamnet får enbart innehålla bokstäver, mellanslag, apostrof och bindestreck.";
   } else {
-    emailError.textContent = '';
+    FirstNameError.textContent = '';
   }
 }
-  
 
-function validateCardDetails(cardName, cardNumber, expMonth, expYear, cvv) {
-  return true;
-}
+const firstNameInput = document.getElementById('fname');
+firstNameInput.addEventListener('input', () => {
+  validateFirstName(firstNameInput.value);
+});
+
 
 
 // -----------------------------------------------------------------//
