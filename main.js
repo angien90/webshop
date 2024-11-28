@@ -58,7 +58,7 @@ const productList = [
     id: 2,
     namn: 'Mörkets mysterium',
     img: {
-      url: 'public/img/Munk_extra_choklad.png',
+      url: '/Munk_extra_choklad.png',
       width: 400,
       height: 400,
       alt: 'Munk med chokladglasyr och chokladbitar' 
@@ -73,7 +73,7 @@ const productList = [
     id: 3,
     namn: 'Smurfmunken',
     img: {
-      url: 'public/img/Munk_gron_glasyr_med_musli.png',
+      url: 'Munk_gron_glasyr_med_musli.png',
       width: 400,
       height: 400,
       alt: 'Munk med päronglasyr och musli' 
