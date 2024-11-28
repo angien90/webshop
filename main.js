@@ -784,7 +784,7 @@ addressInput.addEventListener('input', () => {
  */
 function validatePostalCode(PostalCode) {
   const potalCodeRegEx = /^(s-|S-){0,1}[0-9]{3}\s?[0-9]{2}$/;
-  const postalCodeError = document.getElementById('postalCodeError');
+  const postalCodeError = document.getElementById('zipCodeError');
 
   if (!potalCodeRegEx.test(PostalCode)) {
     postalCodeError.textContent = " Du har inte angett en giltig adress";
@@ -793,7 +793,7 @@ function validatePostalCode(PostalCode) {
   }
 }
 
-const postalCodeInput = document.getElementById('postalcode');
+const postalCodeInput = document.getElementById('zipCode');
 postalCodeInput.addEventListener('input', () => {
   validatePostalCode(postalCodeInput.value);
 });
@@ -809,7 +809,7 @@ postalCodeInput.addEventListener('input', () => {
     Om valt är något annat så visa betalningsuppgifter
  */
 const paymentMethodSelect = document.getElementById('payment-method');
-const paymentDetailsSection = document.getElementById('payment-details');
+const paymentDetailsSection = document.getElementById('paymentDetails');
 
 paymentMethodSelect.addEventListener('change', () => {
   if (paymentMethodSelect.value !== 'invoice') {

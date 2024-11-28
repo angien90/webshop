@@ -241,7 +241,7 @@ form {
 }
 
 /* Kunduppgifter */
-.leveransuppgifter {
+.delivery-information {
     gap: 0px;
     padding-left: 20px;
     padding-right: 20px;
@@ -253,7 +253,7 @@ form {
     padding-right: 20px;
 }
 
-.leveransuppgifter h2 {
+.delivery-information h2 {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -261,7 +261,7 @@ form {
     margin-bottom: 10px;
 }
 
-.leveransuppgifter p {
+.delivery-information p {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -270,7 +270,7 @@ form {
     margin-top: 0px;
 }
 
-.leveransuppgifter input {
+.delivery-information input {
     width: 100%;
     border-radius: 10px;
     height: 25px;
@@ -290,7 +290,7 @@ form {
 }
 
 /* Betalningsuppgifter */
-.betalningsuppgifter {
+.payment-details {
     background-color: white;
     width: 80%;
     margin-top: 30px;
@@ -303,12 +303,12 @@ form {
     
 }
 
-.betalningsuppgifter p {
+.payment-details p {
     margin-top: 0px;
     margin-bottom: 0px;
 }
 
-.kort-information {
+.card-information {
     display: flex;
     flex-direction: column;
     align-items: start;
@@ -316,11 +316,11 @@ form {
     margin-bottom: 20px;
 }
 
-.kort-information input {
+.card-information input {
     margin-bottom: 10px;
 }
 
-.skicka-betalning {
+.send-payment {
     display: flex;
     flex-direction: column;
     align-items: center;
