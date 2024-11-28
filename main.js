@@ -223,8 +223,6 @@ const productList = [
 // -----------------------------------------------------------------//
 // -----------Skapande av produktlista i HTML-----------------------//
 
-/* 🦄🦄🦄🦄🦄🦄 JENNI: Kolla på {{Varför mina bilder visas i min localhost men på github pages}}, tack!*/
-
 /**
  * Hämta en referens till DOM-elementet med id "product-list".
  * Rensa befintlig lista
@@ -705,13 +703,13 @@ let isId = true;
  * Skapa en event listener som kollar av värdet i input fältet och kör funktionen
  */
 function validateFirstName(FirstName) {
-  const FirstNameRegEx = /^[a-öA-Ö][a-öA-Ö '-]+$/;
-  const FirstNameError = document.getElementById('firstNameError');
+  const firstNameRegEx = /^[a-öA-Ö][a-öA-Ö '-]+$/;
+  const firstNameError = document.getElementById('firstNameError');
 
-  if (!FirstNameRegEx.test(FirstName)) {
-    FirstNameError.textContent = " Förnamnet får enbart innehålla bokstäver, mellanslag, apostrof och bindestreck.";
+  if (!firstNameRegEx.test(FirstName)) {
+    firstNameError.textContent = " Förnamnet får enbart innehålla bokstäver, mellanslag, apostrof och bindestreck.";
   } else {
-    FirstNameError.textContent = '';
+    firstNameError.textContent = '';
   }
 }
 
@@ -732,13 +730,13 @@ firstNameInput.addEventListener('input', () => {
  * Skapa en event listener som kollar av värdet i input fältet och kör funktionen
  */
 function validateLastName(LastName) {
-  const LastNameRegEx = /^[a-öA-Ö][a-öA-Ö '-]+$/;
-  const LastNameError = document.getElementById('lastNameError');
+  const lastNameRegEx = /^[a-öA-Ö][a-öA-Ö '-]+$/;
+  const lastNameError = document.getElementById('lastNameError');
 
-  if (!LastNameRegEx.test(LastName)) {
-    LastNameError.textContent = " Efternamn får enbart innehålla bokstäver, mellanslag, apostrof och bindestreck.";
+  if (!lastNameRegEx.test(LastName)) {
+    lastNameError.textContent = " Efternamn får enbart innehålla bokstäver, mellanslag, apostrof och bindestreck.";
   } else {
-    LastNameError.textContent = '';
+    lastNameError.textContent = '';
   }
 }
 
@@ -758,13 +756,13 @@ lastNameInput.addEventListener('input', () => {
  * Skapa en event listener som kollar av värdet i input fältet och kör funktionen
  */
 function validateAddress(Address) {
-  const AddressRegEx = /^[a-öA-Ö0-9][a-öA-Ö0-9 '-]+$/;
-  const AddressError = document.getElementById('addressError');
+  const addressRegEx = /^[a-öA-Ö0-9][a-öA-Ö0-9 '-]+$/;
+  const addressError = document.getElementById('addressError');
 
-  if (!AddressRegEx.test(Address)) {
-    AddressError.textContent = " Du har inte angett en giltig adress";
+  if (!addressRegEx.test(Address)) {
+    addressError.textContent = " Du har inte angett en giltig adress";
   } else {
-    AddressError.textContent = '';
+    addressError.textContent = '';
   }
 }
 
@@ -785,13 +783,13 @@ addressInput.addEventListener('input', () => {
  * Skapa en event listener som kollar av värdet i input fältet och kör funktionen
  */
 function validatePostalCode(PostalCode) {
-  const PotalCodeRegEx = /^(s-|S-){0,1}[0-9]{3}\s?[0-9]{2}$/;
-  const PostalCodeError = document.getElementById('postalCodeError');
+  const potalCodeRegEx = /^(s-|S-){0,1}[0-9]{3}\s?[0-9]{2}$/;
+  const postalCodeError = document.getElementById('postalCodeError');
 
-  if (!PotalCodeRegEx.test(PostalCode)) {
-    PostalCodeError.textContent = " Du har inte angett en giltig adress";
+  if (!potalCodeRegEx.test(PostalCode)) {
+    postalCodeError.textContent = " Du har inte angett en giltig adress";
   } else {
-    PostalCodeError.textContent = '';
+    postalCodeError.textContent = '';
   }
 }
 
