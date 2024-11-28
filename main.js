@@ -28,7 +28,7 @@ const productList = [
     id: 0,
     namn: 'Kolakungen',
     img: {
-      url: 'public/img/Munk_med_kola_glasyr.png',
+      url: '/img/Munk_med_kola_glasyr.png',
       width: 400,
       height: 400,
       alt: 'Munk med kolaglasyr och kola bitar' 
@@ -43,7 +43,7 @@ const productList = [
     id: 1,
     namn: 'Chokladhjulet',
     img: {
-      url: 'public/img/Munk_choklad_glasyr.png',
+      url: 'img/Munk_choklad_glasyr.png',
       width: 400,
       height: 400,
       alt: 'Munk med chokladglasyr' 
@@ -749,7 +749,6 @@ lastNameInput.addEventListener('input', () => {
 
 // -----------------------------------------------------------------//
 // --------------Validering av formulär - Adressfält----------------//
-// ----------------------UNDER ARBETE!!!!---------------------------//
 
 /**
  * Skapa en variabel för RegEx valideringen
@@ -759,7 +758,7 @@ lastNameInput.addEventListener('input', () => {
  * Skapa en event listener som kollar av värdet i input fältet och kör funktionen
  */
 function validateAddress(Address) {
-  const AddressRegEx = /^[a-öA-Ö][a-öA-Ö '-]+$/;
+  const AddressRegEx = /^[a-öA-Ö0-9][a-öA-Ö0-9 '-]+$/;
   const AddressError = document.getElementById('addressError');
 
   if (!AddressRegEx.test(Address)) {
@@ -772,6 +771,33 @@ function validateAddress(Address) {
 const addressInput = document.getElementById('address');
 addressInput.addEventListener('input', () => {
   validateAddress(addressInput.value);
+});
+
+// -----------------------------------------------------------------//
+// --------------Validering av formulär - Postnummer----------------//
+// ----------------------UNDER ARBETE!!!!---------------------------//
+
+/**
+ * Skapa en variabel för RegEx valideringen
+ * Skapa en variabel för fältet för felmeddelande med id postalCodeError
+ * Skapa en if else sats som kollar om input fältet uppfyller RegEx valideringen
+ * Skapa en variabel för input fältet med id postalcode
+ * Skapa en event listener som kollar av värdet i input fältet och kör funktionen
+ */
+function validatePostalCode(PostalCode) {
+  const PotalCodeRegEx = /^(s-|S-){0,1}[0-9]{3}\s?[0-9]{2}$/;
+  const PostalCodeError = document.getElementById('postalCodeError');
+
+  if (!PotalCodeRegEx.test(PostalCode)) {
+    PostalCodeError.textContent = " Du har inte angett en giltig adress";
+  } else {
+    PostalCodeError.textContent = '';
+  }
+}
+
+const postalCodeInput = document.getElementById('postalcode');
+postalCodeInput.addEventListener('input', () => {
+  validatePostalCode(postalCodeInput.value);
 });
 
 // -----------------------------------------------------------------//

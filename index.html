@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="sv">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
@@ -43,11 +43,11 @@
     <!-- Sorterings funktion -->
      <section class="sort-function">
       <h2>Sortering:</h2>
-      <button id="sortName" title="Sortera på namn"><span class="material-symbols-outlined">Sort_By_Alpha</span></button>
-      <button id="sortCategory" title="Sortera på kategori"><span class="material-symbols-outlined">Category</span></button>
-      <button id="sortPrice" title="Sortera på pris"><span class="material-symbols-outlined">Price_Change</span></button>
-      <button id="sortRating" title="Sortera på betyg"><span class="material-symbols-outlined">Star</span></button>
-      <button id="sortStop" title="Återgå till standardlistan"><span class="material-symbols-outlined">Disabled_by_default</span></button>
+      <button id="sortName" title="Sortera på namn"><span class="material-symbols-outlined" aria-hidden="true">Sort_By_Alpha</span></button>
+      <button id="sortCategory" title="Sortera på kategori"><span class="material-symbols-outlined" aria-hidden="true">Category</span></button>
+      <button id="sortPrice" title="Sortera på pris"><span class="material-symbols-outlined" aria-hidden="true">Price_Change</span></button>
+      <button id="sortRating" title="Sortera på betyg"><span class="material-symbols-outlined" aria-hidden="true">Star</span></button>
+      <button id="sortStop" title="Återgå till standardlistan"><span class="material-symbols-outlined" aria-hidden="true">Disabled_by_default</span></button>
      </section>
 
     <!-- Produktlista -->
@@ -84,8 +84,8 @@
         <label for="portkod">Portkod:</label><br>
         <input type="text" id="portkod" name="portkod" placeholder="1234#" value=""><br>
 
-        <label for="postnr">Postnummer: *</label><br>
-        <input type="text" id="postnr" name="postnr" placeholder="123 45" value="" required><br>
+        <label for="postnr">Postnummer: *</label><span id="postalCodeError"></span><br>
+        <input type="text" id="postalcode" name="postnr" placeholder="123 45" value="" required><br>
 
         <label for="postort">Postort: *</label><br>
         <input type="text" id="postort" name="postort" placeholder="Snaskköping" value="" required><br>
