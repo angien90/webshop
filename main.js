@@ -19,7 +19,6 @@
 
 // -----------------------------------------------------------------//
 // -----------------------Produktlistan------------------------------//
-
 /**
  * Skapa upp en array där varje artikel är ett objekt
  */
@@ -222,7 +221,6 @@ const productList = [
 
 // -----------------------------------------------------------------//
 // -----------Skapande av produktlista i HTML-----------------------//
-
 /**
  * Hämta en referens till DOM-elementet med id "product-list".
  * Rensa befintlig lista
@@ -271,7 +269,6 @@ printProductListDiv();
 
 // -----------------------------------------------------------------//
 // ----------------Funktion för minus knappar-----------------------//
-
 /**
  * Skapa en variabel som tar reda på Id:t
  * Skapa en variabel som hittar index för Id:t
@@ -310,7 +307,6 @@ function removeProductCount(e) {
 
 // -----------------------------------------------------------------//
 // ----------------Funktion för plus knappar-----------------------//
-
 /**
  * Skapa en variabel som tar reda på Id:t
  * Skapa en variabel som hittar index för Id:t
@@ -341,7 +337,6 @@ function addProductCount(e) {
 
 // -----------------------------------------------------------------//
 // ----------------Funktion för att fylla varukorg------------------//
-
 /**
  * Skapa en variabel för att kontrollera att amount är större än 0 
  * Skapa en variabel för html elementet med id cart
@@ -370,7 +365,6 @@ function updateCart() {
 
 // --------------------------------------------------------------------------//
 // ----Funktion för att beräkna totalen i varukorgen & högst upp på sidan----//
-
 /**
  * Skapa en variabel och räkna ut totalkostanden
  * Skapa en variabel för att visa totalkostanden på html element med id totalCost (totalen i varukrogen)
@@ -389,7 +383,6 @@ function updateTotal() {
 
 // -----------------------------------------------------------------//
 // -----------Funktion för att skapa emojis för rating--------------//
-
 /**
  * Skapa en variabel för raiting och kontrollera om det är ett heltal eller har decimaler
  * Skapa en tom html sträng
@@ -413,7 +406,6 @@ function getRatingHtml(rating) {
 
 // -----------------------------------------------------------------//
 // ----------------Soretingsfunktionen för namn-------------------- //
-
 /**
  * Skapa en kopia på befintlig produktlista
  * Skapa en sortering i stigande ordning på namn
@@ -470,7 +462,6 @@ function sortByName(Name) {
 
 // -----------------------------------------------------------------//
 // ----------------Sorteringsfunktionen för kategori---------------- //
-
 /**
  * Skapa en kopia på befintlig produktlista
  * Skapa en sortering i stigande ordning på kategori
@@ -528,7 +519,6 @@ function sortByCategory(Category) {
 
 // -----------------------------------------------------------------//
 // ----------------Soretingsfunktionen för pris---------------------//
-
 /**
  * Skapa en kopia på befintlig produktlista
  * Skapa en sortering i stigande ordning på pris
@@ -584,7 +574,6 @@ let isPrice = true;
 
 // -----------------------------------------------------------------//
 // ----------------Sorteingsfunktionen för rating-------------------//
-
 /**
  * Skapa en kopia på befintlig produktlista
  * Skapa en sortering i fallande ordning på betyg
@@ -638,7 +627,6 @@ let isRating = true;
 
 // -----------------------------------------------------------------//
 // -----------------------Sortera efter ID--------------------------//
-
 /**
  * Skapa en kopia på befintlig produktlista
  * Skapa en sortering på id
@@ -694,7 +682,6 @@ let isId = true;
 
 // -----------------------------------------------------------------//
 // --------------Validering av formulär - Förnamn-------------------//
-
 /**
  * Skapa en variabel för RegEx valideringen
  * Skapa en variabel för fältet för felmeddelande med id firstNameError
@@ -718,10 +705,8 @@ firstNameInput.addEventListener('input', () => {
   validateFirstName(firstNameInput.value);
 });
 
-
 // -----------------------------------------------------------------//
 // --------------Validering av formulär - Efternamn-----------------//
-
 /**
  * Skapa en variabel för RegEx valideringen
  * Skapa en variabel för fältet för felmeddelande med id lastNameError
@@ -747,7 +732,6 @@ lastNameInput.addEventListener('input', () => {
 
 // -----------------------------------------------------------------//
 // --------------Validering av formulär - Adressfält----------------//
-
 /**
  * Skapa en variabel för RegEx valideringen
  * Skapa en variabel för fältet för felmeddelande med id addressError
@@ -773,13 +757,11 @@ addressInput.addEventListener('input', () => {
 
 // -----------------------------------------------------------------//
 // --------------Validering av formulär - Postnummer----------------//
-// ----------------------UNDER ARBETE!!!!---------------------------//
-
 /**
  * Skapa en variabel för RegEx valideringen
- * Skapa en variabel för fältet för felmeddelande med id postalCodeError
+ * Skapa en variabel för fältet för felmeddelande med id zipCodeError
  * Skapa en if else sats som kollar om input fältet uppfyller RegEx valideringen
- * Skapa en variabel för input fältet med id postalcode
+ * Skapa en variabel för input fältet med id zipCode
  * Skapa en event listener som kollar av värdet i input fältet och kör funktionen
  */
 function validatePostalCode(PostalCode) {
@@ -787,7 +769,7 @@ function validatePostalCode(PostalCode) {
   const postalCodeError = document.getElementById('zipCodeError');
 
   if (!potalCodeRegEx.test(PostalCode)) {
-    postalCodeError.textContent = " Du har inte angett en giltig adress";
+    postalCodeError.textContent = " Du får enbart ange siffror";
   } else {
     postalCodeError.textContent = '';
   }
@@ -799,8 +781,34 @@ postalCodeInput.addEventListener('input', () => {
 });
 
 // -----------------------------------------------------------------//
-// --------------Visa & dölj betalningsuppgifter--------------------//
+// ---------------Validering av formulär - Postort------------------//
+// ----------------------UNDER ARBETE!!!!---------------------------//
+/**
+ * Skapa en variabel för RegEx valideringen
+ * Skapa en variabel för fältet för felmeddelande med id postalAddressError
+ * Skapa en if else sats som kollar om input fältet uppfyller RegEx valideringen
+ * Skapa en variabel för input fältet med id postalAddress
+ * Skapa en event listener som kollar av värdet i input fältet och kör funktionen
+ */
+function validatePostalAddress(PostalAddress) {
+  const postalAddressRegEx = /^[a-öA-Ö][a-öA-Ö '-]+$/;
+  const postalAddressError = document.getElementById('postalAddressError');
 
+  if (!postalAddressRegEx.test(PostalAddress)) {
+    postalAddressError.textContent = " Du får enbart ange siffror";
+  } else {
+    postalAddressError.textContent = '';
+  }
+}
+
+const postalAddressInput = document.getElementById('postalAddress');
+postalAddressInput.addEventListener('input', () => {
+  validatePostalAddress(postalAddressInput.value);
+});
+
+
+// -----------------------------------------------------------------//
+// --------------Visa & dölj betalningsuppgifter--------------------//
 /**
  * Skapa variabel för att hämta HTML elementet med rullistan för betalningsmetod (id payment-method)
  * Skapa en variabel för att hämta sektionen med alla fält för betalning med kort (is payment-details) 
@@ -822,7 +830,6 @@ paymentMethodSelect.addEventListener('change', () => {
 
 // -----------------------------------------------------------------//
 // ------------------Visa & dölj beställningsknapp------------------//
-
 /**
  * Skapa en variabel för knappen med id "submitButton"
  * Skapa en variabel för att kontrollera obligatoriska fält
@@ -865,7 +872,6 @@ for (const field of [...requiredFields, ...optionalFields]) {
 
 // -----------------------------------------------------------------//
 // ------------------Knapp för att tömma formulär-------------------//
-
 /**
  * Skapa en variabel för formuläret med id "myForm" 
  * Återställ formuläret
@@ -881,10 +887,8 @@ function clearForm() {
 const removeButton = document.getElementById("clearButton");
 removeButton.addEventListener("click", clearForm);
 
-
 // -----------------------------------------------------------------//
 // ------------------Beställningsbekräftelse------------------------//
-
 /**
  * Skapa en variabel för knappen med id "submitButton"
  * Skapa ett klick event på knappen
