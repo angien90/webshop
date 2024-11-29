@@ -8,7 +8,7 @@
  X Skapa funktion som beräknar totalen (och uppdateras vid förändring)
  X Funktion för betalningssätt. Toggla funktioner i beställningsformuläret som ska döljas och synas. 
  X Visa/dölj beställningsknapp
- - Fält i formuläret ska valideras innan det går att skicka beställningen. 
+ X Fält i formuläret ska valideras innan det går att skicka beställningen. 
  - Skapa en timer som räknar ner och deletar innehåll
  - Lägg in regler för rabatter
  X Bekrätfelse ruta vid beställning
@@ -693,7 +693,9 @@ function validateFirstName(FirstName) {
   const firstNameRegEx = /^[a-öA-Ö][a-öA-Ö '-]+$/;
   const firstNameError = document.getElementById('firstNameError');
 
-  if (!firstNameRegEx.test(FirstName)) {
+  if (FirstName === "") {
+    firstNameError.textContent = "";
+  } else if  (!firstNameRegEx.test(FirstName)) {
     firstNameError.textContent = " Förnamnet får enbart innehålla bokstäver, mellanslag, apostrof och bindestreck.";
   } else {
     firstNameError.textContent = '';
@@ -718,7 +720,9 @@ function validateLastName(LastName) {
   const lastNameRegEx = /^[a-öA-Ö][a-öA-Ö '-]+$/;
   const lastNameError = document.getElementById('lastNameError');
 
-  if (!lastNameRegEx.test(LastName)) {
+  if (LastName === "") {
+    lastNameError.textContent = "";
+  } else if (!lastNameRegEx.test(LastName)) {
     lastNameError.textContent = " Efternamn får enbart innehålla bokstäver, mellanslag, apostrof och bindestreck.";
   } else {
     lastNameError.textContent = '';
@@ -743,7 +747,9 @@ function validateAddress(Address) {
   const addressRegEx = /^[a-öA-Ö0-9][a-öA-Ö0-9 '-]+$/;
   const addressError = document.getElementById('addressError');
 
-  if (!addressRegEx.test(Address)) {
+  if (Address === "") {
+    addressError.textContent = "";
+  } else if (!addressRegEx.test(Address)) {
     addressError.textContent = " Du har inte angett en giltig adress";
   } else {
     addressError.textContent = '';
@@ -768,7 +774,9 @@ function validatePostalCode(PostalCode) {
   const potalCodeRegEx = /^(s-|S-){0,1}[0-9]{3}\s?[0-9]{2}$/;
   const postalCodeError = document.getElementById('zipCodeError');
 
-  if (!potalCodeRegEx.test(PostalCode)) {
+  if (PostalCode === "") {
+    postalCodeError.textContent = "";
+  } else if (!potalCodeRegEx.test(PostalCode)) {
     postalCodeError.textContent = " Du får enbart ange siffror";
   } else {
     postalCodeError.textContent = '';
@@ -782,7 +790,6 @@ postalCodeInput.addEventListener('input', () => {
 
 // -----------------------------------------------------------------//
 // ---------------Validering av formulär - Postort------------------//
-// ----------------------UNDER ARBETE!!!!---------------------------//
 /**
  * Skapa en variabel för RegEx valideringen
  * Skapa en variabel för fältet för felmeddelande med id postalAddressError
@@ -794,8 +801,10 @@ function validatePostalAddress(PostalAddress) {
   const postalAddressRegEx = /^[a-öA-Ö][a-öA-Ö '-]+$/;
   const postalAddressError = document.getElementById('postalAddressError');
 
-  if (!postalAddressRegEx.test(PostalAddress)) {
-    postalAddressError.textContent = " Du får enbart ange siffror";
+  if (PostalAddress === "") {
+    postalAddressError.textContent = "";
+  } else if (!postalAddressRegEx.test(PostalAddress)) {
+    postalAddressError.textContent = " Du har inte angett en giltig postadresss";
   } else {
     postalAddressError.textContent = '';
   }
@@ -808,15 +817,212 @@ postalAddressInput.addEventListener('input', () => {
 
 
 // -----------------------------------------------------------------//
-// --------------Visa & dölj betalningsuppgifter--------------------//
+// ---------------Validering av formulär - Telefon------------------//
 /**
- * Skapa variabel för att hämta HTML elementet med rullistan för betalningsmetod (id payment-method)
- * Skapa en variabel för att hämta sektionen med alla fält för betalning med kort (is payment-details) 
+ * Skapa en variabel för RegEx valideringen
+ * Skapa en variabel för fältet för felmeddelande med id phoneError
+ * Skapa en if else sats som kollar om input fältet uppfyller RegEx valideringen
+ * Skapa en variabel för input fältet med id phone
+ * Skapa en event listener som kollar av värdet i input fältet och kör funktionen
+ */
+function validatePhone(Phone) {
+  const phoneRegEx = /^(\+46|070|073|072)?[- ]?\d{0,3}[- ]?\d{2}[- ]?\d{2}[- ]?\d{2}$/;
+  const phoneError = document.getElementById('phoneError');
+
+  if (Phone === "") {
+    phoneError.textContent = "";
+  } else if (!phoneRegEx.test(Phone)) {
+  phoneError.textContent = " Du har inte angett ett giltig telefonnummer";
+  } else {
+    phoneError.textContent = '';
+  }
+}
+
+const phoneInput = document.getElementById('phone');
+phoneInput.addEventListener('input', () => {
+  validatePhone(phoneInput.value);
+});
+
+// -----------------------------------------------------------------//
+// ------------------Validering av formulär - Epost-----------------//
+/**
+ * Skapa en variabel för RegEx valideringen
+ * Skapa en variabel för fältet för felmeddelande med id emailError
+ * Skapa en if else sats som kollar om input fältet uppfyller RegEx valideringen
+ * Skapa en variabel för input fältet med id email
+ * Skapa en event listener som kollar av värdet i input fältet och kör funktionen
+ */
+function validateEmail(Email) {
+  const emailRegEx = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+  const emailError = document.getElementById('emailError');
+
+  if (Email === "") {
+    emailError.textContent = "";
+  } else if (!emailRegEx.test(Email)) {
+    emailError.textContent = " Du har inte angett en giltig e-postadress";
+  } else {
+    emailError.textContent = '';
+  }
+}
+
+const emailInput = document.getElementById('email');
+emailInput.addEventListener('input', () => {
+  validateEmail(emailInput.value);
+});
+
+// -----------------------------------------------------------------//
+// ---------------Validering av formulär - Betalningssätt-----------//
+// ----------------------FUNGERAR EJ--------------------------------//
+/**
+ * Skapa en variabel för RegEx valideringen
+ * Skapa en variabel för fältet för felmeddelande med id paymentMethodError
+ * Skapa en if else sats som kollar om input fältet uppfyller RegEx valideringen
+ * Skapa en variabel för input fältet med id paymentMethod
+ * Skapa en event listener som kollar av värdet i input fältet och kör funktionen
+ */
+
+function validatePaymentMethod(PaymentMethod) {
+  const paymentMethodError = document.getElementById('paymentMethodError');
+
+  if (PaymentMethod === "") {
+    paymentMethodError.textContent = "Vänligen välj betalningsmetod";
+  } else {
+    paymentMethodError.textContent = '';
+  }
+}
+
+const paymentMethodInput = document.getElementById('paymentMethod');
+paymentMethodInput.addEventListener('change', () => {
+  validatePaymentMethod(paymentMethodInput.value);
+});
+
+
+// -----------------------------------------------------------------//
+// ----------Validering av betalningsuppgifter - Kortnamn-----------//
+/**
+ * Skapa en variabel för RegEx valideringen
+ * Skapa en variabel för fältet för felmeddelande med id cnameError
+ * Skapa en if else sats som kollar om input fältet uppfyller RegEx valideringen
+ * Skapa en variabel för input fältet med id cname
+ * Skapa en event listener som kollar av värdet i input fältet och kör funktionen
+ */
+function validateCardName(CardName) {
+  const cardNameRegEx = /^[a-öA-Ö][a-öA-Ö '-]+$/;
+  const cardNameError = document.getElementById('cardNameError');
+
+  if (CardName === "") {
+    cardNameError.textContent = "";
+  } else if (!cardNameRegEx.test(CardName)) {
+    cardNameError.textContent = " Du har inte angett ett giltigt namn";
+  } else {
+    cardNameError.textContent = '';
+  }
+}
+
+const cardNameInput = document.getElementById('cname');
+cardNameInput.addEventListener('input', () => {
+  validateCardName(cardNameInput.value);
+});
+
+// -----------------------------------------------------------------//
+// ----------Validering av betalningsuppgifter - Kortnummer---------//
+/**
+ * Skapa en variabel för RegEx valideringen
+ * Skapa en variabel för fältet för felmeddelande med id cardNumberError
+ * Skapa en if else sats som kollar om input fältet uppfyller RegEx valideringen
+ * Skapa en variabel för input fältet med id ccnum
+ * Skapa en event listener som kollar av värdet i input fältet och kör funktionen
+ */
+function validateCardNumber(CardNumber) {
+  const cardNumberRegEx = /^(?:4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14}|3[47][0-9]{13}|6(?:011|5[0-9]{2})[0-9]{12}|35[2-9][0-9]{14})$/;
+  const cardNumberError = document.getElementById('cardNumberError');
+
+  const cleanedCardNumber = CardNumber.replace(/\s/g, '');
+
+  if (cleanedCardNumber === "") {
+    cardNumberError.textContent = "";
+  } else if (!cardNumberRegEx.test(cleanedCardNumber)) {
+    cardNumberError.textContent = "Ogiltigt kortnummer";
+  } else {
+    cardNumberError.textContent = "";
+  }
+}
+
+// Ensure the script runs after the DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+  const cardNumberInput = document.getElementById('ccnum');
+  cardNumberInput.addEventListener('input', () => {
+    validateCardNumber(cardNumberInput.value);
+  });
+});
+
+
+// -----------------------------------------------------------------//
+// --------Validering av betalningsuppgifter - Utgångsdatum---------//
+/**
+ * Skapa en variabel för RegEx valideringen
+ * Skapa en variabel för fältet för felmeddelande med id expDateError
+ * Skapa en if else sats som kollar om input fältet uppfyller RegEx valideringen
+ * Skapa en variabel för input fältet med id expdate
+ * Skapa en event listener som kollar av värdet i input fältet och kör funktionen
+ */
+function validateExpDate(ExpDate) {
+  const expDateRegEx = /^(0[1-9]|1[0-2])(\/|-)([0-9]{2})$/;
+  const expDateError = document.getElementById('expDateError');
+
+  if (ExpDate === "") {
+    expDateError.textContent = "";
+  } else if (!expDateRegEx.test(ExpDate)) {
+    expDateError.textContent = " Du har inte angett ett giltigt utgångsdatum";
+  } else {
+    expDateError.textContent = '';
+  }
+}
+
+const expDateInput = document.getElementById('expdate');
+expDateInput.addEventListener('input', () => {
+  validateExpDate(expDateInput.value);
+});
+
+
+// -----------------------------------------------------------------//
+// -------------Validering av betalningsuppgifter - CVV-------------//
+/**
+ * Skapa en variabel för RegEx valideringen
+ * Skapa en variabel för fältet för felmeddelande med id cvvError
+ * Skapa en if else sats som kollar om input fältet uppfyller RegEx valideringen
+ * Skapa en variabel för input fältet med id cvv
+ * Skapa en event listener som kollar av värdet i input fältet och kör funktionen
+ */
+function validateCvv(CVV) {
+  const cvvRegEx = /^[0-9]{3}$/;
+  const cvvError = document.getElementById('cvvError');
+
+  if (CVV === "") {
+    cvvError.textContent = "";
+  } else if (!cvvRegEx.test(CVV)) {
+    cvvError.textContent = " Du har inte angett en giltig cvv";
+  } else {
+    cvvError.textContent = '';
+  }
+}
+
+const cvvInput = document.getElementById('cvv');
+cvvInput.addEventListener('input', () => {
+  validateCvv(cvvInput.value);
+});
+
+// -----------------------------------------------------------------//
+// --------------Visa & dölj betalningsuppgifter--------------------//
+// ---------EJ KLAR SAKNAR FUNKTION KRING ATT BEHÅLLA CSS-----------//
+/**
+ * Skapa variabel för att hämta HTML elementet med rullistan för betalningsmetod (id paymentMethod)
+ * Skapa en variabel för att hämta sektionen med alla fält för betalning med kort (id paymentDetails) 
  * Skapa en event lyssnare som kollar efter ändringar i rullistan
     Om valet är invoice/faktura visa inget
     Om valt är något annat så visa betalningsuppgifter
  */
-const paymentMethodSelect = document.getElementById('payment-method');
+const paymentMethodSelect = document.getElementById('paymentMethod');
 const paymentDetailsSection = document.getElementById('paymentDetails');
 
 paymentMethodSelect.addEventListener('change', () => {

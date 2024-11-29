@@ -8,10 +8,9 @@ main {
 .top-bar {
     grid-column: 1 / span 4;
     flex-direction: column;
-}
-
-.top-bar h1 {
-    font-size: 3rem;
+    h1 {
+        font-size: 3rem;
+    }
 }
 
 .slogan {
@@ -25,10 +24,9 @@ main {
     flex-direction: row;
     margin-right: 40px;
     justify-content: right;
-}
-
-.sort-function h2 {
-    font-size: 1.2rem;
+    h2 {
+        font-size: 1.2rem;
+    }
 }
 
 
@@ -52,15 +50,13 @@ article {
 .product-cart {
     display: flex;
     flex-direction: row;
-}
-
-.product-cart h2 {
+    h2 {
+        font-size: 1.2em;
+        margin-top: 16px;
+    }
+    h3 {
     font-size: 1.2em;
-    margin-top: 16px;
-}
-
-.product-cart h3 {
-    font-size: 1.2em;
+    }
 }
 
 
