@@ -28,7 +28,7 @@ const productList = [
     id: 0,
     namn: 'Kolakungen',
     img: {
-      url: '/munk_med_kola_glasyr.png',
+      url: './img/munk_med_kola_glasyr.png',
       width: 400,
       height: 400,
       alt: 'Munk med kolaglasyr och kola bitar' 
@@ -43,7 +43,7 @@ const productList = [
     id: 1,
     namn: 'Chokladhjulet',
     img: {
-      url: '../munk_choklad_glasyr.png',
+      url: './img/munk_choklad_glasyr.png',
       width: 400,
       height: 400,
       alt: 'Munk med chokladglasyr' 
@@ -73,7 +73,7 @@ const productList = [
     id: 3,
     namn: 'Smurfmunken',
     img: {
-      url: '../img/munk_gron_glasyr_med_musli.png',
+      url: './img/munk_gron_glasyr_med_musli.png',
       width: 400,
       height: 400,
       alt: 'Munk med päronglasyr och musli' 
@@ -88,7 +88,7 @@ const productList = [
     id: 4,
     namn: 'Guldklumpen',
     img: {
-      url: 'img/munk_med_honungs_glasyr.png',
+      url: './img/munk_med_honungs_glasyr.png',
       width: 400,
       height: 400,
       alt: 'Munk med honungsglasyr och choklad strössel' 
@@ -103,7 +103,7 @@ const productList = [
     id: 5,
     namn: 'Rosa moln',
     img: {
-      url: 'public/img/munk_rosa_glasyr_med_florsocker.png',
+      url: './img/munk_rosa_glasyr_med_florsocker.png',
       width: 400,
       height: 400,
       alt: 'Munk med hallonglasyr och florsocker' 
@@ -118,7 +118,7 @@ const productList = [
     id: 6,
     namn: 'Smaklösa Sven',
     img: {
-      url: 'public/img/munk_utan_glasyr.png',
+      url: './img/munk_utan_glasyr.png',
       width: 400,
       height: 400,
       alt: 'Munk utan glasyr' 
@@ -133,7 +133,7 @@ const productList = [
     id: 7,
     namn: 'Rosa prinsessan',
     img: {
-      url: 'public/img/munk_rosa_glasyr_med_godis.png',
+      url: './img/munk_rosa_glasyr_med_godis.png',
       width: 400,
       height: 400,
       alt: 'Munk med hallonglasyr och godis' 
@@ -148,7 +148,7 @@ const productList = [
     id: 8,
     namn: 'Trollkarlens förtrollning',
     img: {
-      url: 'public/img/munk_choklad_glasyr_med_notter_och_bar.png',
+      url: './img/munk_choklad_glasyr_med_notter_och_bar.png',
       width: 400,
       height: 400,
       alt: 'Munk med chokladglasyr samt bär och nötter' 
@@ -163,7 +163,7 @@ const productList = [
     id: 9,
     namn: 'C-vitamin-kungen',
     img: {
-      url: 'public/img/munk_orange_gasyr_med_apelsin.png',
+      url: './img/munk_orange_gasyr_med_apelsin.png',
       width: 400,
       height: 400,
       alt: 'Munk med apelsinglasyr och apelsinbitar' 
@@ -178,7 +178,7 @@ const productList = [
     id: 10,
     namn: 'Rosapantern',
     img: {
-      url: 'public/img/munk_rosa_glasyr_med_strossel.png',
+      url: './img/munk_rosa_glasyr_med_strossel.png',
       width: 400,
       height: 400,
       alt: 'Munk med hallonglasyr och strössel' 
@@ -193,7 +193,7 @@ const productList = [
     id: 11,
     namn: 'Nötskallen',
     img: {
-      url: 'public/img/munk_choklad_och_notter.png',
+      url: './img/munk_choklad_och_notter.png',
       width: 400,
       height: 400,
       alt: 'Munk med chokladglasyr och nötter' 
@@ -208,7 +208,7 @@ const productList = [
     id: 12,
     namn: 'Polarbjörnen',
     img: {
-      url: 'public/img/munk_vit_glasyr_med_choklad_strossel.png',
+      url: './img/munk_vit_glasyr_med_choklad_strossel.png',
       width: 400,
       height: 400,
       alt: 'Munk med vit glasyr och choklad strössel' 
