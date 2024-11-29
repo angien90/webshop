@@ -88,7 +88,7 @@ const productList = [
     id: 4,
     namn: 'Guldklumpen',
     img: {
-      url: 'public/img/munk_med_honungs_glasyr.png',
+      url: 'img/munk_med_honungs_glasyr.png',
       width: 400,
       height: 400,
       alt: 'Munk med honungsglasyr och choklad strössel' 
