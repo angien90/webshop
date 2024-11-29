@@ -9,12 +9,14 @@
  X Funktion för betalningssätt. Toggla funktioner i beställningsformuläret som ska döljas och synas. 
  X Visa/dölj beställningsknapp
  X Fält i formuläret ska valideras innan det går att skicka beställningen. 
- - Styla felmeddelanden i valideringen med CSS.
- - Skapa en timer som räknar ner och deletar innehåll
+ X Styla felmeddelanden i valideringen med CSS.
+ X Skapa en timer som räknar ner och deletar innehåll
  - Lägg in regler för rabatter
  X Bekrätfelse ruta vid beställning
  X Rensa knapp för beställningsformulär
  - Effekt när Totalen uppe på sidan uppdateras
+ - Uppdatera README filen
+ - KOntrollera kravlistan från uppgiften igen så att allt är med
  */
 
 
@@ -907,20 +909,16 @@ emailInput.addEventListener('input', () => {
  * Skapa en event listener som kollar av värdet i input fältet och kör funktionen
  */
 
-function validatePaymentMethod(PaymentMethod) {
+function validatePaymentMethod() {
+  const paymentMethod = document.getElementById('paymentMethod').value;
   const paymentMethodError = document.getElementById('paymentMethodError');
 
-  if (PaymentMethod === "") {
-    paymentMethodError.textContent = "Vänligen välj betalningsmetod";
+  if (!paymentMethod) {
+    paymentMethodError.textContent = "Vänligen välj en betalningsmetod.";
   } else {
-    paymentMethodError.textContent = '';
+    paymentMethodError.textContent = "";
   }
 }
-
-const paymentMethodInput = document.getElementById('paymentMethod');
-paymentMethodInput.addEventListener('change', () => {
-  validatePaymentMethod(paymentMethodInput.value);
-});
 
 
 // -----------------------------------------------------------------//
@@ -1160,3 +1158,42 @@ submitButton.addEventListener('click', (event) => {
     alert('Beställningen avbröts.');
   }
 });
+
+// -----------------------------------------------------------------//
+// ------------------Timer som deletar innehåll---------------------//
+/**
+ * Skapa en variabel som här elementet med id countdown
+ * Skapa en funktion som räknar ned får 15 minuter. I både minuter och sekunder 
+ * När tiden är slut ska sidan laddas om så att informationen försvinner
+ * Funktionen ska starta när sidan laddas. 
+ */
+
+const countdownElement = document.getElementById('countdown');
+let countdownInterval;
+
+function startCountdown() {
+  let minutes = 14;
+  let seconds = 59;
+  countdownInterval = setInterval(() => {
+    if (seconds === 0) {
+      minutes--;
+      seconds = 59;
+    } else {
+      seconds--;
+    }
+
+    countdownElement.textContent = minutes + "min " + seconds + "sek";
+
+    if (minutes === 0 && seconds === 0) {
+      clearInterval(countdownInterval);
+      localStorage.clear();
+      location.reload();
+    }
+  }, 1000); // Varje 1000 millisekunder (1 sekund)
+}
+
+function stopCountdown() {
+  clearInterval(countdownInterval);
+}
+
+startCountdown(); 

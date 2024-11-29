@@ -3,6 +3,14 @@ main {
     grid-template-columns: repeat(4, 1fr);       
 }
 
+.countdown-container {
+    left: 50%;
+    transform: translateX(-50%);
+    p {
+        font-size: 1em;
+    }
+}
+
 
 /* Sidans övre del */
 .top-bar {
