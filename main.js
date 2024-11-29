@@ -517,7 +517,6 @@ function sortByCategory(Category) {
   isCategory = !isCategory; 
 });
 
-
 // -----------------------------------------------------------------//
 // ----------------Soretingsfunktionen för pris---------------------//
 /**
@@ -571,7 +570,6 @@ sortPriceButton.addEventListener('click', () => {
 });
 
 let isPrice = true;
-
 
 // -----------------------------------------------------------------//
 // ----------------Sorteingsfunktionen för rating-------------------//
@@ -680,7 +678,6 @@ sortIdButton.addEventListener('click', () => {
 
 let isId = true;
 
-
 // -----------------------------------------------------------------//
 // --------------Validering av formulär - Förnamn-------------------//
 /**
@@ -693,13 +690,17 @@ let isId = true;
 function validateFirstName(FirstName) {
   const firstNameRegEx = /^[a-öA-Ö][a-öA-Ö '-]+$/;
   const firstNameError = document.getElementById('firstNameError');
+  const firstNameErrorMessage = document.getElementById('firstNameErrorMessage');
 
   if (FirstName === "") {
-    firstNameError.textContent = "";
-  } else if  (!firstNameRegEx.test(FirstName)) {
-    firstNameError.textContent = " Förnamnet får enbart innehålla bokstäver, mellanslag, apostrof och bindestreck.";
+    firstNameError.style.display = 'none';
+    firstNameErrorMessage.textContent = "";
+  } else if (!firstNameRegEx.test(FirstName)) {
+    firstNameError.style.display = 'inline-block';
+    firstNameErrorMessage.textContent = "Fel: Får enbart innehålla bokstäver, mellanslag, apostrof och bindestreck.";
   } else {
-    firstNameError.textContent = '';
+    firstNameError.style.display = 'none';
+    firstNameErrorMessage.textContent = "";
   }
 }
 
@@ -720,13 +721,17 @@ firstNameInput.addEventListener('input', () => {
 function validateLastName(LastName) {
   const lastNameRegEx = /^[a-öA-Ö][a-öA-Ö '-]+$/;
   const lastNameError = document.getElementById('lastNameError');
+  const lastNameErrorMessage = document.getElementById('lastNameErrorMessage');
 
   if (LastName === "") {
-    lastNameError.textContent = "";
+    lastNameError.style.display = 'none';
+    lastNameErrorMessage.textContent = "";
   } else if (!lastNameRegEx.test(LastName)) {
-    lastNameError.textContent = " Efternamn får enbart innehålla bokstäver, mellanslag, apostrof och bindestreck.";
+    lastNameError.style.display = 'inline-block';
+    lastNameErrorMessage.textContent = " Fel: Får enbart innehålla bokstäver, mellanslag, apostrof och bindestreck.";
   } else {
-    lastNameError.textContent = '';
+    lastNameError.style.display = 'none';
+    lastNameErrorMessage.textContent = '';
   }
 }
 
@@ -747,13 +752,17 @@ lastNameInput.addEventListener('input', () => {
 function validateAddress(Address) {
   const addressRegEx = /^[a-öA-Ö0-9][a-öA-Ö0-9 '-]+$/;
   const addressError = document.getElementById('addressError');
+  const addressErrorMessage = document.getElementById('addressErrorMessage');
 
   if (Address === "") {
-    addressError.textContent = "";
+    addressError.style.display = 'none';
+    addressErrorMessage.textContent = "";
   } else if (!addressRegEx.test(Address)) {
-    addressError.textContent = " Du har inte angett en giltig adress";
+    addressError.style.display = 'inline-block';
+    addressErrorMessage.textContent = " Du har inte angett en giltig adress";
   } else {
-    addressError.textContent = '';
+    addressError.style.display = 'none';
+    addressErrorMessage.textContent = '';
   }
 }
 
@@ -771,22 +780,26 @@ addressInput.addEventListener('input', () => {
  * Skapa en variabel för input fältet med id zipCode
  * Skapa en event listener som kollar av värdet i input fältet och kör funktionen
  */
-function validatePostalCode(PostalCode) {
-  const potalCodeRegEx = /^(s-|S-){0,1}[0-9]{3}\s?[0-9]{2}$/;
-  const postalCodeError = document.getElementById('zipCodeError');
+function validateZipCode(ZipCode) {
+  const zipCodeRegEx = /^(s-|S-){0,1}[0-9]{3}\s?[0-9]{2}$/;
+  const zipCodeError = document.getElementById('zipCodeError');
+  const zipCodeErrorMessage = document.getElementById('zipCodeErrorMessage');
 
-  if (PostalCode === "") {
-    postalCodeError.textContent = "";
-  } else if (!potalCodeRegEx.test(PostalCode)) {
-    postalCodeError.textContent = " Du får enbart ange siffror";
+  if (ZipCode === "") {
+    zipCodeError.style.display = 'none';
+    zipCodeErrorMessage.textContent = "";
+  } else if (!zipCodeRegEx.test(ZipCode)) {
+    zipCodeError.style.display = 'inline-block';
+    zipCodeErrorMessage.textContent = " Du får enbart ange siffror";
   } else {
-    postalCodeError.textContent = '';
+    zipCodeError.style.display = 'none';
+    zipCodeErrorMessage.textContent = '';
   }
 }
 
-const postalCodeInput = document.getElementById('zipCode');
-postalCodeInput.addEventListener('input', () => {
-  validatePostalCode(postalCodeInput.value);
+const zipCodeInput = document.getElementById('zipCode');
+zipCodeInput.addEventListener('input', () => {
+  validateZipCode(zipCodeInput.value);
 });
 
 // -----------------------------------------------------------------//
@@ -801,13 +814,17 @@ postalCodeInput.addEventListener('input', () => {
 function validatePostalAddress(PostalAddress) {
   const postalAddressRegEx = /^[a-öA-Ö][a-öA-Ö '-]+$/;
   const postalAddressError = document.getElementById('postalAddressError');
+  const postalAddressErrorMessage = document.getElementById('postalAddressErrorMessage');
 
   if (PostalAddress === "") {
-    postalAddressError.textContent = "";
+    postalAddressError.style.display = 'none';
+    postalAddressErrorMessage.textContent = "";
   } else if (!postalAddressRegEx.test(PostalAddress)) {
-    postalAddressError.textContent = " Du har inte angett en giltig postadresss";
+    postalAddressError.style.display = 'inline-block';
+    postalAddressErrorMessage.textContent = " Du har inte angett en giltig postadress";
   } else {
-    postalAddressError.textContent = '';
+    postalAddressError.style.display = 'none';
+    postalAddressErrorMessage.textContent = '';
   }
 }
 
@@ -829,13 +846,17 @@ postalAddressInput.addEventListener('input', () => {
 function validatePhone(Phone) {
   const phoneRegEx = /^(\+46|070|073|072)?[- ]?\d{0,3}[- ]?\d{2}[- ]?\d{2}[- ]?\d{2}$/;
   const phoneError = document.getElementById('phoneError');
+  const phoneErrorMessage = document.getElementById('phoneErrorMessage');
 
   if (Phone === "") {
-    phoneError.textContent = "";
+    phoneError.style.display = 'none';
+    phoneErrorMessage.textContent = "";
   } else if (!phoneRegEx.test(Phone)) {
-  phoneError.textContent = " Du har inte angett ett giltig telefonnummer";
+    phoneError.style.display = 'inline-block';
+    phoneErrorMessage.textContent = " Du har inte angett ett giltig telefonnummer";
   } else {
-    phoneError.textContent = '';
+    phoneError.style.display = 'none';
+    phoneErrorMessage.textContent = '';
   }
 }
 
@@ -856,13 +877,17 @@ phoneInput.addEventListener('input', () => {
 function validateEmail(Email) {
   const emailRegEx = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
   const emailError = document.getElementById('emailError');
+  const emailErrorMessage = document.getElementById('emailErrorMessage');
 
   if (Email === "") {
-    emailError.textContent = "";
+    emailError.style.display = 'none';
+    emailErrorMessage.textContent = "";
   } else if (!emailRegEx.test(Email)) {
-    emailError.textContent = " Du har inte angett en giltig e-postadress";
+    emailError.style.display = 'inline-block';
+    emailErrorMessage.textContent = " Du har inte angett en giltig e-postadress";
   } else {
-    emailError.textContent = '';
+    emailError.style.display = 'none';
+    emailErrorMessage.textContent = '';
   }
 }
 
@@ -910,13 +935,17 @@ paymentMethodInput.addEventListener('change', () => {
 function validateCardName(CardName) {
   const cardNameRegEx = /^[a-öA-Ö][a-öA-Ö '-]+$/;
   const cardNameError = document.getElementById('cardNameError');
+  const cardNameErrorMessage = document.getElementById('cardNameErrorMessage');
 
   if (CardName === "") {
-    cardNameError.textContent = "";
+    cardNameError.style.display = 'none';
+    cardNameErrorMessage.textContent = "";
   } else if (!cardNameRegEx.test(CardName)) {
-    cardNameError.textContent = " Du har inte angett ett giltigt namn";
+    cardNameError.style.display = 'inline-block';
+    cardNameErrorMessage.textContent = " Du har inte angett ett giltigt namn";
   } else {
-    cardNameError.textContent = '';
+    cardNameError.style.display = 'none';
+    cardNameErrorMessage.textContent = '';
   }
 }
 
@@ -937,19 +966,23 @@ cardNameInput.addEventListener('input', () => {
 function validateCardNumber(CardNumber) {
   const cardNumberRegEx = /^(?:4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14}|3[47][0-9]{13}|6(?:011|5[0-9]{2})[0-9]{12}|35[2-9][0-9]{14})$/;
   const cardNumberError = document.getElementById('cardNumberError');
+  const cardNumberErrorMessage = document.getElementById('cardNumberErrorMessage');
+
 
   const cleanedCardNumber = CardNumber.replace(/\s/g, '');
 
   if (cleanedCardNumber === "") {
-    cardNumberError.textContent = "";
+    cardNumberError.style.display = 'none';
+    cardNumberErrorMessage.textContent = "";
   } else if (!cardNumberRegEx.test(cleanedCardNumber)) {
-    cardNumberError.textContent = "Ogiltigt kortnummer";
+    cardNumberError.style.display = 'inline-block';
+    cardNumberErrorMessage.textContent = "Du har inte angett ett giltigt kortnummer";
   } else {
-    cardNumberError.textContent = "";
+    cardNumberError.style.display = 'none';
+    cardNumberErrorMessage.textContent = "";
   }
 }
 
-// Ensure the script runs after the DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
   const cardNumberInput = document.getElementById('ccnum');
   cardNumberInput.addEventListener('input', () => {
@@ -970,13 +1003,17 @@ document.addEventListener('DOMContentLoaded', () => {
 function validateExpDate(ExpDate) {
   const expDateRegEx = /^(0[1-9]|1[0-2])(\/|-)([0-9]{2})$/;
   const expDateError = document.getElementById('expDateError');
+  const expDateErrorMessage = document.getElementById('expDateErrorMessage');
 
   if (ExpDate === "") {
-    expDateError.textContent = "";
+    expDateError.style.display = 'none';
+    expDateErrorMessage.textContent = "";
   } else if (!expDateRegEx.test(ExpDate)) {
-    expDateError.textContent = " Du har inte angett ett giltigt utgångsdatum";
+    expDateError.style.display = 'inline-block';
+    expDateErrorMessage.textContent = " Du har inte angett ett giltigt utgångsdatum";
   } else {
-    expDateError.textContent = '';
+    expDateError.style.display = 'none';
+    expDateErrorMessage.textContent = '';
   }
 }
 
@@ -998,13 +1035,17 @@ expDateInput.addEventListener('input', () => {
 function validateCvv(CVV) {
   const cvvRegEx = /^[0-9]{3}$/;
   const cvvError = document.getElementById('cvvError');
+  const cvvErrorMessage = document.getElementById('cvvErrorMessage');
 
   if (CVV === "") {
-    cvvError.textContent = "";
+    cvvError.style.display = 'none';
+    cvvErrorMessage.textContent = "";
   } else if (!cvvRegEx.test(CVV)) {
-    cvvError.textContent = " Du har inte angett en giltig cvv";
+    cvvError.style.display = 'inline-block';
+    cvvErrorMessage.textContent = " Du har inte angett en giltig cvv";
   } else {
-    cvvError.textContent = '';
+    cvvError.style.display = 'none';
+    cvvErrorMEssage.textContent = '';
   }
 }
 

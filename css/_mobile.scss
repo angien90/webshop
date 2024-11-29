@@ -281,6 +281,47 @@ form {
     }
 }
 
+/* Styling av felmeddelanden i leveransuppgifter och betalningsuppgifter */
+.delivery-information i {
+    font-size: 16px;
+    vertical-align: bottom;
+    margin-left: 10px;
+    margin-right: 5px;
+    color: red;
+}
+  
+#firstNameError,
+#lastNameError,
+#addressError,
+#zipCodeError,
+#postalAddressError,
+#phoneError,
+#emailError,
+#paymentMethodError,
+#cardNameError,
+#cardNumberError,
+#expDateError,
+#cvvError {
+    display: none;
+    color: red;
+    font-size: 5px;
+}
+
+#firstNameErrorMessage, 
+#lastNameErrorMessage,
+#addressErrorMessage,
+#zipCodeErrorMessage,
+#postalAddressErrorMessage,
+#phoneErrorMessage,
+#emailErrorMessage,
+#paymentMethodErrorMessage,
+#cardNameErrorMessage,
+#cardNumberErrorMessage,
+#expDateErrorMessage,
+#cvvErrorMessage {
+    color: red;
+}
+
 /* Betalningsuppgifter */
 .payment-details {
     background-color: white;
