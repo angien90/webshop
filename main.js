@@ -1,3 +1,4 @@
+
 /*
  X Skapa en array med objekt som bär alla produkterna. 
  X Skapa en funktion som loopar ut alla produkterna på sidan/i vår html struktur.
@@ -11,12 +12,16 @@
  X Fält i formuläret ska valideras innan det går att skicka beställningen. 
  X Styla felmeddelanden i valideringen med CSS.
  X Skapa en timer som räknar ner och deletar innehåll
+ - Fixa till så att CSS fungerar som den ska för Betalningsuppgifter
  - Lägg in regler för rabatter
  X Bekrätfelse ruta vid beställning
  X Rensa knapp för beställningsformulär
  - Effekt när Totalen uppe på sidan uppdateras
- - Uppdatera README filen
- - KOntrollera kravlistan från uppgiften igen så att allt är med
+
+ ÖVRIGT ATT KOLLA/GÖRA
+- Kontrollera kravlistan från uppgiften igen så att allt är med
+ - Tangentbordstyrt?
+  - Uppdatera README filen
  */
 
 
@@ -377,11 +382,26 @@ function updateCart() {
  */
 function updateTotal() {
   const totalCost = productList.reduce((total, eachProduct) => total + eachProduct.amount * eachProduct.pris, 0);
+  const totalDonuts = productList.reduce((total, eachProduct) => total + eachProduct.amount, 0);
+  const shippingCost = calculateShippingCost(totalDonuts, totalCost);
   const totalElement = document.getElementById('totalCost');
-  totalElement.textContent = `Totalt: ${totalCost} kr`;
+  totalElement.textContent = `Totalt: ${totalCost + shippingCost} kr`;
 
   const totalSum = document.getElementById('totalSum');
-  totalSum.textContent = `${totalCost} kr`;
+  totalSum.textContent = `${totalCost + shippingCost} kr`;
+
+  const shippingCostElement = document.getElementById('shippingCost');
+  shippingCostElement.textContent = `Fraktkostnad: ${shippingCost} kr`;
+}
+
+// -----------------------------------------------------------------//
+// --------------Gratis frakt vid minst 15 munkar-------------------//
+function calculateShippingCost(totalDonuts, totalCost) {
+  if (totalDonuts > 15) {
+    return 0;
+  } else {
+    return 25 + 0.1 * totalCost;
+  }
 }
 
 // -----------------------------------------------------------------//
@@ -679,6 +699,7 @@ sortIdButton.addEventListener('click', () => {
 });
 
 let isId = true;
+
 
 // -----------------------------------------------------------------//
 // --------------Validering av formulär - Förnamn-------------------//
@@ -1076,6 +1097,9 @@ paymentMethodSelect.addEventListener('change', () => {
 
 // -----------------------------------------------------------------//
 // ------------------Visa & dölj beställningsknapp------------------//
+
+/* 🦄🦄🦄🦄🦄🦄 JENNI: Är det okej att göra såhär eller ska det kopplas till valideringsfunktionerna ovan? */
+
 /**
  * Skapa en variabel för knappen med id "submitButton"
  * Skapa en variabel för att kontrollera obligatoriska fält
@@ -1085,6 +1109,7 @@ paymentMethodSelect.addEventListener('change', () => {
     Om det är falskt: Dölj knappen
  * Skapa en event lyssnare som kollar efter ändringar på obligatoriska fält
  */
+
 const submitButtonHide = document.getElementById("submitButton");
 const requiredFields = document.querySelectorAll("input[required]:not([type='checkbox']), select[required]");
 const optionalFields = document.querySelectorAll("input:not([required]), select:not([required])");
@@ -1114,7 +1139,6 @@ checkRequiredFields();
 for (const field of [...requiredFields, ...optionalFields]) {
   field.addEventListener("change", checkRequiredFields);
 }
-
 
 // -----------------------------------------------------------------//
 // ------------------Knapp för att tömma formulär-------------------//
