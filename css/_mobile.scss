@@ -367,14 +367,14 @@ form {
 /* Betalningsuppgifter */
 .payment-details {
     background-color: white;
-    width: 80%;
+    width: 70%;
     margin-top: 30px;
     border-radius: 20px;
     padding-left: 20px;
     padding-right: 20px;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    text-align: center;
     p {
         margin-top: 0px;
         margin-bottom: 0px;
@@ -387,9 +387,13 @@ form {
     flex-direction: column;
     align-items: start;
     margin-top: 20px;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     input {
         margin-bottom: 10px;
+        width: 100%
+    }
+    lable {
+        width: 100%;
     }
 }
 
@@ -398,6 +402,8 @@ form {
     flex-direction: column;
     align-items: center;
     width: 100%;
+    margin-bottom: 10px;
+
 }
 
 .submit-order {
