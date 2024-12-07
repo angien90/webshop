@@ -15,8 +15,9 @@ import "./css/style.scss"
  X Skapa en timer som räknar ner och deletar innehåll
  X Bekrätfelse ruta vid beställning
  X Rensa knapp för beställningsformulär
+ X Effekt när Totalen uppe på sidan uppdateras
  - Lägg in regler för rabatter
- - Effekt när Totalen uppe på sidan uppdateras
+ 
  - Tömma-knappen skriver ut produktlsitan dubbelt. Fixa
  - Validering av betalningssätt fungerar ej. 
 
@@ -385,6 +386,8 @@ function addProductCount(e) {
  * Töm innehållet i html elementet
  * Skapa ett html elmement i varukorgen för varje artikel som har ett amount som är större än 0.
  */
+let totalProducts = 0;
+
 function updateCart() {
   const cartItems = productList.filter(eachProduct => eachProduct.amount > 0);
   const cartElement = document.getElementById('cart');
@@ -403,6 +406,9 @@ function updateCart() {
     `;
     cartElement.appendChild(productElement);
   });
+
+  totalProducts = productList.reduce((total, product) => total + product.amount, 0); //uppdaterar antal som visas i ikonen som en varukorg
+  updateCartIcon();
 }
 
 // ----Funktion för att beräkna totalen i varukorgen & högst upp på sidan----//
@@ -421,7 +427,7 @@ function updateTotal() {
     
   const totalElement = document.getElementById('totalCost');
   totalElement.textContent = `Totalt: ${totalCost + shippingCost + totalDiscount} kr`;
-
+  
   const totalSum = document.getElementById('totalSum');
   totalSum.textContent = `${totalCost + shippingCost + totalDiscount} kr`;
 
@@ -491,6 +497,13 @@ function updatePaymentOptions() {
   }
 }
 
+// ------------------Uppdatera antal på varukorgen------------------//
+function updateCartIcon() {
+  const cartIcon = document.querySelector('.button .material-symbols-outlined');
+  cartIcon.setAttribute('data-count', totalProducts);
+}
+
+updateCartIcon();
 
 
 // ------------------------------------------------------------------------------------------ //

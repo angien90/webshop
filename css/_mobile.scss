@@ -271,6 +271,23 @@ form {
     padding-right: 20px;
 }
 
+.button .material-symbols-outlined {
+    position: relative;
+  }
+  
+  .button .material-symbols-outlined::after {
+    content: attr(data-count);
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 15px;
+    font-weight: 700;
+    background-color: #2ab0bc;
+    color: black;
+    border-radius: 50%;
+    padding: 1px 4px 4px 4px;
+}
+
 /* Kunduppgifter */
 .delivery-information {
     gap: 0px;
