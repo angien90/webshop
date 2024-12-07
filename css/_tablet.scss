@@ -3,12 +3,20 @@ main {
     grid-template-columns: repeat(4, 1fr);       
 }
 
+header {
+    gap: 40px;
+}
+
 .countdown-container {
     left: 50%;
     transform: translateX(-50%);
     p {
         font-size: 1em;
     }
+}
+
+.total-sum {
+    font-size: larger;
 }
 
 
@@ -48,9 +56,14 @@ article {
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 50px;
+    gap: 10px;
     width: 100%;
     margin-top: 10px;
+}
+
+.eachProduct {
+    width: 25%;
+    height: 550px;
 }
 
 
@@ -70,7 +83,7 @@ article {
 
 /* Kunduppgifter */
 .delivery-information input {
-    width: 60%;
+    width: 95%;
 }
 
 .checkboxes input {

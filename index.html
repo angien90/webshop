@@ -68,6 +68,7 @@
         <article>
           <div id="cart"></div>
         </article>
+        <div class="discount" id="discount"></div>
         <div class="shipping-cost" id="shippingCost"></div>
         <hr>
         <div class="total-cost" id="totalCost"></div>
@@ -83,7 +84,7 @@
         <label for="lname">Efternamn: *</label><span id="lastNameError"><i class="material-symbols-outlined">warning</span></i><span id="lastNameErrorMessage"></span></span><br>
         <input type="text" id="lname" name="lname" placeholder="Jästson" value="" required><br>
         
-        <label for="lname">Address (gata + nr): *</label><span id="addressError"><i class="material-symbols-outlined">warning</span></i><span id="addressErrorMessage"></span></span><br>
+        <label for="lname">Adress (gata + nr): *</label><span id="addressError"><i class="material-symbols-outlined">warning</span></i><span id="addressErrorMessage"></span></span><br>
         <input type="text" id="address" name="address" placeholder="Snaskvägen 1" value="" required><br>
 
         <label for="portCode">Portkod:</label><br>
@@ -107,13 +108,13 @@
         <label for="paymentMethod">Betalningssätt: *</label><span id="paymentMethodError"><i class="material-symbols-outlined">warning</span></i><span id="paymentMethodErrorMessage"></span></span><br>
         <select id="paymentMethod" name="payment-method" required>
           <option value="" disabled selected>Gör ditt val här</option>
-          <option value="invoice">Kortbetalning</option>
+          <option id="invoice" value="invoice">Kortbetalning</option>
           <option value="card">Faktura</option>
         </select>
 
         <div class="checkboxes">
           <label>
-            <input type="checkbox" name="personnummer"> Jag godkänner att Gottrids Gyllene Munkar behandlar mina personuppgifter
+            <input type="checkbox" name="personnummer" required> Jag godkänner att Gottrids Gyllene Munkar behandlar mina personuppgifter *
           </label><br>
 
           <label>

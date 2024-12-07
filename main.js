@@ -1,3 +1,4 @@
+import "./css/style.scss"
 
 /*
  X Skapa en array med objekt som bär alla produkterna. 
@@ -22,10 +23,16 @@
 - Kontrollera kravlistan från uppgiften igen så att allt är med
  - Tangentbordstyrt?
   - Uppdatera README filen
+  - Validera html och css
  */
 
+// ------------------------------------------------------------------------------------------ //
+// ------------------------------------------------------------------------------------------ //
+// ------------------------------------  PRODUKTERNA  --------------------------------------- //
+// ------------------------------------------------------------------------------------------ //
+// ------------------------------------------------------------------------------------------ //
 
-// -----------------------------------------------------------------//
+
 // -----------------------Produktlistan------------------------------//
 /**
  * Skapa upp en array där varje artikel är ett objekt
@@ -227,7 +234,6 @@ const productList = [
   },
 ];
 
-// -----------------------------------------------------------------//
 // -----------Skapande av produktlista i HTML-----------------------//
 /**
  * Hämta en referens till DOM-elementet med id "product-list".
@@ -275,7 +281,6 @@ function printProductListDiv() {
 
 printProductListDiv();
 
-// -----------------------------------------------------------------//
 // ----------------Funktion för minus knappar-----------------------//
 /**
  * Skapa en variabel som tar reda på Id:t
@@ -313,7 +318,6 @@ function removeProductCount(e) {
   updateTotal();
 }
 
-// -----------------------------------------------------------------//
 // ----------------Funktion för plus knappar-----------------------//
 /**
  * Skapa en variabel som tar reda på Id:t
@@ -343,7 +347,36 @@ function addProductCount(e) {
   updateTotal();
 }
 
-// -----------------------------------------------------------------//
+// -----------Funktion för att skapa emojis för rating--------------//
+/**
+ * Skapa en variabel för raiting och kontrollera om det är ett heltal eller har decimaler
+ * Skapa en tom html sträng
+ * Uppreda följande;
+    För heltal: Lägg till en stjärna för varje heltal med start från 0
+    För decimaltal: Lägg till en tom stjärna för att avrunda uppåt. 
+ * Retunera en färdig HTML-sträng
+ */
+    function getRatingHtml(rating) {
+      const isHalf = String(rating).indexOf('.');
+    
+      let html = '';
+      for (let i = 0; i < rating; i++) {
+        html += `<span>⭐</span>`;
+      }
+      if (isHalf !== -1) {
+        html += `<span></span>`;
+      }
+      return html;
+    }
+    
+
+// ------------------------------------------------------------------------------------------ //
+// ------------------------------------------------------------------------------------------ //
+// ------------------------------------  VARUKORGEN  ---------------------------------------- //
+// ------------------------------------------------------------------------------------------ //
+// ------------------------------------------------------------------------------------------ //
+
+
 // ----------------Funktion för att fylla varukorg------------------//
 /**
  * Skapa en variabel för att kontrollera att amount är större än 0 
@@ -371,7 +404,6 @@ function updateCart() {
   });
 }
 
-// --------------------------------------------------------------------------//
 // ----Funktion för att beräkna totalen i varukorgen & högst upp på sidan----//
 /**
  * Skapa en variabel och räkna ut totalkostanden
@@ -383,18 +415,22 @@ function updateCart() {
 function updateTotal() {
   const totalCost = productList.reduce((total, eachProduct) => total + eachProduct.amount * eachProduct.pris, 0);
   const totalDonuts = productList.reduce((total, eachProduct) => total + eachProduct.amount, 0);
+  const totalDiscount = calculateTotalDiscount();
   const shippingCost = calculateShippingCost(totalDonuts, totalCost);
+    
   const totalElement = document.getElementById('totalCost');
-  totalElement.textContent = `Totalt: ${totalCost + shippingCost} kr`;
+  totalElement.textContent = `Totalt: ${totalCost + shippingCost + totalDiscount} kr`;
 
   const totalSum = document.getElementById('totalSum');
-  totalSum.textContent = `${totalCost + shippingCost} kr`;
+  totalSum.textContent = `${totalCost + shippingCost + totalDiscount} kr`;
 
   const shippingCostElement = document.getElementById('shippingCost');
-  shippingCostElement.textContent = `Fraktkostnad: ${shippingCost} kr`;
+  shippingCostElement.textContent = `Din fraktkostnad: ${shippingCost} kr`;
+
+  const discountElement = document.getElementById('discount');
+  discountElement.textContent = `Din rabatt: ${totalDiscount} kr`;
 }
 
-// -----------------------------------------------------------------//
 // --------------Gratis frakt vid minst 15 munkar-------------------//
 function calculateShippingCost(totalDonuts, totalCost) {
   if (totalDonuts > 15) {
@@ -404,30 +440,65 @@ function calculateShippingCost(totalDonuts, totalCost) {
   }
 }
 
-// -----------------------------------------------------------------//
-// -----------Funktion för att skapa emojis för rating--------------//
-/**
- * Skapa en variabel för raiting och kontrollera om det är ett heltal eller har decimaler
- * Skapa en tom html sträng
- * Uppreda följande;
-    För heltal: Lägg till en stjärna för varje heltal med start från 0
-    För decimaltal: Lägg till en tom stjärna för att avrunda uppåt. 
- * Retunera en färdig HTML-sträng
- */
-function getRatingHtml(rating) {
-  const isHalf = String(rating).indexOf('.');
-
-  let html = '';
-  for (let i = 0; i < rating; i++) {
-    html += `<span>⭐</span>`;
-  }
-  if (isHalf !== -1) {
-    html += `<span></span>`;
-  }
-  return html;
+// ----------------10% rabatt vid köp av fler än 10-----------------//
+function calculateTotalDiscount() {
+  let totalDiscount = 0;
+  productList.forEach(product => {
+    if (product.amount >= 10) {
+      totalDiscount += product.amount * product.pris * 0.1;
+    }
+  });
+  return totalDiscount;
 }
 
-// -----------------------------------------------------------------//
+// -------------------------Rabatt på måndagar----------------------//
+// ---------------------EJ KLAR---------------------------//
+function updateProductPricesMonday() {
+  const now = new Date();
+  const day = now.getDay();
+  const hours = now.getHours();
+
+  productList.forEach(product => {
+    if (day === 1 && hours < 10) {
+      product.displayedPrice = eachProduct.pris * 0.9; 
+    } else {
+      product.displayedPrice = eachProduct.pris; 
+    }
+
+    const priceElement = document.querySelector(`.product-price[data-product-id="${eachProduct.id}"]`);
+    if (priceElement) {
+      priceElement.textContent = `Din rabbatt är ${product.displayedPrice} kr/st`;
+    }
+  });
+}
+
+// -------------------------Rabatt på helger------------------------//
+// ---------------------EJ KLAR---------------------------//
+
+
+// ------------------Ta bort faktura möjlighet----------------------//
+// --------------------------FUNGERAR EJ----------------------------//
+function updatePaymentOptions() {
+  const total = calculateTotal();
+
+  const invoiceOption = document.getElementById('invoice');
+
+  if (total > 800) {
+    invoiceOption.disabled = true;
+  } else {
+    invoiceOption.disabled = false;
+  }
+}
+
+
+
+// ------------------------------------------------------------------------------------------ //
+// ------------------------------------------------------------------------------------------ //
+// -------------------------------------  SORTERING  ---------------------------------------- //
+// ------------------------------------------------------------------------------------------ //
+// ------------------------------------------------------------------------------------------ //
+
+
 // ----------------Soretingsfunktionen för namn-------------------- //
 /**
  * Skapa en kopia på befintlig produktlista
@@ -483,7 +554,6 @@ function sortByName(Name) {
   isName = !isName; 
 }); 
 
-// -----------------------------------------------------------------//
 // ----------------Sorteringsfunktionen för kategori---------------- //
 /**
  * Skapa en kopia på befintlig produktlista
@@ -539,7 +609,6 @@ function sortByCategory(Category) {
   isCategory = !isCategory; 
 });
 
-// -----------------------------------------------------------------//
 // ----------------Soretingsfunktionen för pris---------------------//
 /**
  * Skapa en kopia på befintlig produktlista
@@ -593,7 +662,6 @@ sortPriceButton.addEventListener('click', () => {
 
 let isPrice = true;
 
-// -----------------------------------------------------------------//
 // ----------------Sorteingsfunktionen för rating-------------------//
 /**
  * Skapa en kopia på befintlig produktlista
@@ -646,7 +714,6 @@ sortRatingButton.addEventListener('click', () => {
 
 let isRating = true;
 
-// -----------------------------------------------------------------//
 // -----------------------Sortera efter ID--------------------------//
 /**
  * Skapa en kopia på befintlig produktlista
@@ -701,7 +768,12 @@ sortIdButton.addEventListener('click', () => {
 let isId = true;
 
 
-// -----------------------------------------------------------------//
+// ------------------------------------------------------------------------------------------ //
+// ------------------------------------------------------------------------------------------ //
+// -------------------------------------  VALIDERING  --------------------------------------- //
+// ------------------------------------------------------------------------------------------ //
+// ------------------------------------------------------------------------------------------ //
+
 // --------------Validering av formulär - Förnamn-------------------//
 /**
  * Skapa en variabel för RegEx valideringen
@@ -732,7 +804,6 @@ firstNameInput.addEventListener('input', () => {
   validateFirstName(firstNameInput.value);
 });
 
-// -----------------------------------------------------------------//
 // --------------Validering av formulär - Efternamn-----------------//
 /**
  * Skapa en variabel för RegEx valideringen
@@ -763,7 +834,6 @@ lastNameInput.addEventListener('input', () => {
   validateLastName(lastNameInput.value);
 });
 
-// -----------------------------------------------------------------//
 // --------------Validering av formulär - Adressfält----------------//
 /**
  * Skapa en variabel för RegEx valideringen
@@ -794,7 +864,6 @@ addressInput.addEventListener('input', () => {
   validateAddress(addressInput.value);
 });
 
-// -----------------------------------------------------------------//
 // --------------Validering av formulär - Postnummer----------------//
 /**
  * Skapa en variabel för RegEx valideringen
@@ -825,7 +894,6 @@ zipCodeInput.addEventListener('input', () => {
   validateZipCode(zipCodeInput.value);
 });
 
-// -----------------------------------------------------------------//
 // ---------------Validering av formulär - Postort------------------//
 /**
  * Skapa en variabel för RegEx valideringen
@@ -856,8 +924,6 @@ postalAddressInput.addEventListener('input', () => {
   validatePostalAddress(postalAddressInput.value);
 });
 
-
-// -----------------------------------------------------------------//
 // ---------------Validering av formulär - Telefon------------------//
 /**
  * Skapa en variabel för RegEx valideringen
@@ -888,7 +954,6 @@ phoneInput.addEventListener('input', () => {
   validatePhone(phoneInput.value);
 });
 
-// -----------------------------------------------------------------//
 // ------------------Validering av formulär - Epost-----------------//
 /**
  * Skapa en variabel för RegEx valideringen
@@ -919,7 +984,6 @@ emailInput.addEventListener('input', () => {
   validateEmail(emailInput.value);
 });
 
-// -----------------------------------------------------------------//
 // ---------------Validering av formulär - Betalningssätt-----------//
 // ----------------------FUNGERAR EJ--------------------------------//
 /**
@@ -941,8 +1005,11 @@ function validatePaymentMethod() {
   }
 }
 
+const paymentMethodInput = document.getElementById('paymentMethod');
+paymentMethodInput.addEventListener('input', () => {
+  validateCardName(paymentMethodInput.value);
+});
 
-// -----------------------------------------------------------------//
 // ----------Validering av betalningsuppgifter - Kortnamn-----------//
 /**
  * Skapa en variabel för RegEx valideringen
@@ -973,7 +1040,6 @@ cardNameInput.addEventListener('input', () => {
   validateCardName(cardNameInput.value);
 });
 
-// -----------------------------------------------------------------//
 // ----------Validering av betalningsuppgifter - Kortnummer---------//
 /**
  * Skapa en variabel för RegEx valideringen
@@ -1009,8 +1075,6 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
-
-// -----------------------------------------------------------------//
 // --------Validering av betalningsuppgifter - Utgångsdatum---------//
 /**
  * Skapa en variabel för RegEx valideringen
@@ -1041,8 +1105,6 @@ expDateInput.addEventListener('input', () => {
   validateExpDate(expDateInput.value);
 });
 
-
-// -----------------------------------------------------------------//
 // -------------Validering av betalningsuppgifter - CVV-------------//
 /**
  * Skapa en variabel för RegEx valideringen
@@ -1073,7 +1135,13 @@ cvvInput.addEventListener('input', () => {
   validateCvv(cvvInput.value);
 });
 
-// -----------------------------------------------------------------//
+
+// ------------------------------------------------------------------------------------------ //
+// ------------------------------------------------------------------------------------------ //
+// ------------------------  FORMULÄR & ÖVRIGA FUNKTIONER  ---------------------------------- //
+// ------------------------------------------------------------------------------------------ //
+// ------------------------------------------------------------------------------------------ //
+
 // --------------Visa & dölj betalningsuppgifter--------------------//
 // ---------EJ KLAR SAKNAR FUNKTION KRING ATT BEHÅLLA CSS-----------//
 /**
@@ -1094,10 +1162,7 @@ paymentMethodSelect.addEventListener('change', () => {
   }
 });
 
-
-// -----------------------------------------------------------------//
 // ------------------Visa & dölj beställningsknapp------------------//
-
 /* 🦄🦄🦄🦄🦄🦄 JENNI: Är det okej att göra såhär eller ska det kopplas till valideringsfunktionerna ovan? */
 
 /**
@@ -1140,24 +1205,38 @@ for (const field of [...requiredFields, ...optionalFields]) {
   field.addEventListener("change", checkRequiredFields);
 }
 
-// -----------------------------------------------------------------//
 // ------------------Knapp för att tömma formulär-------------------//
+// ---------------------SKRIVER UT DUBBELT--------------------------//
+
 /**
- * Skapa en variabel för formuläret med id "myForm" 
- * Återställ formuläret
- * Skapa en variabel för knappen med id "clearButton"
- * Skapa ett klick event för knappen
+ * Skapa en funktion för att tömma input fält
+ * Skapa en funktion för att tömma varukorg och skriva ut produkterna igen. 
+ * Skapa en koppling till knappen (ta bort beställning)
  */
 function clearForm() {
-   const form = document.getElementById("myForm");
-
+  const form = document.getElementById("myForm");
   form.reset();
 }
 
-const removeButton = document.getElementById("clearButton");
-removeButton.addEventListener("click", clearForm);
+function clearCart() {
+  productList.forEach(product => {
+    product.amount = 0;
+  });
 
-// -----------------------------------------------------------------//
+  printProductListDiv();
+  updateCart();
+}
+
+
+const removeButton = document.getElementById("clearButton");
+
+function handleClearButtonClick() {
+  clearForm();
+  clearCart();
+}
+
+removeButton.addEventListener("click", handleClearButtonClick);
+
 // ------------------Beställningsbekräftelse------------------------//
 /**
  * Skapa en variabel för knappen med id "submitButton"
@@ -1171,19 +1250,20 @@ removeButton.addEventListener("click", clearForm);
  */
 const submitButton = document.getElementById('submitButton');
 
+
 submitButton.addEventListener('click', (event) => {
   event.preventDefault();
+  const addressValue = addressInput.value;
 
   const confirmed = confirm('Är du säker på att du vill skicka beställningen?');
 
   if (confirmed) {
-    alert('Tack för din beställning! Vår leveranstid är för närvarande 8 dagar.');
+    alert(`Tack för din beställning! Dina munkar är nu påväg till dig på adressen ${addressValue}. Vår leveranstid är för närvarande 8 dagar.`);
   } else {
     alert('Beställningen avbröts.');
   }
 });
 
-// -----------------------------------------------------------------//
 // ------------------Timer som deletar innehåll---------------------//
 /**
  * Skapa en variabel som här elementet med id countdown
@@ -1211,13 +1291,10 @@ function startCountdown() {
     if (minutes === 0 && seconds === 0) {
       clearInterval(countdownInterval);
       localStorage.clear();
+      alert('Din beställning kommer nu att rensas då du tog för lång tid på dig ;)');
       location.reload();
     }
   }, 1000); // Varje 1000 millisekunder (1 sekund)
-}
-
-function stopCountdown() {
-  clearInterval(countdownInterval);
 }
 
 startCountdown(); 
