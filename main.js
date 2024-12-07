@@ -17,7 +17,6 @@ import "./css/style.scss"
  X Rensa knapp för beställningsformulär
  X Effekt när Totalen uppe på sidan uppdateras
  - Lägg in regler för rabatter
- 
  - Tömma-knappen skriver ut produktlsitan dubbelt. Fixa
  - Validering av betalningssätt fungerar ej. 
 
@@ -26,6 +25,7 @@ import "./css/style.scss"
  - Tangentbordstyrt?
  - Uppdatera README filen
  - Validera html och css
+ - Ta bilder inför inlämningen (?)
  */
 
 // ------------------------------------------------------------------------------------------ //
@@ -411,7 +411,16 @@ function updateCart() {
   updateCartIcon();
 }
 
-// ----Funktion för att beräkna totalen i varukorgen & högst upp på sidan----//
+
+// ------------------Uppdatera antal på varukorgen------------------//
+function updateCartIcon() {
+  const cartIcon = document.querySelector('.button .material-symbols-outlined');
+  cartIcon.setAttribute('data-count', totalProducts);
+}
+
+updateCartIcon();
+
+// --------Beräkna totalen i varukorgen & högst upp på sidan--------//
 /**
  * Skapa en variabel och räkna ut totalkostanden
  * Skapa en variabel för att visa totalkostanden på html element med id totalCost (totalen i varukrogen)
@@ -424,18 +433,22 @@ function updateTotal() {
   const totalDonuts = productList.reduce((total, eachProduct) => total + eachProduct.amount, 0);
   const totalDiscount = calculateTotalDiscount();
   const shippingCost = calculateShippingCost(totalDonuts, totalCost);
-    
+
   const totalElement = document.getElementById('totalCost');
   totalElement.textContent = `Totalt: ${totalCost + shippingCost + totalDiscount} kr`;
   
   const totalSum = document.getElementById('totalSum');
   totalSum.textContent = `${totalCost + shippingCost + totalDiscount} kr`;
 
+  const discountElement = document.getElementById('discount');
+  discountElement.textContent = `Din rabatt: ${totalDiscount} kr`;
+
   const shippingCostElement = document.getElementById('shippingCost');
   shippingCostElement.textContent = `Din fraktkostnad: ${shippingCost} kr`;
 
-  const discountElement = document.getElementById('discount');
-  discountElement.textContent = `Din rabatt: ${totalDiscount} kr`;
+  updatePaymentMethodOptions();
+  calculateMondayDiscount();
+
 }
 
 // --------------Gratis frakt vid minst 15 munkar-------------------//
@@ -459,51 +472,52 @@ function calculateTotalDiscount() {
 }
 
 // -------------------------Rabatt på måndagar----------------------//
-// ---------------------EJ KLAR---------------------------//
-function updateProductPricesMonday() {
-  const now = new Date();
-  const day = now.getDay();
-  const hours = now.getHours();
+// -------------------------------TESTA!!---------------------------//
+function calculateMondayDiscount(totalCost) {
+  const today = new Date();
+  const isMonday = today.getDay() === 1;
+  const isBefore10AM = today.getHours() < 10;
 
-  productList.forEach(product => {
-    if (day === 1 && hours < 10) {
-      product.displayedPrice = eachProduct.pris * 0.9; 
-    } else {
-      product.displayedPrice = eachProduct.pris; 
-    }
-
-    const priceElement = document.querySelector(`.product-price[data-product-id="${eachProduct.id}"]`);
-    if (priceElement) {
-      priceElement.textContent = `Din rabbatt är ${product.displayedPrice} kr/st`;
-    }
-  });
+  if (isMonday && isBefore10AM) {
+    const mondayDiscount = totalCost * 0.1;
+    discountSummaryElement.textContent = `Måndagsrabatt: ${mondayDiscount} kr`;
+    return mondayDiscount;
+  } else {
+    discountSummaryElement.textContent = '';
+    return 0;
+  }
 }
 
 // -------------------------Rabatt på helger------------------------//
 // ---------------------EJ KLAR---------------------------//
+function calculatePriceWithSurcharge(originalPrice) {
+  const currentDate = new Date();
+  const dayOfWeek = currentDate.getDay();
+  const hours = currentDate.getHours();
 
-
-// ------------------Ta bort faktura möjlighet----------------------//
-// --------------------------FUNGERAR EJ----------------------------//
-function updatePaymentOptions() {
-  const total = calculateTotal();
-
-  const invoiceOption = document.getElementById('invoice');
-
-  if (total > 800) {
-    invoiceOption.disabled = true;
+  if ((dayOfWeek === 5 && hours >= 15) || (dayOfWeek === 0 && hours >= 3) || dayOfWeek === 6) {
+    return eachProduct.pris * 1.15;
   } else {
-    invoiceOption.disabled = false;
+    return eachProduct.pris;
   }
 }
 
-// ------------------Uppdatera antal på varukorgen------------------//
-function updateCartIcon() {
-  const cartIcon = document.querySelector('.button .material-symbols-outlined');
-  cartIcon.setAttribute('data-count', totalProducts);
-}
 
-updateCartIcon();
+
+// -------------Ta bort faktura möjlighet över 800kr----------------//
+function updatePaymentMethodOptions() {
+  const totalCost = productList.reduce((total, eachProduct) => total + eachProduct.amount * eachProduct.pris, 0);
+  const invoiceOption = document.getElementById('invoice');
+
+  if (totalCost > 800) {
+      invoiceOption.disabled = true;
+      // Optionellt: Visa ett felmeddelande
+      document.getElementById('paymentMethodErrorMessage').textContent = " Faktura är inte tillgänglig vid köp över 800 kr!";
+  } else {
+      invoiceOption.disabled = false;
+      document.getElementById('paymentMethodErrorMessage').textContent = "";
+  }
+}
 
 
 // ------------------------------------------------------------------------------------------ //
@@ -1167,7 +1181,7 @@ const paymentMethodSelect = document.getElementById('paymentMethod');
 const paymentDetailsSection = document.getElementById('paymentDetails');
 
 paymentMethodSelect.addEventListener('change', () => {
-  if (paymentMethodSelect.value !== 'invoice') {
+  if (paymentMethodSelect.value !== 'card') {
     paymentDetailsSection.style.display = 'none';
   } else {
     paymentDetailsSection.style.display = 'block';
