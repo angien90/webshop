@@ -13,17 +13,18 @@ import "./css/style.scss"
  X Fält i formuläret ska valideras innan det går att skicka beställningen. 
  X Styla felmeddelanden i valideringen med CSS.
  X Skapa en timer som räknar ner och deletar innehåll
- - Fixa till så att CSS fungerar som den ska för Betalningsuppgifter
- - Lägg in regler för rabatter
  X Bekrätfelse ruta vid beställning
  X Rensa knapp för beställningsformulär
+ - Lägg in regler för rabatter
  - Effekt när Totalen uppe på sidan uppdateras
+ - Tömma-knappen skriver ut produktlsitan dubbelt. Fixa
+ - Validering av betalningssätt fungerar ej. 
 
- ÖVRIGT ATT KOLLA/GÖRA
-- Kontrollera kravlistan från uppgiften igen så att allt är med
+ ÖVRIGT ATT KOLLA/GÖRA INNAN INLÄMNING
+ - Kontrollera kravlistan från uppgiften igen så att allt är med
  - Tangentbordstyrt?
-  - Uppdatera README filen
-  - Validera html och css
+ - Uppdatera README filen
+ - Validera html och css
  */
 
 // ------------------------------------------------------------------------------------------ //
@@ -933,7 +934,7 @@ postalAddressInput.addEventListener('input', () => {
  * Skapa en event listener som kollar av värdet i input fältet och kör funktionen
  */
 function validatePhone(Phone) {
-  const phoneRegEx = /^(\+46|070|073|072)?[- ]?\d{0,3}[- ]?\d{2}[- ]?\d{2}[- ]?\d{2}$/;
+  const phoneRegEx = /^([0|\+[0-9]{1,5})?([0-9]{10})$/;
   const phoneError = document.getElementById('phoneError');
   const phoneErrorMessage = document.getElementById('phoneErrorMessage');
 
@@ -942,7 +943,7 @@ function validatePhone(Phone) {
     phoneErrorMessage.textContent = "";
   } else if (!phoneRegEx.test(Phone)) {
     phoneError.style.display = 'inline-block';
-    phoneErrorMessage.textContent = " Du har inte angett ett giltig telefonnummer";
+    phoneErrorMessage.textContent = " Du har inte angett ett giltig telefonnummer. Ange utan mellanslag eller bindestreck";
   } else {
     phoneError.style.display = 'none';
     phoneErrorMessage.textContent = '';
@@ -993,7 +994,6 @@ emailInput.addEventListener('input', () => {
  * Skapa en variabel för input fältet med id paymentMethod
  * Skapa en event listener som kollar av värdet i input fältet och kör funktionen
  */
-
 function validatePaymentMethod() {
   const paymentMethod = document.getElementById('paymentMethod').value;
   const paymentMethodError = document.getElementById('paymentMethodError');
@@ -1007,7 +1007,7 @@ function validatePaymentMethod() {
 
 const paymentMethodInput = document.getElementById('paymentMethod');
 paymentMethodInput.addEventListener('input', () => {
-  validateCardName(paymentMethodInput.value);
+  validatePaymentMethod(paymentMethodInput.value);
 });
 
 // ----------Validering av betalningsuppgifter - Kortnamn-----------//
@@ -1143,7 +1143,6 @@ cvvInput.addEventListener('input', () => {
 // ------------------------------------------------------------------------------------------ //
 
 // --------------Visa & dölj betalningsuppgifter--------------------//
-// ---------EJ KLAR SAKNAR FUNKTION KRING ATT BEHÅLLA CSS-----------//
 /**
  * Skapa variabel för att hämta HTML elementet med rullistan för betalningsmetod (id paymentMethod)
  * Skapa en variabel för att hämta sektionen med alla fält för betalning med kort (id paymentDetails) 
