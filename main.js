@@ -21,8 +21,8 @@ import "./css/style.scss"
  - Validering av betalningssätt fungerar ej. 
 
  ÖVRIGT ATT KOLLA/GÖRA INNAN INLÄMNING
- - Kontrollera kravlistan från uppgiften igen så att allt är med
- - Tangentbordstyrt?
+ - Kontrollera svengelska
+ - I mån av tid lägg in snygagre funktion av hjälptext på inputfält
  - Uppdatera README filen
  - Validera html och css
  - Ta bilder inför inlämningen (?)
@@ -279,6 +279,7 @@ function printProductListDiv() {
   addButton.forEach(button => {
     button.addEventListener('click', addProductCount);
   });
+
 }
 
 printProductListDiv();
@@ -431,14 +432,14 @@ updateCartIcon();
 function updateTotal() {
   const totalCost = productList.reduce((total, eachProduct) => total + eachProduct.amount * eachProduct.pris, 0);
   const totalDonuts = productList.reduce((total, eachProduct) => total + eachProduct.amount, 0);
-  const totalDiscount = calculateTotalDiscount();
+  const totalDiscount = amountDiscount();
   const shippingCost = calculateShippingCost(totalDonuts, totalCost);
 
   const totalElement = document.getElementById('totalCost');
-  totalElement.textContent = `Totalt: ${totalCost + shippingCost + totalDiscount} kr`;
+  totalElement.textContent = `Totalt: ${totalCost + shippingCost - totalDiscount} kr`;
   
   const totalSum = document.getElementById('totalSum');
-  totalSum.textContent = `${totalCost + shippingCost + totalDiscount} kr`;
+  totalSum.textContent = `${totalCost + shippingCost - totalDiscount} kr`;
 
   const discountElement = document.getElementById('discount');
   discountElement.textContent = `Din rabatt: ${totalDiscount} kr`;
@@ -446,7 +447,6 @@ function updateTotal() {
   const shippingCostElement = document.getElementById('shippingCost');
   shippingCostElement.textContent = `Din fraktkostnad: ${shippingCost} kr`;
 
-  updatePaymentMethodOptions();
   calculateMondayDiscount();
 
 }
@@ -461,7 +461,7 @@ function calculateShippingCost(totalDonuts, totalCost) {
 }
 
 // ----------------10% rabatt vid köp av fler än 10-----------------//
-function calculateTotalDiscount() {
+function amountDiscount() {
   let totalDiscount = 0;
   productList.forEach(product => {
     if (product.amount >= 10) {
@@ -478,9 +478,11 @@ function calculateMondayDiscount(totalCost) {
   const isMonday = today.getDay() === 1;
   const isBefore10AM = today.getHours() < 10;
 
+  const discountSummaryElement = document.getElementById('discount-summary');
+
   if (isMonday && isBefore10AM) {
     const mondayDiscount = totalCost * 0.1;
-    discountSummaryElement.textContent = `Måndagsrabatt: ${mondayDiscount} kr`;
+    discountSummaryElement.textContent = `Grattis du får idag måndagsrabatt som idag är ${mondayDiscount} kr`;
     return mondayDiscount;
   } else {
     discountSummaryElement.textContent = '';
@@ -490,34 +492,11 @@ function calculateMondayDiscount(totalCost) {
 
 // -------------------------Rabatt på helger------------------------//
 // ---------------------EJ KLAR---------------------------//
-function calculatePriceWithSurcharge(originalPrice) {
-  const currentDate = new Date();
-  const dayOfWeek = currentDate.getDay();
-  const hours = currentDate.getHours();
 
-  if ((dayOfWeek === 5 && hours >= 15) || (dayOfWeek === 0 && hours >= 3) || dayOfWeek === 6) {
-    return eachProduct.pris * 1.15;
-  } else {
-    return eachProduct.pris;
-  }
-}
 
 
 
 // -------------Ta bort faktura möjlighet över 800kr----------------//
-function updatePaymentMethodOptions() {
-  const totalCost = productList.reduce((total, eachProduct) => total + eachProduct.amount * eachProduct.pris, 0);
-  const invoiceOption = document.getElementById('invoice');
-
-  if (totalCost > 800) {
-      invoiceOption.disabled = true;
-      // Optionellt: Visa ett felmeddelande
-      document.getElementById('paymentMethodErrorMessage').textContent = " Faktura är inte tillgänglig vid köp över 800 kr!";
-  } else {
-      invoiceOption.disabled = false;
-      document.getElementById('paymentMethodErrorMessage').textContent = "";
-  }
-}
 
 
 // ------------------------------------------------------------------------------------------ //
@@ -1013,7 +992,7 @@ emailInput.addEventListener('input', () => {
 });
 
 // ---------------Validering av formulär - Betalningssätt-----------//
-// ----------------------FUNGERAR EJ--------------------------------//
+// ----------------------FUNGERAR EJ - Visar tvärt om--------------------------------//
 /**
  * Skapa en variabel för RegEx valideringen
  * Skapa en variabel för fältet för felmeddelande med id paymentMethodError
@@ -1021,21 +1000,28 @@ emailInput.addEventListener('input', () => {
  * Skapa en variabel för input fältet med id paymentMethod
  * Skapa en event listener som kollar av värdet i input fältet och kör funktionen
  */
-function validatePaymentMethod() {
-  const paymentMethod = document.getElementById('paymentMethod').value;
+function validatePaymentMethod(paymentMethodInput) {
+  const paymentMethodRegex = /^("card|invoice")$/;
   const paymentMethodError = document.getElementById('paymentMethodError');
+  const paymentMethodMessage = document.getElementById('paymentMethodErrorMessage');
 
-  if (!paymentMethod) {
-    paymentMethodError.textContent = "Vänligen välj en betalningsmetod.";
+  if (paymentMethodInput.value === "") { 
+    paymentMethodError.style.display = 'inline'; // Show error message
+    paymentMethodMessage.textContent = " Fel";
+  } else if (!paymentMethodRegex.test(paymentMethodInput.value)) {
+    paymentMethodError.style.display = 'inline'; // Show error message for invalid values
+    paymentMethodMessage.textContent = " Fel";
   } else {
-    paymentMethodError.textContent = "";
+    paymentMethodError.style.display = 'none'; // Hide error message for valid values
+    paymentMethodMessage.textContent = '';
   }
 }
 
-const paymentMethodInput = document.getElementById('paymentMethod');
+  const paymentMethodInput = document.getElementById('paymentMethod');
 paymentMethodInput.addEventListener('input', () => {
   validatePaymentMethod(paymentMethodInput.value);
 });
+
 
 // ----------Validering av betalningsuppgifter - Kortnamn-----------//
 /**
@@ -1095,12 +1081,11 @@ function validateCardNumber(CardNumber) {
   }
 }
 
-document.addEventListener('DOMContentLoaded', () => {
   const cardNumberInput = document.getElementById('ccnum');
   cardNumberInput.addEventListener('input', () => {
     validateCardNumber(cardNumberInput.value);
   });
-});
+
 
 // --------Validering av betalningsuppgifter - Utgångsdatum---------//
 /**
@@ -1141,7 +1126,7 @@ expDateInput.addEventListener('input', () => {
  * Skapa en event listener som kollar av värdet i input fältet och kör funktionen
  */
 function validateCvv(CVV) {
-  const cvvRegEx = /^[0-9]{3}$/;
+  const cvvRegEx = /^[0-9]{3,4}$/;
   const cvvError = document.getElementById('cvvError');
   const cvvErrorMessage = document.getElementById('cvvErrorMessage');
 
@@ -1153,7 +1138,7 @@ function validateCvv(CVV) {
     cvvErrorMessage.textContent = " Du har inte angett en giltig cvv";
   } else {
     cvvError.style.display = 'none';
-    cvvErrorMEssage.textContent = '';
+    cvvErrorMessage.textContent = '';
   }
 }
 
@@ -1161,6 +1146,85 @@ const cvvInput = document.getElementById('cvv');
 cvvInput.addEventListener('input', () => {
   validateCvv(cvvInput.value);
 });
+
+// -------------Validering av fält för att aktiver skicka knapp-------------//
+function areAllFieldsValid() {
+  if (!validateFirstName(firstNameInput)) return false;
+  if (!validateLastName(lastNameInput)) return false;
+  if (!validateAddress(addressInput)) return false;
+  if (!validateZipCode(zipCodeInput)) return false;
+  if (!validatePostalAddress(postalAddressInput)) return false;
+  if (!validatePhone(phoneInput)) return false;
+  if (!validateEmail(emailInput)) return false;
+  if (!validatePaymentMethod(paymentMethodInput)) return false;
+  if (!validateCardName(cardNameInput)) return false;
+  if (!validateCardNumber(cardNumberInput)) return false;
+  if (!validateExpDate(expDateInput)) return false;
+  if (!validateCvv(cvvInput)) return false;
+
+  return true;
+}
+
+function toggleSubmitButtonCard() {
+  const submitButton = document.getElementById('submit');
+  submitButton.disabled = !areAllFieldsValid();
+}
+
+const inputFields = [
+  cardNameInput, cardNumberInput, expDateInput, cvvInput,
+  firstNameInput, lastNameInput, addressInput, zipCodeInput,
+  postalAddressInput, phoneInput, emailInput, paymentMethodInput
+];
+
+inputFields.forEach(input => {
+  input.addEventListener('input', toggleSubmitButtonCard);
+});
+
+/*function areAllFieldsValid() {
+  const isValid = (
+    validateFirstName(firstNameInput) &&
+    validateLastName(lastNameInput) &&
+    validateAddress(addressInput) &&
+    validateZipCode(zipCodeInput) &&
+    validatePostalAddress(postalAddressInput) &&
+    validatePhone(phoneInput) &&
+    validateEmail(emailInput) &&
+    validatePaymentMethod(paymentMethodInput) &&
+    validateCardName(cardNameInput.value) &&
+    validateCardNumber(cardNumberInput.value) &&
+    validateExpDate(expDateInput.value) &&
+    validateCvv(cvvInput.value) 
+  );
+
+  console.log('All fields valid:', isValid);
+  return isValid;
+}
+
+function toggleSubmitButtonCard() {
+  const submitButton = document.getElementById('submit');
+
+  if (areAllFieldsValid()) {
+    submitButton.disabled = false;
+  } else {
+    submitButton.disabled = true;
+  }
+}
+
+toggleSubmitButtonCard();
+
+cardNameInput.addEventListener('input', toggleSubmitButtonCard);
+cardNumberInput.addEventListener('input', toggleSubmitButtonCard);
+expDateInput.addEventListener('input', toggleSubmitButtonCard);
+cvvInput.addEventListener('input', toggleSubmitButtonCard);
+firstNameInput.addEventListener('input', toggleSubmitButtonCard);
+lastNameInput.addEventListener('input', toggleSubmitButtonCard);
+addressInput.addEventListener('input', toggleSubmitButtonCard);
+zipCodeInput.addEventListener('input', toggleSubmitButtonCard);
+postalAddressInput.addEventListener('input', toggleSubmitButtonCard);
+phoneInput.addEventListener('input', toggleSubmitButtonCard);
+emailInput.addEventListener('input', toggleSubmitButtonCard);
+paymentMethodInput.addEventListener('input', toggleSubmitButtonCard);
+*/
 
 
 // ------------------------------------------------------------------------------------------ //
@@ -1201,7 +1265,8 @@ paymentMethodSelect.addEventListener('change', () => {
  * Skapa en event lyssnare som kollar efter ändringar på obligatoriska fält
  */
 
-const submitButtonHide = document.getElementById("submitButton");
+
+/*const submitButtonHide = document.getElementById("submitButton");
 const requiredFields = document.querySelectorAll("input[required]:not([type='checkbox']), select[required]");
 const optionalFields = document.querySelectorAll("input:not([required]), select:not([required])");
 
@@ -1229,7 +1294,7 @@ checkRequiredFields();
 
 for (const field of [...requiredFields, ...optionalFields]) {
   field.addEventListener("change", checkRequiredFields);
-}
+}*/
 
 // ------------------Knapp för att tömma formulär-------------------//
 // ---------------------SKRIVER UT DUBBELT--------------------------//
