@@ -68,8 +68,8 @@
         <article>
           <div id="cart"></div>
         </article>
+        <p class="monday-discount" id="discount-summary"></p>
         <div class="discount" id="discount"></div>
-        <p id="discount-summary"></p>
         <div class="shipping-cost" id="shippingCost"></div>
         <hr>
         <div class="total-cost" id="totalCost"></div>
@@ -79,36 +79,36 @@
       <section class="delivery-information">
         <h2>Leveransuppgifter</h2>
         <p>(* = obligatoriska fält)</p>
-        <label for="fname">Förnamn: *</label><span id="firstNameError"><i class="material-symbols-outlined">warning</span></i><span id="firstNameErrorMessage"></span></span><br>
+        <label for="fname">Förnamn: *</label><span id="firstNameError"><i class="material-symbols-outlined">warning</i></span><span id="firstNameErrorMessage"></span><br>
         <input type="text" id="fname" name="fname" placeholder="Gottfrid" aria-label="Gottfrid" value="" required><br>
 
-        <label for="lname">Efternamn: *</label><span id="lastNameError"><i class="material-symbols-outlined">warning</span></i><span id="lastNameErrorMessage"></span></span><br>
+        <label for="lname">Efternamn: *</label><span id="lastNameError"><i class="material-symbols-outlined">warning</i></span><span id="lastNameErrorMessage"></span><br>
         <input type="text" id="lname" name="lname" placeholder="Jästson" aria-label="Jätson" value="" required><br>
         
-        <label for="lname">Adress (gata + nr): *</label><span id="addressError"><i class="material-symbols-outlined">warning</span></i><span id="addressErrorMessage"></span></span><br>
+        <label for="lname">Adress (gata + nr): *</label><span id="addressError"><i class="material-symbols-outlined">warning</i></span><span id="addressErrorMessage"></span><br>
         <input type="text" id="address" name="address" placeholder="Snaskvägen 1" aria-label="Snaskvägen 1" value="" required><br>
 
         <label for="portCode">Portkod:</label><br>
         <input type="text" id="portCode" name="portkod" placeholder="1234#" aria-label="1234#" value=""><br>
 
-        <label for="zipCode">Postnummer: *</label></label><span id="zipCodeError"><i class="material-symbols-outlined">warning</span></i><span id="zipCodeErrorMessage"></span></span><br>
+        <label for="zipCode">Postnummer: *</label><span id="zipCodeError"><i class="material-symbols-outlined">warning</i></span><span id="zipCodeErrorMessage"></span><br>
         <input type="text" id="zipCode" name="postnr" placeholder="123 45" aria-label="123 45" value="" required><br>
 
-        <label for="postalAddress">Postort: *</label><span id="postalAddressError"><i class="material-symbols-outlined">warning</span></i><span id="postalAddressErrorMessage"></span></span><br>
+        <label for="postalAddress">Postort: *</label><span id="postalAddressError"><i class="material-symbols-outlined">warning</i></span><span id="postalAddressErrorMessage"></span><br>
         <input type="text" id="postalAddress" name="postort" placeholder="Snaskköping" aria-label="Snaskköping" value="" required><br>
 
-        <label for="phone">Telefon (mobil): *</label><span id="phoneError"><i class="material-symbols-outlined">warning</span></i><span id="phoneErrorMessage"></span></span><br>
+        <label for="phone">Telefon (mobil): *</label><span id="phoneError"><i class="material-symbols-outlined">warning</i></span><span id="phoneErrorMessage"></span><br>
         <input type="tel" id="phone" name="phone" placeholder="0701234567" aria-label="0701234567" value="" required><br>
       
-        <label for="email">E-postadress: *</label><span id="emailError"><i class="material-symbols-outlined">warning</span></i><span id="emailErrorMessage"></span></span><br>
+        <label for="email">E-postadress: *</label><span id="emailError"><i class="material-symbols-outlined">warning</i></span><span id="emailErrorMessage"></span><br>
         <input type="email" id="email" name="email" placeholder="gottfridsgyllenemunkar@munkar.com" aria-label="gottfridsgyllenemunkar@munkar.com" value="" required><br>
       
         <label for="sale">Rabattkod:</label><br>
         <input type="text" id="sale" name="sale" placeholder="ABC_123" aria-label="ABC_123" value=""><br>
 
-        <label for="paymentMethod">Betalningssätt: *</label><span id="paymentMethodError"><i class="material-symbols-outlined">warning</span></i><span id="paymentMethodErrorMessage"></span></span><br>
+        <label for="paymentMethod">Betalningssätt: *</label><span id="paymentMethodError"><i class="material-symbols-outlined">warning</i></span><span id="paymentMethodErrorMessage"></span><br>
         <select id="paymentMethod" name="payment-method" required>
-          <option value="" disabled selected>Gör ditt val här</option>
+          <option value="" selected>Gör ditt val här!</option>
           <option id="card" value="card">Kortbetalning</option>
           <option id="invoice" value="invoice">Faktura</option>
         </select>
@@ -134,13 +134,13 @@
           </div>
 
           <div class="card-information">
-            <label for="cname">Kortnamn</label><span id="cardNameError"><i class="material-symbols-outlined">warning</span></i><span id="cardNameErrorMessage"></span></span>
+            <label for="cname">Kortnamn</label><span id="cardNameError"><i class="material-symbols-outlined">warning</i></span><span id="cardNameErrorMessage"></span>
             <input type="text" id="cname" name="cardname" placeholder="Gottfrid Jästson" aria-label="Gottfrid Jästson">
-            <label for="ccnum">Kortnummer</label><span id="cardNumberError"><i class="material-symbols-outlined">warning</span></i><span id="cardNumberErrorMessage"></span></span>
+            <label for="ccnum">Kortnummer</label><span id="cardNumberError"><i class="material-symbols-outlined">warning</i></span><span id="cardNumberErrorMessage"></span>
             <input type="text" id="ccnum" name="cardnumber" placeholder="1111 2222 3333 4444" aria-label="1111 2222 3333 4444">
-            <label for="expdate">Utgångsdatum</label><span id="expDateError"><i class="material-symbols-outlined">warning</span></i><span id="expDateErrorMessage"></span></span>
+            <label for="expdate">Utgångsdatum</label><span id="expDateError"><i class="material-symbols-outlined">warning</i></span><span id="expDateErrorMessage"></span>
             <input type="text" id="expdate" name="expdate" placeholder="01/12" aria-label="01/12">
-            <label for="cvv">CVV</label><span id="cvvError"><i class="material-symbols-outlined">warning</span></i><span id="cvvErrorMessage"></span></span>
+            <label for="cvv">CVV</label><span id="cvvError"><i class="material-symbols-outlined">warning</i></span><span id="cvvErrorMessage"></span>
             <input type="text" id="cvv" name="cvv" placeholder="123" aria-label="123">
           </div>
           <div class="send-payment">
@@ -150,7 +150,7 @@
 
       <div class="submit-order">
         <button id="clearButton">Ta bort beställning<br><span class="material-symbols-outlined">Delete</span></button>
-        <button type="submit" class="submit-button" id="submitButton" disabled>Skicka beställning<br><span class="material-symbols-outlined">shopping_cart_checkout</span></button>
+        <button type="submit" id="submitButton" disabled>Skicka beställning<br><span class="material-symbols-outlined">shopping_cart_checkout</span></button>
       </div>
     </form>
    

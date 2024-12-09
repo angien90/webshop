@@ -474,7 +474,8 @@ function amountDiscount() {
 // -------------------------Rabatt på måndagar----------------------//
 // -------------------------------TESTA!!---------------------------//
 function calculateMondayDiscount(totalCost) {
-  const today = new Date();
+  const today = new Date('2024-12-09T09:00:00');
+  /*const today = new Date();*/
   const isMonday = today.getDay() === 1;
   const isBefore10AM = today.getHours() < 10;
 
@@ -482,13 +483,15 @@ function calculateMondayDiscount(totalCost) {
 
   if (isMonday && isBefore10AM) {
     const mondayDiscount = totalCost * 0.1;
-    discountSummaryElement.textContent = `Grattis du får idag måndagsrabatt som idag är ${mondayDiscount} kr`;
+    discountSummaryElement.textContent = `Grattis! Du får idag måndagsrabatt. Vi drar ytterligare ${mondayDiscount} kr från ditt köp`;
     return mondayDiscount;
   } else {
     discountSummaryElement.textContent = '';
     return 0;
   }
 }
+
+calculateMondayDiscount(totalCost);
 
 // -------------------------Rabatt på helger------------------------//
 // ---------------------EJ KLAR---------------------------//
@@ -803,6 +806,7 @@ function validateFirstName(FirstName) {
   } else {
     firstNameError.style.display = 'none';
     firstNameErrorMessage.textContent = "";
+    return true;
   }
 }
 
@@ -828,6 +832,7 @@ function validateLastName(LastName) {
   } else {
     lastNameError.style.display = 'none';
     lastNameErrorMessage.textContent = '';
+    return true;
   }
 }
 
@@ -853,6 +858,7 @@ function validateAddress(Address) {
   } else {
     addressError.style.display = 'none';
     addressErrorMessage.textContent = '';
+    return true;
   }
 }
 
@@ -879,6 +885,7 @@ function validateZipCode(ZipCode) {
   } else {
     zipCodeError.style.display = 'none';
     zipCodeErrorMessage.textContent = '';
+    return true;
   }
 }
 
@@ -905,6 +912,7 @@ function validatePostalAddress(PostalAddress) {
   } else {
     postalAddressError.style.display = 'none';
     postalAddressErrorMessage.textContent = '';
+    return true;
   }
 }
 
@@ -930,6 +938,7 @@ function validatePhone(Phone) {
   } else {
     phoneError.style.display = 'none';
     phoneErrorMessage.textContent = '';
+    return true;
   }
 }
 
@@ -955,12 +964,13 @@ function validateEmail(Email) {
   } else {
     emailError.style.display = 'none';
     emailErrorMessage.textContent = '';
+    return true;
   }
 }
 
 
 // ---------------Validering av formulär - Betalningssätt-----------//
-// ----------------------FUNGERAR EJ - Visar tvärt om--------------------------------//
+// ----------------FUNGERAR EJ - Visar tvärt om---------------------//
 /**
  * Skapa en variabel för RegEx valideringen
  * Skapa en variabel för fältet för felmeddelande med id paymentMethodError
@@ -968,20 +978,25 @@ function validateEmail(Email) {
  * Skapa en variabel för input fältet med id paymentMethod
  * Skapa en event listener som kollar av värdet i input fältet och kör funktionen
  */
-function validatePaymentMethod(paymentMethodInput) {
-  const paymentMethodRegex = /^("card|invoice")$/;
+function validatePaymentMethod(paymentMethod) {
+  const paymentMethodRegex = /^(card|invoice)$/;
   const paymentMethodError = document.getElementById('paymentMethodError');
   const paymentMethodMessage = document.getElementById('paymentMethodErrorMessage');
 
-  if (paymentMethodInput.value === "") { 
-    paymentMethodError.style.display = 'inline'; // Show error message
-    paymentMethodMessage.textContent = " Fel";
-  } else if (!paymentMethodRegex.test(paymentMethodInput.value)) {
-    paymentMethodError.style.display = 'inline'; // Show error message for invalid values
-    paymentMethodMessage.textContent = " Fel";
-  } else {
-    paymentMethodError.style.display = 'none'; // Hide error message for valid values
-    paymentMethodMessage.textContent = '';
+  console.log(paymentMethod);
+
+  if (paymentMethod === "") {
+    paymentMethodError.style.display = 'inline-block';  
+    paymentMethodMessage.textContent = "Fel: Vänligen välj ett betalningssätt.";
+  } 
+  else if (!paymentMethodRegex.test(paymentMethod)) {
+    paymentMethodError.style.display = 'inline-block';  
+    paymentMethodMessage.textContent = "Fel: Ogiltigt betalningssätt.";
+  } 
+  else {
+    paymentMethodError.style.display = 'none';
+    paymentMethodMessage.textContent = "";  
+    return true; 
   }
 }
 
@@ -996,7 +1011,7 @@ function toggleSubmitButton() {
   const postalAddressValid = validatePostalAddress(postalAddressInput.value);
   const phoneValid = validatePhone(phoneInput.value);
   const emailValid = validateEmail(emailInput.value);
-  const paymentMethodValid = validatePaymentMethod(paymentMethodInput.value);
+  const paymentMethodValid = validatePaymentMethod(paymentMethod.value);
 
   const submitButton = document.getElementById('submitButton');
 
@@ -1051,9 +1066,9 @@ emailInput.addEventListener('input', () => {
   toggleSubmitButton();
 });
 
-const paymentMethodInput = document.getElementById('paymentMethod');
-paymentMethodInput.addEventListener('input', () => {
-  validatePaymentMethod(paymentMethodInput.value);
+const paymentMethod = document.getElementById('paymentMethod');
+paymentMethod.addEventListener('input', () => {
+  validatePaymentMethod(paymentMethod.value);
   toggleSubmitButton();
 });
 
