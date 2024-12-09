@@ -1148,7 +1148,7 @@ cvvInput.addEventListener('input', () => {
 });
 
 // -------------Validering av fält för att aktiver skicka knapp-------------//
-function areAllFieldsValid() {
+/*function areAllFieldsValid() {
   if (!validateFirstName(firstNameInput)) return false;
   if (!validateLastName(lastNameInput)) return false;
   if (!validateAddress(addressInput)) return false;
@@ -1178,7 +1178,7 @@ const inputFields = [
 
 inputFields.forEach(input => {
   input.addEventListener('input', toggleSubmitButtonCard);
-});
+});*/
 
 /*function areAllFieldsValid() {
   const isValid = (
@@ -1297,8 +1297,6 @@ for (const field of [...requiredFields, ...optionalFields]) {
 }*/
 
 // ------------------Knapp för att tömma formulär-------------------//
-// ---------------------SKRIVER UT DUBBELT--------------------------//
-
 /**
  * Skapa en funktion för att tömma input fält
  * Skapa en funktion för att tömma varukorg och skriva ut produkterna igen. 
@@ -1313,6 +1311,9 @@ function clearCart() {
   productList.forEach(product => {
     product.amount = 0;
   });
+
+  const shelf = document.getElementById("product-list");
+  shelf.innerHTML = ''; 
 
   printProductListDiv();
   updateCart();
