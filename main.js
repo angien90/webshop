@@ -806,11 +806,6 @@ function validateFirstName(FirstName) {
   }
 }
 
-const firstNameInput = document.getElementById('fname');
-firstNameInput.addEventListener('input', () => {
-  validateFirstName(firstNameInput.value);
-});
-
 // --------------Validering av formulär - Efternamn-----------------//
 /**
  * Skapa en variabel för RegEx valideringen
@@ -835,11 +830,6 @@ function validateLastName(LastName) {
     lastNameErrorMessage.textContent = '';
   }
 }
-
-const lastNameInput = document.getElementById('lname');
-lastNameInput.addEventListener('input', () => {
-  validateLastName(lastNameInput.value);
-});
 
 // --------------Validering av formulär - Adressfält----------------//
 /**
@@ -866,10 +856,6 @@ function validateAddress(Address) {
   }
 }
 
-const addressInput = document.getElementById('address');
-addressInput.addEventListener('input', () => {
-  validateAddress(addressInput.value);
-});
 
 // --------------Validering av formulär - Postnummer----------------//
 /**
@@ -896,10 +882,6 @@ function validateZipCode(ZipCode) {
   }
 }
 
-const zipCodeInput = document.getElementById('zipCode');
-zipCodeInput.addEventListener('input', () => {
-  validateZipCode(zipCodeInput.value);
-});
 
 // ---------------Validering av formulär - Postort------------------//
 /**
@@ -926,11 +908,6 @@ function validatePostalAddress(PostalAddress) {
   }
 }
 
-const postalAddressInput = document.getElementById('postalAddress');
-postalAddressInput.addEventListener('input', () => {
-  validatePostalAddress(postalAddressInput.value);
-});
-
 // ---------------Validering av formulär - Telefon------------------//
 /**
  * Skapa en variabel för RegEx valideringen
@@ -955,11 +932,6 @@ function validatePhone(Phone) {
     phoneErrorMessage.textContent = '';
   }
 }
-
-const phoneInput = document.getElementById('phone');
-phoneInput.addEventListener('input', () => {
-  validatePhone(phoneInput.value);
-});
 
 // ------------------Validering av formulär - Epost-----------------//
 /**
@@ -986,10 +958,6 @@ function validateEmail(Email) {
   }
 }
 
-const emailInput = document.getElementById('email');
-emailInput.addEventListener('input', () => {
-  validateEmail(emailInput.value);
-});
 
 // ---------------Validering av formulär - Betalningssätt-----------//
 // ----------------------FUNGERAR EJ - Visar tvärt om--------------------------------//
@@ -1017,10 +985,6 @@ function validatePaymentMethod(paymentMethodInput) {
   }
 }
 
-  const paymentMethodInput = document.getElementById('paymentMethod');
-paymentMethodInput.addEventListener('input', () => {
-  validatePaymentMethod(paymentMethodInput.value);
-});
 
 // -------------Validering av fält för att aktiver skicka knapp-------------//
 //----- ej klar --- //
