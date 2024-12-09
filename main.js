@@ -448,7 +448,7 @@ function updateTotal() {
   shippingCostElement.textContent = `Din fraktkostnad: ${shippingCost} kr`;
 
   calculateMondayDiscount();
-
+  updatePaymentMethodOptions();
 }
 
 // --------------Gratis frakt vid minst 15 munkar-------------------//
@@ -500,7 +500,19 @@ calculateMondayDiscount(totalCost);
 
 
 // -------------Ta bort faktura möjlighet över 800kr----------------//
+function updatePaymentMethodOptions() {
+  const totalCost = productList.reduce((total, eachProduct) => total + eachProduct.amount * eachProduct.pris, 0);
+  const invoiceOption = document.getElementById('invoice');
 
+  if (totalCost > 800) {
+      invoiceOption.disabled = true;
+      // Optionellt: Visa ett felmeddelande
+      document.getElementById('paymentMethodErrorMessage').textContent = " Faktura är inte tillgänglig vid köp över 800 kr!";
+  } else {
+      invoiceOption.disabled = false;
+      document.getElementById('paymentMethodErrorMessage').textContent = "";
+  }
+}
 
 // ------------------------------------------------------------------------------------------ //
 // ------------------------------------------------------------------------------------------ //
