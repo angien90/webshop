@@ -17,15 +17,13 @@ import "./css/style.scss"
  X Rensa knapp för beställningsformulär
  X Effekt när Totalen uppe på sidan uppdateras
  - Lägg in regler för rabatter
- - Tömma-knappen skriver ut produktlsitan dubbelt. Fixa
- - Validering av betalningssätt fungerar ej. 
+  - Fixa till skickaknapp
 
  ÖVRIGT ATT KOLLA/GÖRA INNAN INLÄMNING
  - Kontrollera svengelska
  - I mån av tid lägg in snygagre funktion av hjälptext på inputfält
  - Uppdatera README filen
- - Validera html och css
- - Ta bilder inför inlämningen (?)
+ X Validera html och css
  */
 
 // ------------------------------------------------------------------------------------------ //

@@ -313,9 +313,6 @@ form {
         margin-top: 40px;
         margin-bottom: 10px;
     }
-}
-
-.delivery-information {
     p {
         display: flex;
         flex-direction: column;
@@ -328,8 +325,54 @@ form {
         width: 100%;
         border-radius: 10px;
         height: 25px;
-        margin-bottom: 10px;
+        margin-bottom: 0px;
     }
+    h4 {
+        margin-top: 0px;
+        margin-bottom:5px;
+        font-weight: lighter;
+    }
+}
+
+.input-group {
+    font-size: 1rem;
+    position: relative;
+    --primary: #fe6491;
+    
+}
+
+.input {
+    all:unset;
+    color: black;
+    padding: 0.3rem;
+    border: 1px solid black;
+    border-radius: 10px;
+    transition: 150ms
+        cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.label {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    color: gray;
+    pointer-events: none;
+    transition: 150ms
+        cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.input:focus {
+    border: 1px solid 
+        var(--primary);
+}
+
+.input:is(:focus, :valid) ~ label {
+    transform:
+        translateY(-120%)
+        scale(0.7);
+    background-color: white;
+    padding-inline: 0.3rem;
+    color: var(--primary);
 }
 
 .checkboxes {
