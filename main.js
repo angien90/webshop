@@ -21,7 +21,6 @@ import "./css/style.scss"
 
  ÖVRIGT ATT KOLLA/GÖRA INNAN INLÄMNING
  - Kontrollera svengelska
- - I mån av tid lägg in snygagre funktion av hjälptext på inputfält
  - Uppdatera README filen
  X Validera html och css
  */
@@ -430,7 +429,7 @@ updateCartIcon();
 function updateTotal() {
   const totalCost = productList.reduce((total, eachProduct) => total + eachProduct.amount * eachProduct.pris, 0);
   const totalDonuts = productList.reduce((total, eachProduct) => total + eachProduct.amount, 0);
-  const totalDiscount = amountDiscount();
+  const totalDiscount = parseFloat(amountDiscount()) + parseFloat(calculateMondayDiscount(totalCost));
   const shippingCost = calculateShippingCost(totalDonuts, totalCost);
 
   const totalElement = document.getElementById('totalCost');
@@ -445,8 +444,9 @@ function updateTotal() {
   const shippingCostElement = document.getElementById('shippingCost');
   shippingCostElement.textContent = `Din fraktkostnad: ${shippingCost} kr`;
 
-  calculateMondayDiscount();
+  calculateMondayDiscount(totalCost);
   updatePaymentMethodOptions();
+  
 }
 
 // --------------Gratis frakt vid minst 15 munkar-------------------//
@@ -470,26 +470,23 @@ function amountDiscount() {
 }
 
 // -------------------------Rabatt på måndagar----------------------//
-// -------------------------------TESTA!!---------------------------//
 function calculateMondayDiscount(totalCost) {
-  const today = new Date('2024-12-09T09:00:00');
-  /*const today = new Date();*/
+  //const today = new Date('2024-12-09T09:00:00');
+  const today = new Date();
   const isMonday = today.getDay() === 1;
   const isBefore10AM = today.getHours() < 10;
 
   const discountSummaryElement = document.getElementById('discount-summary');
 
   if (isMonday && isBefore10AM) {
-    const mondayDiscount = totalCost * 0.1;
-    discountSummaryElement.textContent = `Grattis! Du får idag måndagsrabatt. Vi drar ytterligare ${mondayDiscount} kr från ditt köp`;
+    const mondayDiscount = (totalCost * 0.1).toFixed(2);
+    discountSummaryElement.textContent = `Grattis! Du får idag måndagsrabatt så vi drar ytterligare ${mondayDiscount} kr från ditt köp`;
     return mondayDiscount;
   } else {
     discountSummaryElement.textContent = '';
     return 0;
   }
 }
-
-calculateMondayDiscount(totalCost);
 
 // -------------------------Rabatt på helger------------------------//
 // ---------------------EJ KLAR---------------------------//
@@ -980,7 +977,7 @@ function validateEmail(Email) {
 
 
 // ---------------Validering av formulär - Betalningssätt-----------//
-// ----------------FUNGERAR EJ - Visar tvärt om---------------------//
+// ------Förbättring - Felmeddelande ska visas när sidan laddas-----//
 /**
  * Skapa en variabel för RegEx valideringen
  * Skapa en variabel för fältet för felmeddelande med id paymentMethodError
@@ -1247,6 +1244,62 @@ cvvInput.addEventListener('input', () => {
 });
 
 
+// ------------------------------------------------------------------------------------------ //
+// ------------------------------------------------------------------------------------------ //
+// -------------------  VALIDERING AV BETALNINGSUPPGIFTER FAKTURA  -------------------------- //
+// ------------------------------------------------------------------------------------------ //
+// ------------------------------------------------------------------------------------------ //
+
+// -------------Validering av betalningsuppgifter - Personnummer-------------//
+// -----------------------------EJ KLAR -------------------------------------//
+/**
+ * Skapa en variabel för RegEx valideringen
+ * Skapa en variabel för fältet för felmeddelande med id securityNumberError
+ * Skapa en if else sats som kollar om input fältet uppfyller RegEx valideringen
+ * Skapa en variabel för input fältet med id secnumber
+ * Skapa en event listener som kollar av värdet i input fältet och kör funktionen
+ */
+function validateSecurityNumber(SecurityNumber) {
+  const securityNumberRegEx = /^\d{6}(?:\d{2})?[-\s]?\d{4}$/;
+  const securityNumberError = document.getElementById('securityNymberError');
+  const securityNumberErrorMessage = document.getElementById('securityNymberErrorMessage');
+
+  if (SecurityNumber === "") {
+    securityNumberError.style.display = 'none';
+    securityNumberErrorMessage.textContent = "";
+    return false;
+  } else if (!securityNumberRegEx.test(SecurityNumber)) {
+    securityNumberError.style.display = 'inline-block';
+    securityNumberErrorMessage.textContent = " Du har inte angett ett giltigt personnummer";
+    return false;
+  } else {
+    securityNumberError.style.display = 'none';
+    securityNumberErrorMessage.textContent = '';
+    return true;
+  }
+}
+
+function toggleSubmits() {
+  const securityNumberValid = validateSecurityNumber(securityNumberInput.value);
+
+const submitButtons = document.getElementById('submitButton');
+
+  if (securityNumberValid) {
+    submitButtons.disabled = false;
+    submitButtons.style.display = 'inline'; 
+  } else {
+    submitButtons.disabled = true;
+    submitButtons.style.display = 'none';
+  }
+}
+
+const securityNumberInput = document.getElementById('secnumber');
+securityNumberInput.addEventListener('input', () => {
+  validateSecurityNumber(securityNumberInput.value);
+  toggleSubmits();
+});
+
+
 
 // ------------------------------------------------------------------------------------------ //
 // ------------------------------------------------------------------------------------------ //
@@ -1254,7 +1307,7 @@ cvvInput.addEventListener('input', () => {
 // ------------------------------------------------------------------------------------------ //
 // ------------------------------------------------------------------------------------------ //
 
-// --------------Visa & dölj betalningsuppgifter--------------------//
+// ------------Visa & dölj betalningsuppgifter för kort-----------//
 /**
  * Skapa variabel för att hämta HTML elementet med rullistan för betalningsmetod (id paymentMethod)
  * Skapa en variabel för att hämta sektionen med alla fält för betalning med kort (id paymentDetails) 
@@ -1272,6 +1325,24 @@ paymentMethodSelect.addEventListener('change', () => {
     paymentDetailsSection.style.display = 'block';
   }
 });
+
+// --------Visa & dölj betalningsuppgifter för faktura-----------//
+/**
+ * Skapa variabel för att hämta HTML elementet med rullistan för betalningsmetod (id paymentMethod)
+ * Skapa en variabel för att hämta sektionen med alla fält för betalning med kort (id paymentDetails) 
+ * Skapa en event lyssnare som kollar efter ändringar i rullistan
+    Om valet är invoice/faktura visa inget
+    Om valt är något annat så visa betalningsuppgifter
+ */
+    const paymentDetailsSectionInvoice = document.getElementById('paymentDetailsInvoice');
+    
+    paymentMethodSelect.addEventListener('change', () => {
+      if (paymentMethodSelect.value !== 'invoice') {
+        paymentDetailsSectionInvoice.style.display = 'none';
+      } else {
+        paymentDetailsSectionInvoice.style.display = 'block';
+      }
+    });
 
 // ------------------Knapp för att tömma formulär-------------------//
 /**

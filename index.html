@@ -68,7 +68,7 @@
         <article>
           <div id="cart"></div>
         </article>
-        <p class="monday-discount" id="discount-summary"></p>
+        <div class="monday-discount" id="discount-summary"></div>
         <div class="discount" id="discount"></div>
         <div class="shipping-cost" id="shippingCost"></div>
         <hr>
@@ -166,16 +166,32 @@
             <label for="cname">Kortnamn</label><span id="cardNameError"><i class="material-symbols-outlined">warning</i></span><span id="cardNameErrorMessage"></span>
             <input type="text" id="cname" name="cardname" placeholder="Gottfrid Jästson" aria-label="Gottfrid Jästson">
             <label for="ccnum">Kortnummer</label><span id="cardNumberError"><i class="material-symbols-outlined">warning</i></span><span id="cardNumberErrorMessage"></span>
-            <input type="text" id="ccnum" name="cardnumber" placeholder="1111 2222 3333 4444" aria-label="1111 2222 3333 4444">
+            <input type="number" id="ccnum" name="cardnumber" placeholder="1111 2222 3333 4444" aria-label="1111 2222 3333 4444">
             <label for="expdate">Utgångsdatum</label><span id="expDateError"><i class="material-symbols-outlined">warning</i></span><span id="expDateErrorMessage"></span>
-            <input type="text" id="expdate" name="expdate" placeholder="01/12" aria-label="01/12">
+            <input type="number" id="expdate" name="expdate" placeholder="01/12" aria-label="01/12">
             <label for="cvv">CVV</label><span id="cvvError"><i class="material-symbols-outlined">warning</i></span><span id="cvvErrorMessage"></span>
-            <input type="text" id="cvv" name="cvv" placeholder="123" aria-label="123">
+            <input type="number" id="cvv" name="cvv" placeholder="123" aria-label="123">
           </div>
           <div class="send-payment">
             <input type="submit" id="submit" name="submit" disabled>
           </div>
       </section>
+
+      <!-- Betalningsuppgifter -->
+      <section class="payment-details-invocie" id="paymentDetailsInvoice" style="display: none;">
+        <h3>Betalningsuppgifter</h3>
+        <p>För att kunna betala med faktura behöver du ange ditt personummer nedan</p>
+        <div class="invoice-information">
+          <label for="securitynumber">Personnummer</label><span id="securityNumberError"><i class="material-symbols-outlined">warning</i></span><span id="securityNumberErrorMessage"></span>
+          <input type="text" id="secnumber" name="securitynumber" placeholder="12345678-1234" aria-label="12345678-1234">
+        </div>
+        <div class="invoice-address">
+          <label>
+            <input type="checkbox" name="fakturaadress"> Min leveransadress är det samma som min fakturaadress. 
+          </label><br>
+        </div>
+      </section>
+
 
       <div class="submit-order">
         <button id="clearButton">Ta bort beställning<br><span class="material-symbols-outlined">Delete</span></button>
