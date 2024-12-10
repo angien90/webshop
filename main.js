@@ -360,12 +360,15 @@ function addProductCount(e) {
       const isHalf = String(rating).indexOf('.');
     
       let html = '';
+      
       for (let i = 0; i < rating; i++) {
         html += `<span>⭐</span>`;
       }
+
       if (isHalf !== -1) {
         html += `<span></span>`;
       }
+
       return html;
     }
     
