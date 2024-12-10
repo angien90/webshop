@@ -34,11 +34,16 @@
 
     <main>
 
+      
+
     <!-- Sidans övre del -->
       <section class="top-bar">
+        <div class="container">
+          <button class="theme-button" id="themeToggle">Växla Tema</button>
+        </div>
         <div>
           <h1>Gottfrids Gyllene Munkar</h1>
-          <img src="img/logo_gottfrids_gyllene_munkar.png" alt="Gottfrids Gyllene Munkars logotype" width="400" height="400" />
+          <img src="img/logo_gottfrids_gyllene_munkar.png" alt="Gottfrids Gyllene Munkars logotype" width="250" height="250" />
         </div>
         <h2 class="slogan">Snaskköpings bästa munkar direkt till din dörr</h2>
       </section>
@@ -80,58 +85,57 @@
         <h2>Leveransuppgifter</h2>
         <p>(* = obligatoriska fält)</p>
 
-        <h4>Förnamn: *</h4>
+        <h3>Förnamn: *</h3>
         <div class="input-group">
           <input class="input" type="text" id="fname" name="fname" aria-label="Gottfrid" value="" required><br>
           <label class="label" for="fname">T.ex. Gottfrid</label><span id="firstNameError"><i class="material-symbols-outlined">warning</i></span><span id="firstNameErrorMessage"></span><br>
         </div>
 
-        <h4>Efternamn: *</h4>
+        <h3>Efternamn: *</h3>
         <div class="input-group">
           <input class="input" type="text" id="lname" name="lname" aria-label="Jätson" value="" required><br>
           <label class="label" for="lname">T.ex. Jätson</label><span id="lastNameError"><i class="material-symbols-outlined">warning</i></span><span id="lastNameErrorMessage"></span><br>
         </div>
 
-        <h4>Adress (gata + nr): *</h4>
+        <h3>Adress (gata + nr): *</h3>
         <div class="input-group">
           <input class="input" type="text" id="address" name="address" aria-label="Snaskvägen 1" value="" required><br>
           <label class="label" for="address">T.ex. Snaskvägen 1</label><span id="addressError"><i class="material-symbols-outlined">warning</i></span><span id="addressErrorMessage"></span><br>
         </div>
 
-        <h4>Portkod: *</h4>
+        <h3>Portkod: *</h3>
         <div class="input-group">
           <input class="input" type="text" id="portCode" name="portkod" placeholder="  T.ex. 1234#" aria-label="1234#" value=""><br>
           <label class="label" for="portCode"></label><br>
         </div>
 
-        <h4>Postnummer: *</h4>
+        <h3>Postnummer: *</h3>
         <div class="input-group">
           <input class="input" type="text" id="zipCode" name="postnr" aria-label="123 45" value="" required><br>
           <label class="label" for="zipCode">T.ex. 123 45</label><span id="zipCodeError"><i class="material-symbols-outlined">warning</i></span><span id="zipCodeErrorMessage"></span><br>
         </div>
 
-        <h4>Postort: *</h4>
+        <h3>Postort: *</h3>
         <div class="input-group">
           <input class="input" type="text" id="postalAddress" name="postort" aria-label="Snaskköping" value="" required><br>
           <label class="label" for="postalAddress">T.ex. Snaskköping</label><span id="postalAddressError"><i class="material-symbols-outlined">warning</i></span><span id="postalAddressErrorMessage"></span><br>
         </div>
 
-        <h4>Telefon (mobil): *</h4>
+        <h3>Telefon (mobil): *</h3>
         <div class="input-group">
           <input class="input" type="tel" id="phone" name="phone" aria-label="0701234567" value="" required><br>
           <label class="label" for="phone">T.ex. 0701234567</label><span id="phoneError"><i class="material-symbols-outlined">warning</i></span><span id="phoneErrorMessage"></span><br>
         </div>
 
-        <h4>E-postadress: *</h4>
+        <h3>E-postadress: *</h3>
         <div class="input-group">
           <input class="input" type="email" id="email" name="email" aria-label="gottfridsgyllenemunkar@munkar.com" value="" required><br>
           <label class="label" for="email">T.ex. gottfridsgyllenemunkar@munkar.com</label><span id="emailError"><i class="material-symbols-outlined">warning</i></span><span id="emailErrorMessage"></span><br>
         </div>
 
-        <h4>Rabattkod: *</h4>
+        <h3>Rabattkod: *</h3>
         <div class="input-group">
           <input class="input" type="text" id="sale" name="sale" placeholder="  T.ex. ABC_123" aria-label="ABC_123" value=""><br>
-
           <label class="label" for="sale"></label><br>
         </div>
 
@@ -172,6 +176,7 @@
             <label for="cvv">CVV</label><span id="cvvError"><i class="material-symbols-outlined">warning</i></span><span id="cvvErrorMessage"></span>
             <input type="number" id="cvv" name="cvv" placeholder="123" aria-label="123">
           </div>
+
           <div class="send-payment">
             <input type="submit" id="submit" name="submit" disabled>
           </div>
@@ -183,7 +188,7 @@
         <p>För att kunna betala med faktura behöver du ange ditt personummer nedan</p>
         <div class="invoice-information">
           <label for="securitynumber">Personnummer</label><span id="securityNumberError"><i class="material-symbols-outlined">warning</i></span><span id="securityNumberErrorMessage"></span>
-          <input type="text" id="secnumber" name="securitynumber" placeholder="12345678-1234" aria-label="12345678-1234">
+          <input type="number" id="secnumber" name="securitynumber" placeholder="12345678-1234" aria-label="12345678-1234">
         </div>
         <div class="invoice-address">
           <label>
@@ -191,7 +196,6 @@
           </label><br>
         </div>
       </section>
-
 
       <div class="submit-order">
         <button id="clearButton">Ta bort beställning<br><span class="material-symbols-outlined">Delete</span></button>

@@ -16,13 +16,17 @@ import "./css/style.scss"
  X Bekrätfelse ruta vid beställning
  X Rensa knapp för beställningsformulär
  X Effekt när Totalen uppe på sidan uppdateras
- - Lägg in regler för rabatter
-  - Fixa till skickaknapp
+ - Lägg in regler för helgrabatt
+ - Personnummer validering
+ - Fixa till skickaknapp
+ - Filtrering
+ X Light/dark theme
 
  ÖVRIGT ATT KOLLA/GÖRA INNAN INLÄMNING
  - Kontrollera svengelska
  - Uppdatera README filen
- X Validera html och css
+ - Lighthouse analys
+ - Validera html och css
  */
 
 // ------------------------------------------------------------------------------------------ //
@@ -42,8 +46,8 @@ const productList = [
     namn: 'Kolakungen',
     img: {
       url: './img/munk_med_kola_glasyr.png',
-      width: 400,
-      height: 400,
+      width: 250,
+      height: 250,
       alt: 'Munk med kolaglasyr och kola bitar' 
     },
     raiting: 3,
@@ -57,8 +61,8 @@ const productList = [
     namn: 'Chokladhjulet',
     img: {
       url: './img/munk_choklad_glasyr.png',
-      width: 400,
-      height: 400,
+      width: 250,
+      height: 250,
       alt: 'Munk med chokladglasyr' 
     },
     raiting: 4,
@@ -72,8 +76,8 @@ const productList = [
     namn: 'Mörkets mysterium',
     img: {
       url: './img/munk_extra_choklad.png',
-      width: 400,
-      height: 400,
+      width: 250,
+      height: 250,
       alt: 'Munk med chokladglasyr och chokladbitar' 
     },
     raiting: 4,
@@ -87,8 +91,8 @@ const productList = [
     namn: 'Smurfmunken',
     img: {
       url: './img/munk_gron_glasyr_med_musli.png',
-      width: 400,
-      height: 400,
+      width: 250,
+      height: 250,
       alt: 'Munk med päronglasyr och musli' 
     },
     raiting: 3,
@@ -102,8 +106,8 @@ const productList = [
     namn: 'Guldklumpen',
     img: {
       url: './img/munk_med_honungs_glasyr.png',
-      width: 400,
-      height: 400,
+      width: 250,
+      height: 250,
       alt: 'Munk med honungsglasyr och choklad strössel' 
     },
     raiting: 5,
@@ -117,8 +121,8 @@ const productList = [
     namn: 'Rosa moln',
     img: {
       url: './img/munk_rosa_glasyr_med_florsocker.png',
-      width: 400,
-      height: 400,
+      width: 250,
+      height: 250,
       alt: 'Munk med hallonglasyr och florsocker' 
     },
     raiting: 5,
@@ -132,8 +136,8 @@ const productList = [
     namn: 'Smaklösa Sven',
     img: {
       url: './img/munk_utan_glasyr.png',
-      width: 400,
-      height: 400,
+      width: 250,
+      height: 250,
       alt: 'Munk utan glasyr' 
     },
     raiting: 2,
@@ -147,8 +151,8 @@ const productList = [
     namn: 'Rosa prinsessan',
     img: {
       url: './img/munk_rosa_glasyr_med_godis.png',
-      width: 400,
-      height: 400,
+      width: 250,
+      height: 250,
       alt: 'Munk med hallonglasyr och godis' 
     },
     raiting: 3,
@@ -162,8 +166,8 @@ const productList = [
     namn: 'Trollkarlens förtrollning',
     img: {
       url: './img/munk_choklad_glasyr_med_notter_och_bar.png',
-      width: 400,
-      height: 400,
+      width: 250,
+      height: 250,
       alt: 'Munk med chokladglasyr samt bär och nötter' 
     },
     raiting: 5,
@@ -177,8 +181,8 @@ const productList = [
     namn: 'C-vitamin-kungen',
     img: {
       url: './img/munk_orange_gasyr_med_apelsin.png',
-      width: 400,
-      height: 400,
+      width: 250,
+      height: 250,
       alt: 'Munk med apelsinglasyr och apelsinbitar' 
     },
     raiting: 4,
@@ -192,8 +196,8 @@ const productList = [
     namn: 'Rosapantern',
     img: {
       url: './img/munk_rosa_glasyr_med_strossel.png',
-      width: 400,
-      height: 400,
+      width: 250,
+      height: 250,
       alt: 'Munk med hallonglasyr och strössel' 
     },
     raiting: 3,
@@ -207,8 +211,8 @@ const productList = [
     namn: 'Nötskallen',
     img: {
       url: './img/munk_choklad_och_notter.png',
-      width: 400,
-      height: 400,
+      width: 250,
+      height: 250,
       alt: 'Munk med chokladglasyr och nötter' 
     },
     raiting: 5,
@@ -222,8 +226,8 @@ const productList = [
     namn: 'Polarbjörnen',
     img: {
       url: './img/munk_vit_glasyr_med_choklad_strossel.png',
-      width: 400,
-      height: 400,
+      width: 250,
+      height: 250,
       alt: 'Munk med vit glasyr och choklad strössel' 
     },
     raiting: 4,
@@ -248,7 +252,7 @@ function printProductListDiv() {
     productsListDiv.innerHTML += `
       <article class="eachProduct">
         <h2>${eachProduct.namn}</h2>
-        <img src="${eachProduct.img.url}" alt="${eachProduct.img.alt}"> 
+        <img src="${eachProduct.img.url}" width="${eachProduct.img.width}" height="${eachProduct.img.height}" alt="${eachProduct.img.alt}"> 
         <p>${eachProduct.img.alt}</p>
         <div class="product-information">
           <h3>${getRatingHtml(eachProduct.raiting)}</h3>
@@ -360,7 +364,7 @@ function addProductCount(e) {
       const isHalf = String(rating).indexOf('.');
     
       let html = '';
-      
+
       for (let i = 0; i < rating; i++) {
         html += `<span>⭐</span>`;
       }
@@ -1264,8 +1268,8 @@ cvvInput.addEventListener('input', () => {
  */
 function validateSecurityNumber(SecurityNumber) {
   const securityNumberRegEx = /^\d{6}(?:\d{2})?[-\s]?\d{4}$/;
-  const securityNumberError = document.getElementById('securityNymberError');
-  const securityNumberErrorMessage = document.getElementById('securityNymberErrorMessage');
+  const securityNumberError = document.getElementById('securityNumberError');
+  const securityNumberErrorMessage = document.getElementById('securityNumberErrorMessage');
 
   if (SecurityNumber === "") {
     securityNumberError.style.display = 'none';
@@ -1441,3 +1445,25 @@ function startCountdown() {
 }
 
 startCountdown(); 
+
+
+
+// ------------------Växla mellan ljus och mörk tema---------------------//
+const themeToggleButton = document.getElementById('themeToggle');
+
+const savedTheme = localStorage.getItem('theme');
+
+if (savedTheme) {
+    document.documentElement.setAttribute('data-theme', savedTheme);
+}
+
+themeToggleButton.addEventListener('click', () => {
+    let currentTheme = document.documentElement.getAttribute('data-theme');
+    if (currentTheme === 'dark') {
+        document.documentElement.setAttribute('data-theme', 'light');
+        localStorage.setItem('theme', 'light');
+    } else {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        localStorage.setItem('theme', 'dark');
+    }
+});

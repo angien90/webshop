@@ -1,12 +1,58 @@
+/* Standard (Light Theme) */
+:root {
+    --background-color: #2ab0bc86;
+    --text-color: #000000;
+    --button-background: #fe6491;
+    --button-text-color: #000000;
+}
+
+/* Dark Theme */
+[data-theme="dark"] {
+    --background-color: #000000;
+    --text-color: #000000;
+    --button-background: #fe6491;
+    --button-text-color: #121212;
+}
+
 body {
     font-family: "Gabriela", serif;
     font-weight: 400;
     font-style: normal;
-    background-color: #2ab0bc86;
+    background-color: var(--background-color);
+    color: var(--text-color);
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin: 0;
+    padding: 0;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+/* Växla mellan mörkt och ljust tema */
+.container {
+    display: flex;
+    justify-content: end;
+    text-align: center;
+    width: 100%;
+    margin-top: 10px;
+    margin-bottom: 0px;
+}
+
+.theme-button {
+    background-color: var(--button-background);
+    color: var(--button-text-color);
+    border: none;
+    padding: 5px 5px;
+    margin-right: 15px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    border-radius: 5px;
+}
+
+.theme-button:hover {
+    background-color: var(--button-background);
 }
 
 /* Top meny */
@@ -21,7 +67,6 @@ header {
     width: 100%;
     position: fixed;
     top: 0;
-    width: 100%;
     z-index: 1;
 }
 
@@ -327,10 +372,11 @@ form {
         height: 25px;
         margin-bottom: 0px;
     }
-    h4 {
+    h3 {
         margin-top: 0px;
         margin-bottom:5px;
         font-weight: lighter;
+        font-size: 1em;
     }
 }
 
@@ -410,7 +456,7 @@ form {
 #cardNameError,
 #cardNumberError,
 #expDateError,
-#cvvError 
+#cvvError,
 #securityNumberError {
     display: none;
     color: red;
@@ -428,7 +474,7 @@ form {
 #cardNameErrorMessage,
 #cardNumberErrorMessage,
 #expDateErrorMessage,
-#cvvErrorMessage 
+#cvvErrorMessage, 
 #securityNumberErrorMessage {
     color: red;
 }
@@ -459,7 +505,7 @@ form {
     margin-bottom: 10px;
     input {
         margin-bottom: 10px;
-        width: 100%
+        width: 100%;
     }
     lable {
         width: 100%;
@@ -487,7 +533,7 @@ form {
     margin-bottom: 10px;
     input {
         margin-bottom: 10px;
-        width: 100%
+        width: 100%;
     }
     lable {
         width: 100%;
@@ -542,9 +588,14 @@ footer {
         margin-right: 40px;
         list-style: none;
         color: white;
+        font-size: 1em; 
+    }
+    ul{
+        align-content: center;
     }
     a {
         color: white;
-        text-decoration: none;   
+        text-decoration: none;  
+        font-size: 1em;
     }
 }
