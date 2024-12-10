@@ -41,4 +41,6 @@ I detta projekt har jag använt mig av;
 
 ## Slutresultat
 
+### Valideringsrapporter
+
 ### Lighthouse-analys

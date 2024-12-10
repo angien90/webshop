@@ -103,7 +103,7 @@
           <label class="label" for="address">T.ex. Snaskvägen 1</label><span id="addressError"><i class="material-symbols-outlined">warning</i></span><span id="addressErrorMessage"></span><br>
         </div>
 
-        <h3>Portkod: *</h3>
+        <h3>Portkod:</h3>
         <div class="input-group">
           <input class="input" type="text" id="portCode" name="portkod" placeholder="  T.ex. 1234#" aria-label="1234#" value=""><br>
           <label class="label" for="portCode"></label><br>
@@ -133,7 +133,7 @@
           <label class="label" for="email">T.ex. gottfridsgyllenemunkar@munkar.com</label><span id="emailError"><i class="material-symbols-outlined">warning</i></span><span id="emailErrorMessage"></span><br>
         </div>
 
-        <h3>Rabattkod: *</h3>
+        <h3>Rabattkod:</h3>
         <div class="input-group">
           <input class="input" type="text" id="sale" name="sale" placeholder="  T.ex. ABC_123" aria-label="ABC_123" value=""><br>
           <label class="label" for="sale"></label><br>
@@ -172,13 +172,9 @@
             <label for="ccnum">Kortnummer</label><span id="cardNumberError"><i class="material-symbols-outlined">warning</i></span><span id="cardNumberErrorMessage"></span>
             <input type="number" id="ccnum" name="cardnumber" placeholder="1111 2222 3333 4444" aria-label="1111 2222 3333 4444">
             <label for="expdate">Utgångsdatum</label><span id="expDateError"><i class="material-symbols-outlined">warning</i></span><span id="expDateErrorMessage"></span>
-            <input type="number" id="expdate" name="expdate" placeholder="01/12" aria-label="01/12">
+            <input type="text" id="expdate" name="expdate" placeholder="01/12" aria-label="01/12">
             <label for="cvv">CVV</label><span id="cvvError"><i class="material-symbols-outlined">warning</i></span><span id="cvvErrorMessage"></span>
             <input type="number" id="cvv" name="cvv" placeholder="123" aria-label="123">
-          </div>
-
-          <div class="send-payment">
-            <input type="submit" id="submit" name="submit" disabled>
           </div>
       </section>
 
@@ -198,8 +194,8 @@
       </section>
 
       <div class="submit-order">
-        <button id="clearButton">Ta bort beställning<br><span class="material-symbols-outlined">Delete</span></button>
-        <button type="submit" id="submitButton" disabled>Skicka beställning<br><span class="material-symbols-outlined">shopping_cart_checkout</span></button>
+        <button id="clearButton">Töm beställning</button>
+        <input type="submit" id="submit" name="submit" value="Skicka din beställning" disabled>
       </div>
     </form>
    

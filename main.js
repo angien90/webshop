@@ -984,7 +984,6 @@ function validateEmail(Email) {
 
 
 // ---------------Validering av formulär - Betalningssätt-----------//
-// ------Förbättring - Felmeddelande ska visas när sidan laddas-----//
 /**
  * Skapa en variabel för RegEx valideringen
  * Skapa en variabel för fältet för felmeddelande med id paymentMethodError
@@ -1016,7 +1015,6 @@ function validatePaymentMethod(paymentMethod) {
 
 
 // -------------Validering av fält för att aktiver skicka knapp-------------//
-//----- ej klar --- //
 function toggleSubmitButton() {
   const firstNameValid = validateFirstName(firstNameInput.value);
   const lastNameValid = validateLastName(lastNameInput.value);
@@ -1027,7 +1025,7 @@ function toggleSubmitButton() {
   const emailValid = validateEmail(emailInput.value);
   const paymentMethodValid = validatePaymentMethod(paymentMethod.value);
 
-  const submitButton = document.getElementById('submitButton');
+  const submitButton = document.getElementById('submit');
 
   if (firstNameValid && lastNameValid && addressValid && zipCodeValid && postalAddressValid && phoneValid && emailValid && paymentMethodValid) {
     submitButton.disabled = false;
@@ -1122,6 +1120,11 @@ function validateCardName(CardName) {
   }
 }
 
+const cardNameInput = document.getElementById('cname');
+cardNameInput.addEventListener('input', () => {
+  validateCardName(cardNameInput.value);
+});
+
 // ----------Validering av betalningsuppgifter - Kortnummer---------//
 /**
  * Skapa en variabel för RegEx valideringen
@@ -1152,6 +1155,11 @@ function validateCardNumber(CardNumber) {
   }
 }
 
+const cardNumberInput = document.getElementById('ccnum');
+cardNumberInput.addEventListener('input', () => {
+  validateCardNumber(cardNumberInput.value);
+});
+
 // --------Validering av betalningsuppgifter - Utgångsdatum---------//
 /**
  * Skapa en variabel för RegEx valideringen
@@ -1179,6 +1187,11 @@ function validateExpDate(ExpDate) {
     return true;
   }
 }
+
+const expDateInput = document.getElementById('expdate');
+expDateInput.addEventListener('input', () => {
+  validateExpDate(expDateInput.value);
+});
 
 // -------------Validering av betalningsuppgifter - CVV-------------//
 /**
@@ -1208,8 +1221,13 @@ function validateCvv(CVV) {
   }
 }
 
+const cvvInput = document.getElementById('cvv');
+cvvInput.addEventListener('input', () => {
+  validateCvv(cvvInput.value);
+});
+
 // -------------Validering av fält för att aktiver skicka knapp-------------//
-function toggleSubmit() {
+/*function toggleSubmit() {
   const cardNameValid = validateCardName(cardNameInput.value);
   const cardNumberValid = validateCardNumber(cardNumberInput.value);
   const expDateValid = validateExpDate(expDateInput.value);
@@ -1249,7 +1267,7 @@ cvvInput.addEventListener('input', () => {
   validateCvv(cvvInput.value);
   toggleSubmit();
 });
-
+*/
 
 // ------------------------------------------------------------------------------------------ //
 // ------------------------------------------------------------------------------------------ //
@@ -1258,7 +1276,6 @@ cvvInput.addEventListener('input', () => {
 // ------------------------------------------------------------------------------------------ //
 
 // -------------Validering av betalningsuppgifter - Personnummer-------------//
-// -----------------------------EJ KLAR -------------------------------------//
 /**
  * Skapa en variabel för RegEx valideringen
  * Skapa en variabel för fältet för felmeddelande med id securityNumberError
@@ -1286,27 +1303,10 @@ function validateSecurityNumber(SecurityNumber) {
   }
 }
 
-function toggleSubmits() {
-  const securityNumberValid = validateSecurityNumber(securityNumberInput.value);
-
-const submitButtons = document.getElementById('submitButton');
-
-  if (securityNumberValid) {
-    submitButtons.disabled = false;
-    submitButtons.style.display = 'inline'; 
-  } else {
-    submitButtons.disabled = true;
-    submitButtons.style.display = 'none';
-  }
-}
-
 const securityNumberInput = document.getElementById('secnumber');
 securityNumberInput.addEventListener('input', () => {
   validateSecurityNumber(securityNumberInput.value);
-  toggleSubmits();
 });
-
-
 
 // ------------------------------------------------------------------------------------------ //
 // ------------------------------------------------------------------------------------------ //
@@ -1395,7 +1395,7 @@ removeButton.addEventListener("click", handleClearButtonClick);
     Annars:
         Visa ett meddelande som säger "Beställningen avbröts."
  */
-const submitButton = document.getElementById('submitButton');
+const submitButton = document.getElementById('submit');
 
 
 submitButton.addEventListener('click', (event) => {
