@@ -17,12 +17,13 @@ import "./css/style.scss"
  X Rensa knapp för beställningsformulär
  X Effekt när Totalen uppe på sidan uppdateras
  - Lägg in regler för helgrabatt
- - Personnummer validering
- - Fixa till skickaknapp
+ X Personnummer validering
+ X Fixa till skickaknapp
  - Filtrering
  X Light/dark theme
 
  ÖVRIGT ATT KOLLA/GÖRA INNAN INLÄMNING
+ - desktop och tablet 
  - Kontrollera svengelska
  - Uppdatera README filen
  - Lighthouse analys
@@ -245,10 +246,17 @@ const productList = [
  * Skapa en variabel för plus och minusknapp och koppla dessa ihop med html elmenten. 
  */
 const productsListDiv = document.querySelector('#product-list');
+
 function printProductListDiv() {
   productsListDiv.inneHTML = '';
 
   productList.forEach(eachProduct => {
+    let displayedPrice = eachProduct.pris;
+
+    if (isWeekendSurge()) {
+      displayedPrice = Math.round(eachProduct.pris * 1.15); 
+    }
+
     productsListDiv.innerHTML += `
       <article class="eachProduct">
         <h2>${eachProduct.namn}</h2>
@@ -257,7 +265,7 @@ function printProductListDiv() {
         <div class="product-information">
           <h3>${getRatingHtml(eachProduct.raiting)}</h3>
           <h3>Kategori: ${eachProduct.kategori}</h3>
-          <h3>${eachProduct.pris} kr/st</h3>
+          <h3>${displayedPrice} kr/st</h3>
         </div>
         
         <div class="product-counter">
@@ -399,20 +407,25 @@ function updateCart() {
   cartElement.innerHTML = '';
 
   cartItems.forEach(eachProduct => {
+    let displayedPrice = eachProduct.pris;
+    if (isWeekendSurge()) {
+      displayedPrice = Math.round(eachProduct.pris * 1.15); // Helgpris
+    }
+
     const productElement = document.createElement('div');
     productElement.classList.add('cart-item');
     productElement.innerHTML = `
-    <div class="product-cart">
-      <img src="${eachProduct.img.url}" alt="${eachProduct.img.alt}">
-      <h2>${eachProduct.namn}</h2>
-      <h3>${eachProduct.amount} st á ${eachProduct.pris} kr </h3>
-      <h3>Pris: ${eachProduct.amount * eachProduct.pris} kr</h3>
-    </div>
+      <div class="product-cart">
+        <img src="${eachProduct.img.url}" alt="${eachProduct.img.alt}">
+        <h2>${eachProduct.namn}</h2>
+        <h3>${eachProduct.amount} st á ${displayedPrice} kr</h3> 
+        <h3>Pris: ${eachProduct.amount * displayedPrice} kr</h3> 
+      </div>
     `;
     cartElement.appendChild(productElement);
   });
 
-  totalProducts = productList.reduce((total, product) => total + product.amount, 0); //uppdaterar antal som visas i ikonen som en varukorg
+  totalProducts = productList.reduce((total, product) => total + product.amount, 0);
   updateCartIcon();
 }
 
@@ -434,14 +447,21 @@ updateCartIcon();
  * Skriv ut värdet.
  */
 function updateTotal() {
-  const totalCost = productList.reduce((total, eachProduct) => total + eachProduct.amount * eachProduct.pris, 0);
+  const totalCost = productList.reduce((total, eachProduct) => {
+    let price = eachProduct.pris;
+    if (isWeekendSurge()) {
+      price = Math.round(eachProduct.pris * 1.15); // Helgpåslag
+    }
+    return total + (eachProduct.amount * price);  
+  }, 0);
+
   const totalDonuts = productList.reduce((total, eachProduct) => total + eachProduct.amount, 0);
   const totalDiscount = parseFloat(amountDiscount()) + parseFloat(calculateMondayDiscount(totalCost));
   const shippingCost = calculateShippingCost(totalDonuts, totalCost);
 
   const totalElement = document.getElementById('totalCost');
   totalElement.textContent = `Totalt: ${totalCost + shippingCost - totalDiscount} kr`;
-  
+
   const totalSum = document.getElementById('totalSum');
   totalSum.textContent = `${totalCost + shippingCost - totalDiscount} kr`;
 
@@ -453,8 +473,8 @@ function updateTotal() {
 
   calculateMondayDiscount(totalCost);
   updatePaymentMethodOptions();
-  
 }
+
 
 // --------------Gratis frakt vid minst 15 munkar-------------------//
 function calculateShippingCost(totalDonuts, totalCost) {
@@ -496,8 +516,21 @@ function calculateMondayDiscount(totalCost) {
 }
 
 // -------------------------Rabatt på helger------------------------//
-// ---------------------EJ KLAR---------------------------//
-
+function isWeekendSurge() {
+  const now = new Date('2024-12-07T09:00:00');
+  //const now = new Date();
+  const dayOfWeek = now.getDay();  // 0 = söndag, 1 = måndag, ..., 5 = fredag, 6 = lördag
+  const hourOfDay = now.getHours();
+  
+  // Om det är fredag efter kl 15 eller lördag/söndag mellan kl. 15 och 03
+  if (dayOfWeek === 5 && hourOfDay >= 15) {  // Fredag efter kl 15
+    return true;
+  }
+  if (dayOfWeek === 6 || (dayOfWeek === 0 && hourOfDay < 3)) {  // Lördag eller söndag fram till kl 03
+    return true;
+  }
+  return false;
+}
 
 
 
@@ -544,25 +577,29 @@ function sortByName(Name) {
   productListElement.innerHTML = '';
 
   copiedProductList.forEach(eachProduct => {
+    let displayedPrice = eachProduct.pris;
+    if (isWeekendSurge()) {
+      displayedPrice = Math.round(eachProduct.pris * 1.15); // Helgpåslag
+    }
+
     const productElement = document.createElement('div');
-    productsListDiv.innerHTML += `
-      <article class="eachProduct">
-        <h2>${eachProduct.namn}</h2>
-        <img src="${eachProduct.img.url}" alt="${eachProduct.img.alt}">
-        <p>${eachProduct.img.alt}</p>
-        <div class="product-information">
-          <h3>${getRatingHtml(eachProduct.raiting)}</h3>
-          <h3>Kategori: ${eachProduct.kategori}</h3>
-          <h3>${eachProduct.pris} kr/st</h3>
-        </div>
-        
-        <div class="product-counter">
-          <button class="remove material-symbols-outlined" id="remove-${eachProduct.id}">remove_shopping_cart</button>
-          <input type="number" min="0" value="${eachProduct.amount}" id="input-${eachProduct.id}">
-          <button class="add material-symbols-outlined" id="add-${eachProduct.id}">add_shopping_cart</button>
-        </div>
-      </article>
-    `; 
+    productElement.classList.add('eachProduct');
+    productElement.innerHTML = `
+      <h2>${eachProduct.namn}</h2>
+      <img src="${eachProduct.img.url}" alt="${eachProduct.img.alt}">
+      <p>${eachProduct.img.alt}</p>
+      <div class="product-information">
+        <h3>${getRatingHtml(eachProduct.raiting)}</h3>
+        <h3>Kategori: ${eachProduct.kategori}</h3>
+        <h3>${displayedPrice} kr/st</h3> <!-- Visa justerat pris -->
+      </div>
+      
+      <div class="product-counter">
+        <button class="remove material-symbols-outlined" id="remove-${eachProduct.id}">remove_shopping_cart</button>
+        <input type="number" min="0" value="${eachProduct.amount}" id="input-${eachProduct.id}">
+        <button class="add material-symbols-outlined" id="add-${eachProduct.id}">add_shopping_cart</button>
+      </div>
+    `;
     productListElement.appendChild(productElement);
   });
 }
@@ -599,25 +636,29 @@ function sortByCategory(Category) {
   productListElement.innerHTML = '';
 
   copiedProductList.forEach(eachProduct => {
+    let displayedPrice = eachProduct.pris;
+    if (isWeekendSurge()) {
+      displayedPrice = Math.round(eachProduct.pris * 1.15);   // Helgpåslag
+    }
+
     const productElement = document.createElement('div');
-    productsListDiv.innerHTML += `
-      <article class="eachProduct">
-        <h2>${eachProduct.namn}</h2>
-        <img src="${eachProduct.img.url}" alt="${eachProduct.img.alt}">
-        <p>${eachProduct.img.alt}</p>
-        <div class="product-information">
-          <h3>${getRatingHtml(eachProduct.raiting)}</h3>
-          <h3>Kategori: ${eachProduct.kategori}</h3>
-          <h3>${eachProduct.pris} kr/st</h3>
-        </div>
-        
-        <div class="product-counter">
-          <button class="remove material-symbols-outlined" id="remove-${eachProduct.id}">remove_shopping_cart</button>
-          <input type="number" min="0" value="${eachProduct.amount}" id="input-${eachProduct.id}">
-          <button class="add material-symbols-outlined" id="add-${eachProduct.id}">add_shopping_cart</button>
-        </div>
-      </article>
-    `; 
+    productElement.classList.add('eachProduct');
+    productElement.innerHTML = `
+      <h2>${eachProduct.namn}</h2>
+      <img src="${eachProduct.img.url}" alt="${eachProduct.img.alt}">
+      <p>${eachProduct.img.alt}</p>
+      <div class="product-information">
+        <h3>${getRatingHtml(eachProduct.raiting)}</h3>
+        <h3>Kategori: ${eachProduct.kategori}</h3>
+        <h3>${displayedPrice} kr/st</h3> <!-- Visa det justerade priset om helgpriser gäller -->
+      </div>
+      
+      <div class="product-counter">
+        <button class="remove material-symbols-outlined" id="remove-${eachProduct.id}">remove_shopping_cart</button>
+        <input type="number" min="0" value="${eachProduct.amount}" id="input-${eachProduct.id}">
+        <button class="add material-symbols-outlined" id="add-${eachProduct.id}">add_shopping_cart</button>
+      </div>
+    `;
     productListElement.appendChild(productElement);
   });
 }
@@ -648,34 +689,37 @@ function sortByPrice(Price) {
 
   copiedProductList.sort((a, b) => {
     return Price ? a.pris - b.pris : b.pris - a.pris;
-  }); 
+  });
 
   const productListElement = document.getElementById('product-list');
   productListElement.innerHTML = '';
 
   copiedProductList.forEach(eachProduct => {
+    let displayedPrice = eachProduct.pris;
+    if (isWeekendSurge()) {
+      displayedPrice = Math.round(eachProduct.pris * 1.15);  // Helgpåslag
+    }
+
     const productElement = document.createElement('div');
-    productsListDiv.innerHTML += `
-      <article class="eachProduct">
-        <h2>${eachProduct.namn}</h2>
-        <img src="${eachProduct.img.url}" alt="${eachProduct.img.alt}">
-        <p>${eachProduct.img.alt}</p>
-        <div class="product-information">
-          <h3>${getRatingHtml(eachProduct.raiting)}</h3>
-          <h3>Kategori: ${eachProduct.kategori}</h3>
-          <h3>${eachProduct.pris} kr/st</h3>
-        </div>
-        
-        <div class="product-counter">
-          <button class="remove material-symbols-outlined" id="remove-${eachProduct.id}">remove_shopping_cart</button>
-          <input type="number" min="0" value="${eachProduct.amount}" id="input-${eachProduct.id}">
-          <button class="add material-symbols-outlined" id="add-${eachProduct.id}">add_shopping_cart</button>
-        </div>
-      </article>
-    `; 
+    productElement.classList.add('eachProduct');
+    productElement.innerHTML = `
+      <h2>${eachProduct.namn}</h2>
+      <img src="${eachProduct.img.url}" alt="${eachProduct.img.alt}">
+      <p>${eachProduct.img.alt}</p>
+      <div class="product-information">
+        <h3>${getRatingHtml(eachProduct.raiting)}</h3>
+        <h3>Kategori: ${eachProduct.kategori}</h3>
+        <h3>${displayedPrice} kr/st</h3> <!-- Visa det justerade priset om helgpriser gäller -->
+      </div>
+      
+      <div class="product-counter">
+        <button class="remove material-symbols-outlined" id="remove-${eachProduct.id}">remove_shopping_cart</button>
+        <input type="number" min="0" value="${eachProduct.amount}" id="input-${eachProduct.id}">
+        <button class="add material-symbols-outlined" id="add-${eachProduct.id}">add_shopping_cart</button>
+      </div>
+    `;
     productListElement.appendChild(productElement);
   });
-
 }
 
 const sortPriceButton = document.getElementById('sortPrice');
@@ -707,25 +751,29 @@ function sortByRating(Rating) {
   productListElement.innerHTML = '';
 
   copiedProductList.forEach(eachProduct => {
+    let displayedPrice = eachProduct.pris;
+    if (isWeekendSurge()) {
+      displayedPrice = Math.round(eachProduct.pris * 1.15);  // Helgpåslag
+    }
+
     const productElement = document.createElement('div');
-    productsListDiv.innerHTML += `
-      <article class="eachProduct">
-        <h2>${eachProduct.namn}</h2>
-        <img src="${eachProduct.img.url}" alt="${eachProduct.img.alt}">
-        <p>${eachProduct.img.alt}</p>
-        <div class="product-information">
-          <h3>${getRatingHtml(eachProduct.raiting)}</h3>
-          <h3>Kategori: ${eachProduct.kategori}</h3>
-          <h3>${eachProduct.pris} kr/st</h3>
-        </div>
-        
-        <div class="product-counter">
-          <button class="remove material-symbols-outlined" id="remove-${eachProduct.id}">remove_shopping_cart</button>
-          <input type="number" min="0" value="${eachProduct.amount}" id="input-${eachProduct.id}">
-          <button class="add material-symbols-outlined" id="add-${eachProduct.id}">add_shopping_cart</button>
-        </div>
-      </article>
-    `; 
+    productElement.classList.add('eachProduct');
+    productElement.innerHTML = `
+      <h2>${eachProduct.namn}</h2>
+      <img src="${eachProduct.img.url}" alt="${eachProduct.img.alt}">
+      <p>${eachProduct.img.alt}</p>
+      <div class="product-information">
+        <h3>${getRatingHtml(eachProduct.raiting)}</h3>
+        <h3>Kategori: ${eachProduct.kategori}</h3>
+        <h3>${displayedPrice} kr/st</h3> <!-- Visa det justerade priset om helgpriser gäller -->
+      </div>
+      
+      <div class="product-counter">
+        <button class="remove material-symbols-outlined" id="remove-${eachProduct.id}">remove_shopping_cart</button>
+        <input type="number" min="0" value="${eachProduct.amount}" id="input-${eachProduct.id}">
+        <button class="add material-symbols-outlined" id="add-${eachProduct.id}">add_shopping_cart</button>
+      </div>
+    `;
     productListElement.appendChild(productElement);
   });
 }
@@ -759,28 +807,31 @@ function sortById(Id) {
   productListElement.innerHTML = '';
 
   copiedProductList.forEach(eachProduct => {
+    let displayedPrice = eachProduct.pris;
+    if (isWeekendSurge()) {
+      displayedPrice = Math.round(eachProduct.pris * 1.15);  // Helgpåslag
+    }
+
     const productElement = document.createElement('div');
-    productsListDiv.innerHTML += `
-      <article class="eachProduct">
-        <h2>${eachProduct.namn}</h2>
-        <img src="${eachProduct.img.url}" alt="${eachProduct.img.alt}">
-        <p>${eachProduct.img.alt}</p>
-        <div class="product-information">
-          <h3>${getRatingHtml(eachProduct.raiting)}</h3>
-          <h3>Kategori: ${eachProduct.kategori}</h3>
-          <h3>${eachProduct.pris} kr/st</h3>
-        </div>
-        
-        <div class="product-counter">
-          <button class="remove material-symbols-outlined" id="remove-${eachProduct.id}">remove_shopping_cart</button>
-          <input type="number" min="0" value="${eachProduct.amount}" id="input-${eachProduct.id}">
-          <button class="add material-symbols-outlined" id="add-${eachProduct.id}">add_shopping_cart</button>
-        </div>
-      </article>
-    `; 
+    productElement.classList.add('eachProduct');
+    productElement.innerHTML = `
+      <h2>${eachProduct.namn}</h2>
+      <img src="${eachProduct.img.url}" alt="${eachProduct.img.alt}">
+      <p>${eachProduct.img.alt}</p>
+      <div class="product-information">
+        <h3>${getRatingHtml(eachProduct.raiting)}</h3>
+        <h3>Kategori: ${eachProduct.kategori}</h3>
+        <h3>${displayedPrice} kr/st</h3>  <!-- Visa det justerade priset om helgpriser gäller -->
+      </div>
+      
+      <div class="product-counter">
+        <button class="remove material-symbols-outlined" id="remove-${eachProduct.id}">remove_shopping_cart</button>
+        <input type="number" min="0" value="${eachProduct.amount}" id="input-${eachProduct.id}">
+        <button class="add material-symbols-outlined" id="add-${eachProduct.id}">add_shopping_cart</button>
+      </div>
+    `;
     productListElement.appendChild(productElement);
   });
-
 }
 
 const sortIdButton = document.getElementById('sortStop');
@@ -1226,48 +1277,6 @@ cvvInput.addEventListener('input', () => {
   validateCvv(cvvInput.value);
 });
 
-// -------------Validering av fält för att aktiver skicka knapp-------------//
-/*function toggleSubmit() {
-  const cardNameValid = validateCardName(cardNameInput.value);
-  const cardNumberValid = validateCardNumber(cardNumberInput.value);
-  const expDateValid = validateExpDate(expDateInput.value);
-  const cvvValid = validateCvv(cvvInput.value);
-
-  const submitButton = document.getElementById('submit');
-
-  if (cardNameValid && cardNumberValid && expDateValid && cvvValid) {
-    submitButton.disabled = false;
-    submitButton.style.display = 'inline'; 
-  } else {
-    submitButton.disabled = true;
-    submitButton.style.display = 'none';
-  }
-}
-
-const cardNameInput = document.getElementById('cname');
-cardNameInput.addEventListener('input', () => {
-  validateCardName(cardNameInput.value);
-  toggleSubmit();
-});
-
-const cardNumberInput = document.getElementById('ccnum');
-cardNumberInput.addEventListener('input', () => {
-  validateCardNumber(cardNumberInput.value);
-  toggleSubmit();
-});
-
-const expDateInput = document.getElementById('expdate');
-expDateInput.addEventListener('input', () => {
-  validateExpDate(expDateInput.value);
-  toggleSubmit();
-});
-
-const cvvInput = document.getElementById('cvv');
-cvvInput.addEventListener('input', () => {
-  validateCvv(cvvInput.value);
-  toggleSubmit();
-});
-*/
 
 // ------------------------------------------------------------------------------------------ //
 // ------------------------------------------------------------------------------------------ //
@@ -1448,7 +1457,7 @@ startCountdown();
 
 
 
-// ------------------Växla mellan ljus och mörk tema---------------------//
+// -----------------Växla mellan ljust och mörkt tema--------------------//
 const themeToggleButton = document.getElementById('themeToggle');
 
 const savedTheme = localStorage.getItem('theme');
