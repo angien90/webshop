@@ -52,7 +52,7 @@ I detta projekt har jag använt mig av;
 
 ### Lighthouse-analys
 #### Desktop
-![Lighthouse-desktop]https://github.com/Medieinstitutet/fed24d-js-intro-inl-1-webshop-angien90/blob/main/Lighthouse%20analys%20-%20Desktop.png
+![Lighthouse-desktop](https://github.com/Medieinstitutet/fed24d-js-intro-inl-1-webshop-angien90/blob/main/Lighthouse%20analys%20-%20Desktop.png)
 
 #### Mobile
 ![Lighthouse-mobile](https://github.com/Medieinstitutet/fed24d-js-intro-inl-1-webshop-angien90/blob/main/Lighthouse%20analys%20-%20Mobile.png)
