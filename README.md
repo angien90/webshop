@@ -43,6 +43,6 @@ I detta projekt har jag använt mig av;
 
 
 ### Valideringsrapporter
-![Validering HTML](fed24d-js-intro-inl-1-webshop-angien90\Validering HTML.png)
+![Validering HTML](https://github.com/Medieinstitutet/fed24d-js-intro-inl-1-webshop-angien90/blob/main/Validering%20HTML.png)
 
 ### Lighthouse-analys
