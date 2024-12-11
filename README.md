@@ -41,6 +41,8 @@ I detta projekt har jag använt mig av;
 
 ## Slutresultat
 
+
 ### Valideringsrapporter
+![Validering HTML](fed24d-js-intro-inl-1-webshop-angien90\Validering HTML.png)
 
 ### Lighthouse-analys

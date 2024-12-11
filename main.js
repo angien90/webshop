@@ -16,18 +16,13 @@ import "./css/style.scss"
  X Bekrätfelse ruta vid beställning
  X Rensa knapp för beställningsformulär
  X Effekt när Totalen uppe på sidan uppdateras
- - Lägg in regler för helgrabatt
+ X Lägg in regler för helgrabatt
  X Personnummer validering
  X Fixa till skickaknapp
- - Filtrering
  X Light/dark theme
 
  ÖVRIGT ATT KOLLA/GÖRA INNAN INLÄMNING
- - desktop och tablet 
- - Kontrollera svengelska
  - Uppdatera README filen
- - Lighthouse analys
- - Validera html och css
  */
 
 // ------------------------------------------------------------------------------------------ //
@@ -259,34 +254,45 @@ function printProductListDiv() {
 
     productsListDiv.innerHTML += `
       <article class="eachProduct">
-        <h2>${eachProduct.namn}</h2>
+        <h3>${eachProduct.namn}</h3>
         <img src="${eachProduct.img.url}" width="${eachProduct.img.width}" height="${eachProduct.img.height}" alt="${eachProduct.img.alt}"> 
         <p>${eachProduct.img.alt}</p>
         <div class="product-information">
-          <h3>${getRatingHtml(eachProduct.raiting)}</h3>
-          <h3>Kategori: ${eachProduct.kategori}</h3>
-          <h3>${displayedPrice} kr/st</h3>
+          <h4>${getRatingHtml(eachProduct.raiting)}</h4>
+          <h4>Kategori: ${eachProduct.kategori}</h4>
+          <h4>${displayedPrice} kr/st</h4>
         </div>
         
         <div class="product-counter">
           <button class="remove material-symbols-outlined" id="remove-${eachProduct.id}">remove_shopping_cart</button>
-          <input type="number" min="0" value="${eachProduct.amount}" id="input-${eachProduct.id}">
+          <input type="number" name="counter" "min="0" value="${eachProduct.amount}" id="input-${eachProduct.id}" aria-label="amount">
           <button class="add material-symbols-outlined" id="add-${eachProduct.id}">add_shopping_cart</button>
         </div>
       </article>
     `; 
   });
 
-  // Variabler för minus knappar //
+  // Variabler för minus knappar 
   const removeButton = document.querySelectorAll('button.remove');
   removeButton.forEach(button => {
     button.addEventListener('click', removeProductCount);
   });
 
-  // Variabler för plus knappar //
+  // Variabler för plus knappar 
   const addButton = document.querySelectorAll('button.add');
   addButton.forEach(button => {
     button.addEventListener('click', addProductCount);
+  });
+
+   // Event listener på input fälten
+  document.querySelectorAll('input[name="counter"]').forEach(input => {
+    input.addEventListener('input', (event) => {
+      const productId = parseInt(event.target.id.replace('input-', '')); 
+      const newAmount = parseInt(event.target.value) || 0; 
+      updateProductAmount(productId, newAmount); 
+      updateCart(); 
+      updateTotal();
+    });
   });
 
 }
@@ -402,9 +408,9 @@ function addProductCount(e) {
 let totalProducts = 0;
 
 function updateCart() {
-  const cartItems = productList.filter(eachProduct => eachProduct.amount > 0);
+  const cartItems = productList.filter(eachProduct => eachProduct.amount > 0); // Filtrera ut de produkter som har mer än 0 i mängd
   const cartElement = document.getElementById('cart');
-  cartElement.innerHTML = '';
+  cartElement.innerHTML = ''; // Töm varukorgen innan vi uppdaterar den
 
   cartItems.forEach(eachProduct => {
     let displayedPrice = eachProduct.pris;
@@ -417,26 +423,52 @@ function updateCart() {
     productElement.innerHTML = `
       <div class="product-cart">
         <img src="${eachProduct.img.url}" alt="${eachProduct.img.alt}">
-        <h2>${eachProduct.namn}</h2>
-        <h3>${eachProduct.amount} st á ${displayedPrice} kr</h3> 
-        <h3>Pris: ${eachProduct.amount * displayedPrice} kr</h3> 
+        <h3>${eachProduct.namn}</h3>
+        <h4>${eachProduct.amount} st á ${displayedPrice} kr</h4> 
+        <h4>Pris: ${eachProduct.amount * displayedPrice} kr</h4> 
       </div>
     `;
     cartElement.appendChild(productElement);
   });
 
-  totalProducts = productList.reduce((total, product) => total + product.amount, 0);
-  updateCartIcon();
+  totalProducts = productList.reduce((total, product) => total + product.amount, 0); // Uppdatera totalprodukterna
+  updateCartIcon(); // Uppdatera varukorgsikonen
 }
 
 
-// ------------------Uppdatera antal på varukorgen------------------//
+// ---------Funktion för att uppdatera mängden för en produkt-----------//
+function updateProductAmount(productId, newAmount) {
+  const product = productList.find(p => p.id === productId);
+  if (product) {
+    product.amount = newAmount; 
+  }
+}
+
+document.querySelectorAll('input[name="counter"]').forEach(input => {
+  input.addEventListener('input', (event) => {
+    const productId = parseInt(event.target.id.replace('input-', '')); 
+    const newAmount = parseInt(event.target.value) || 0; 
+    updateProductAmount(productId, newAmount); 
+    updateCart(); 
+  });
+});
+
+
+// ------------Uppdatera antal på varukorgen i naviering--------------//
 function updateCartIcon() {
-  const cartIcon = document.querySelector('.button .material-symbols-outlined');
-  cartIcon.setAttribute('data-count', totalProducts);
-}
+  let totalProducts = 0;
 
-updateCartIcon();
+  const productInputs = document.querySelectorAll('input[name="counter"]'); 
+
+  productInputs.forEach(input => {
+    const amount = parseInt(input.value) || 0;  
+    totalProducts += amount;
+  });
+
+  const cartCount = document.querySelector('.cart-count'); 
+  cartCount.textContent = totalProducts > 0 ? totalProducts : ''; // Sätt textinnehåll istället för attributet
+  cartCount.setAttribute('data-count', totalProducts); // Kan lämnas kvar om du vill ha ett attribut
+}
 
 // --------Beräkna totalen i varukorgen & högst upp på sidan--------//
 /**
@@ -447,18 +479,34 @@ updateCartIcon();
  * Skriv ut värdet.
  */
 function updateTotal() {
-  const totalCost = productList.reduce((total, eachProduct) => {
+  let totalCost = 0;
+  let totalDonuts = 0;
+
+  // Iterera genom produktlistan och hämta aktuell mängd från input-fälten
+  productList.forEach(eachProduct => {
+    const inputAmount = document.getElementById(`input-${eachProduct.id}`) ? 
+      parseInt(document.getElementById(`input-${eachProduct.id}`).value) || 0 : 
+      eachProduct.amount;
+
+    // Uppdatera produktens amount med inputvärdet
+    eachProduct.amount = inputAmount;
+
+    // Beräkna priset med eventuellt helgpåslag
     let price = eachProduct.pris;
     if (isWeekendSurge()) {
       price = Math.round(eachProduct.pris * 1.15); // Helgpåslag
     }
-    return total + (eachProduct.amount * price);  
-  }, 0);
 
-  const totalDonuts = productList.reduce((total, eachProduct) => total + eachProduct.amount, 0);
+    // Lägg till kostnaden för produkten i den totala kostnaden
+    totalCost += inputAmount * price;
+    totalDonuts += inputAmount;  // Lägg till antalet produkter
+  });
+
+  // Beräkna rabatt och fraktkostnad
   const totalDiscount = parseFloat(amountDiscount()) + parseFloat(calculateMondayDiscount(totalCost));
   const shippingCost = calculateShippingCost(totalDonuts, totalCost);
 
+  // Uppdatera totalerna på sidan
   const totalElement = document.getElementById('totalCost');
   totalElement.textContent = `Totalt: ${totalCost + shippingCost - totalDiscount} kr`;
 
@@ -471,7 +519,10 @@ function updateTotal() {
   const shippingCostElement = document.getElementById('shippingCost');
   shippingCostElement.textContent = `Din fraktkostnad: ${shippingCost} kr`;
 
+  // Uppdatera måndagsrabatt om relevant
   calculateMondayDiscount(totalCost);
+
+  // Uppdatera betalningsalternativ
   updatePaymentMethodOptions();
 }
 
@@ -517,8 +568,8 @@ function calculateMondayDiscount(totalCost) {
 
 // -------------------------Rabatt på helger------------------------//
 function isWeekendSurge() {
-  const now = new Date('2024-12-07T09:00:00');
-  //const now = new Date();
+  //const now = new Date('2024-12-07T09:00:00');
+  const now = new Date();
   const dayOfWeek = now.getDay();  // 0 = söndag, 1 = måndag, ..., 5 = fredag, 6 = lördag
   const hourOfDay = now.getHours();
   
@@ -585,22 +636,45 @@ function sortByName(Name) {
     const productElement = document.createElement('div');
     productElement.classList.add('eachProduct');
     productElement.innerHTML = `
-      <h2>${eachProduct.namn}</h2>
+      <h3>${eachProduct.namn}</h3>
       <img src="${eachProduct.img.url}" alt="${eachProduct.img.alt}">
       <p>${eachProduct.img.alt}</p>
       <div class="product-information">
-        <h3>${getRatingHtml(eachProduct.raiting)}</h3>
-        <h3>Kategori: ${eachProduct.kategori}</h3>
-        <h3>${displayedPrice} kr/st</h3> <!-- Visa justerat pris -->
+        <h4>${getRatingHtml(eachProduct.raiting)}</h4>
+        <h4>Kategori: ${eachProduct.kategori}</h4>
+        <h4>${displayedPrice} kr/st</h4> <!-- Visa justerat pris -->
       </div>
       
       <div class="product-counter">
-        <button class="remove material-symbols-outlined" id="remove-${eachProduct.id}">remove_shopping_cart</button>
-        <input type="number" min="0" value="${eachProduct.amount}" id="input-${eachProduct.id}">
-        <button class="add material-symbols-outlined" id="add-${eachProduct.id}">add_shopping_cart</button>
-      </div>
+          <button class="remove material-symbols-outlined" id="remove-${eachProduct.id}">remove_shopping_cart</button>
+          <input type="number" name="counter" "min="0" value="${eachProduct.amount}" id="input-${eachProduct.id}" aria-label="amount">
+          <button class="add material-symbols-outlined" id="add-${eachProduct.id}">add_shopping_cart</button>
+        </div>
     `;
     productListElement.appendChild(productElement);
+  });
+
+  // Variabler för minus knappar 
+  const removeButton = document.querySelectorAll('button.remove');
+  removeButton.forEach(button => {
+    button.addEventListener('click', removeProductCount);
+  });
+
+  // Variabler för plus knappar 
+  const addButton = document.querySelectorAll('button.add');
+  addButton.forEach(button => {
+    button.addEventListener('click', addProductCount);
+  });
+
+   // Event listener på input fälten
+  document.querySelectorAll('input[name="counter"]').forEach(input => {
+    input.addEventListener('input', (event) => {
+      const productId = parseInt(event.target.id.replace('input-', '')); 
+      const newAmount = parseInt(event.target.value) || 0; 
+      updateProductAmount(productId, newAmount); 
+      updateCart(); 
+      updateTotal();
+    });
   });
 }
 
@@ -644,22 +718,45 @@ function sortByCategory(Category) {
     const productElement = document.createElement('div');
     productElement.classList.add('eachProduct');
     productElement.innerHTML = `
-      <h2>${eachProduct.namn}</h2>
+      <h3>${eachProduct.namn}</h3>
       <img src="${eachProduct.img.url}" alt="${eachProduct.img.alt}">
       <p>${eachProduct.img.alt}</p>
       <div class="product-information">
-        <h3>${getRatingHtml(eachProduct.raiting)}</h3>
-        <h3>Kategori: ${eachProduct.kategori}</h3>
-        <h3>${displayedPrice} kr/st</h3> <!-- Visa det justerade priset om helgpriser gäller -->
+        <h4>${getRatingHtml(eachProduct.raiting)}</h4>
+        <h4>Kategori: ${eachProduct.kategori}</h4>
+        <h4>${displayedPrice} kr/st</h4> 
       </div>
       
       <div class="product-counter">
-        <button class="remove material-symbols-outlined" id="remove-${eachProduct.id}">remove_shopping_cart</button>
-        <input type="number" min="0" value="${eachProduct.amount}" id="input-${eachProduct.id}">
-        <button class="add material-symbols-outlined" id="add-${eachProduct.id}">add_shopping_cart</button>
-      </div>
+          <button class="remove material-symbols-outlined" id="remove-${eachProduct.id}">remove_shopping_cart</button>
+          <input type="number" name="counter" "min="0" value="${eachProduct.amount}" id="input-${eachProduct.id}" aria-label="amount">
+          <button class="add material-symbols-outlined" id="add-${eachProduct.id}">add_shopping_cart</button>
+        </div>
     `;
     productListElement.appendChild(productElement);
+  });
+
+  // Variabler för minus knappar 
+  const removeButton = document.querySelectorAll('button.remove');
+  removeButton.forEach(button => {
+    button.addEventListener('click', removeProductCount);
+  });
+
+  // Variabler för plus knappar 
+  const addButton = document.querySelectorAll('button.add');
+  addButton.forEach(button => {
+    button.addEventListener('click', addProductCount);
+  });
+
+   // Event listener på input fälten
+  document.querySelectorAll('input[name="counter"]').forEach(input => {
+    input.addEventListener('input', (event) => {
+      const productId = parseInt(event.target.id.replace('input-', '')); 
+      const newAmount = parseInt(event.target.value) || 0; 
+      updateProductAmount(productId, newAmount); 
+      updateCart(); 
+      updateTotal();
+    });
   });
 }
 
@@ -703,22 +800,45 @@ function sortByPrice(Price) {
     const productElement = document.createElement('div');
     productElement.classList.add('eachProduct');
     productElement.innerHTML = `
-      <h2>${eachProduct.namn}</h2>
+      <h3>${eachProduct.namn}</h3>
       <img src="${eachProduct.img.url}" alt="${eachProduct.img.alt}">
       <p>${eachProduct.img.alt}</p>
       <div class="product-information">
-        <h3>${getRatingHtml(eachProduct.raiting)}</h3>
-        <h3>Kategori: ${eachProduct.kategori}</h3>
-        <h3>${displayedPrice} kr/st</h3> <!-- Visa det justerade priset om helgpriser gäller -->
+        <h4>${getRatingHtml(eachProduct.raiting)}</h4>
+        <h4>Kategori: ${eachProduct.kategori}</h4>
+        <h4>${displayedPrice} kr/st</h4>
       </div>
       
-      <div class="product-counter">
-        <button class="remove material-symbols-outlined" id="remove-${eachProduct.id}">remove_shopping_cart</button>
-        <input type="number" min="0" value="${eachProduct.amount}" id="input-${eachProduct.id}">
-        <button class="add material-symbols-outlined" id="add-${eachProduct.id}">add_shopping_cart</button>
-      </div>
+      <<div class="product-counter">
+          <button class="remove material-symbols-outlined" id="remove-${eachProduct.id}">remove_shopping_cart</button>
+          <input type="number" name="counter" "min="0" value="${eachProduct.amount}" id="input-${eachProduct.id}" aria-label="amount">
+          <button class="add material-symbols-outlined" id="add-${eachProduct.id}">add_shopping_cart</button>
+        </div>
     `;
     productListElement.appendChild(productElement);
+  });
+
+  // Variabler för minus knappar 
+  const removeButton = document.querySelectorAll('button.remove');
+  removeButton.forEach(button => {
+    button.addEventListener('click', removeProductCount);
+  });
+
+  // Variabler för plus knappar 
+  const addButton = document.querySelectorAll('button.add');
+  addButton.forEach(button => {
+    button.addEventListener('click', addProductCount);
+  });
+
+   // Event listener på input fälten
+  document.querySelectorAll('input[name="counter"]').forEach(input => {
+    input.addEventListener('input', (event) => {
+      const productId = parseInt(event.target.id.replace('input-', '')); 
+      const newAmount = parseInt(event.target.value) || 0; 
+      updateProductAmount(productId, newAmount); 
+      updateCart(); 
+      updateTotal();
+    });
   });
 }
 
@@ -759,22 +879,45 @@ function sortByRating(Rating) {
     const productElement = document.createElement('div');
     productElement.classList.add('eachProduct');
     productElement.innerHTML = `
-      <h2>${eachProduct.namn}</h2>
+      <h3>${eachProduct.namn}</h3>
       <img src="${eachProduct.img.url}" alt="${eachProduct.img.alt}">
       <p>${eachProduct.img.alt}</p>
       <div class="product-information">
-        <h3>${getRatingHtml(eachProduct.raiting)}</h3>
-        <h3>Kategori: ${eachProduct.kategori}</h3>
-        <h3>${displayedPrice} kr/st</h3> <!-- Visa det justerade priset om helgpriser gäller -->
+        <h4>${getRatingHtml(eachProduct.raiting)}</h4>
+        <h4>Kategori: ${eachProduct.kategori}</h4>
+        <h4>${displayedPrice} kr/st</h4>
       </div>
       
       <div class="product-counter">
-        <button class="remove material-symbols-outlined" id="remove-${eachProduct.id}">remove_shopping_cart</button>
-        <input type="number" min="0" value="${eachProduct.amount}" id="input-${eachProduct.id}">
-        <button class="add material-symbols-outlined" id="add-${eachProduct.id}">add_shopping_cart</button>
-      </div>
+          <button class="remove material-symbols-outlined" id="remove-${eachProduct.id}">remove_shopping_cart</button>
+          <input type="number" name="counter" "min="0" value="${eachProduct.amount}" id="input-${eachProduct.id}" aria-label="amount">
+          <button class="add material-symbols-outlined" id="add-${eachProduct.id}">add_shopping_cart</button>
+        </div>
     `;
     productListElement.appendChild(productElement);
+  });
+
+  // Variabler för minus knappar 
+  const removeButton = document.querySelectorAll('button.remove');
+  removeButton.forEach(button => {
+    button.addEventListener('click', removeProductCount);
+  });
+
+  // Variabler för plus knappar 
+  const addButton = document.querySelectorAll('button.add');
+  addButton.forEach(button => {
+    button.addEventListener('click', addProductCount);
+  });
+
+   // Event listener på input fälten
+  document.querySelectorAll('input[name="counter"]').forEach(input => {
+    input.addEventListener('input', (event) => {
+      const productId = parseInt(event.target.id.replace('input-', '')); 
+      const newAmount = parseInt(event.target.value) || 0; 
+      updateProductAmount(productId, newAmount); 
+      updateCart(); 
+      updateTotal();
+    });
   });
 }
 
@@ -815,22 +958,45 @@ function sortById(Id) {
     const productElement = document.createElement('div');
     productElement.classList.add('eachProduct');
     productElement.innerHTML = `
-      <h2>${eachProduct.namn}</h2>
+      <h3>${eachProduct.namn}</h3>
       <img src="${eachProduct.img.url}" alt="${eachProduct.img.alt}">
       <p>${eachProduct.img.alt}</p>
       <div class="product-information">
-        <h3>${getRatingHtml(eachProduct.raiting)}</h3>
-        <h3>Kategori: ${eachProduct.kategori}</h3>
-        <h3>${displayedPrice} kr/st</h3>  <!-- Visa det justerade priset om helgpriser gäller -->
+        <h4>${getRatingHtml(eachProduct.raiting)}</h4>
+        <h4>Kategori: ${eachProduct.kategori}</h4>
+        <h4>${displayedPrice} kr/st</h4> 
       </div>
       
       <div class="product-counter">
-        <button class="remove material-symbols-outlined" id="remove-${eachProduct.id}">remove_shopping_cart</button>
-        <input type="number" min="0" value="${eachProduct.amount}" id="input-${eachProduct.id}">
-        <button class="add material-symbols-outlined" id="add-${eachProduct.id}">add_shopping_cart</button>
-      </div>
+          <button class="remove material-symbols-outlined" id="remove-${eachProduct.id}">remove_shopping_cart</button>
+          <input type="number" name="counter" "min="0" value="${eachProduct.amount}" id="input-${eachProduct.id}" aria-label="amount">
+          <button class="add material-symbols-outlined" id="add-${eachProduct.id}">add_shopping_cart</button>
+        </div>
     `;
     productListElement.appendChild(productElement);
+  });
+
+  // Variabler för minus knappar 
+  const removeButton = document.querySelectorAll('button.remove');
+  removeButton.forEach(button => {
+    button.addEventListener('click', removeProductCount);
+  });
+
+  // Variabler för plus knappar 
+  const addButton = document.querySelectorAll('button.add');
+  addButton.forEach(button => {
+    button.addEventListener('click', addProductCount);
+  });
+
+   // Event listener på input fälten
+  document.querySelectorAll('input[name="counter"]').forEach(input => {
+    input.addEventListener('input', (event) => {
+      const productId = parseInt(event.target.id.replace('input-', '')); 
+      const newAmount = parseInt(event.target.value) || 0; 
+      updateProductAmount(productId, newAmount); 
+      updateCart(); 
+      updateTotal();
+    });
   });
 }
 
@@ -1080,10 +1246,8 @@ function toggleSubmitButton() {
 
   if (firstNameValid && lastNameValid && addressValid && zipCodeValid && postalAddressValid && phoneValid && emailValid && paymentMethodValid) {
     submitButton.disabled = false;
-    submitButton.style.display = 'inline'; 
   } else {
     submitButton.disabled = true;
-    submitButton.style.display = 'none';
   }
 }
 
@@ -1459,11 +1623,13 @@ startCountdown();
 
 // -----------------Växla mellan ljust och mörkt tema--------------------//
 const themeToggleButton = document.getElementById('themeToggle');
+const themeIcon = document.getElementById('theme-icon');
 
 const savedTheme = localStorage.getItem('theme');
 
 if (savedTheme) {
     document.documentElement.setAttribute('data-theme', savedTheme);
+    updateIcon(savedTheme);
 }
 
 themeToggleButton.addEventListener('click', () => {
@@ -1471,8 +1637,18 @@ themeToggleButton.addEventListener('click', () => {
     if (currentTheme === 'dark') {
         document.documentElement.setAttribute('data-theme', 'light');
         localStorage.setItem('theme', 'light');
+        updateIcon('light');
     } else {
         document.documentElement.setAttribute('data-theme', 'dark');
         localStorage.setItem('theme', 'dark');
+        updateIcon('dark');
     }
 });
+
+function updateIcon(theme) {
+    if (theme === 'dark') {
+        themeIcon.textContent = 'dark_mode';  // Måneikon
+    } else {
+        themeIcon.textContent = 'light_mode';  // Solikon
+    }
+}

@@ -1,10 +1,11 @@
 <!doctype html>
 <html lang="sv">
   <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/svg+xml" href="/vite.svg">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gottfrids gyllene munkar</title>
+    <meta name="description" content="Gottfrids gyllene munkars hemsida där de säljer utsökta munkar.">
     
     <link rel="stylesheet" href="css/style.css" type="text/css">
     
@@ -14,10 +15,11 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Gabriela&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   </head>
 
   <body>
@@ -27,26 +29,26 @@
         <p>Varukorgen töms om <span id="countdown"></span></p>
       </div>
       
-      <a href="#myCart" class="button"><span class="material-symbols-outlined">shopping_cart</span></a>
+      <a href="#myForm" class="button"><span class="material-symbols-outlined">shopping_cart</span><span class="cart-count"></span></a>
       <span class="total-sum" id="totalSum">0 kr</span>
       <button><span class="material-symbols-outlined">menu</span></button>
     </header>
 
     <main>
-
-      
-
     <!-- Sidans övre del -->
-      <section class="top-bar">
-        <div class="container">
-          <button class="theme-button" id="themeToggle">Växla Tema</button>
-        </div>
-        <div>
+    <section class="top-bar">
+      <div class="container">
+          <button class="theme-button" id="themeToggle">
+              <span id="theme-icon" class="material-icons">light_mode</span>
+          </button>
+      </div>
+  
+      <div class="header-content">
           <h1>Gottfrids Gyllene Munkar</h1>
-          <img src="img/logo_gottfrids_gyllene_munkar.png" alt="Gottfrids Gyllene Munkars logotype" width="250" height="250" />
-        </div>
-        <h2 class="slogan">Snaskköpings bästa munkar direkt till din dörr</h2>
-      </section>
+          <img src="img/logo_gottfrids_gyllene_munkar.png" alt="Gottfrids Gyllene Munkars logotype" width="150" height="150">
+      </div>
+      <h2 class="slogan">Snaskköpings bästa munkar direkt till din dörr</h2>
+  </section>
 
 
     <!-- Sorterings funktion -->
@@ -61,6 +63,7 @@
 
     <!-- Produktlista -->
       <article>
+        <h2>Våra munkar - alltid bakade med kärlek</h2>
         <div class="products" id="product-list"></div>
       </article>
 
@@ -68,9 +71,10 @@
 
     <!-- Varukorg -->
     <form id="myForm">
-      <section class="my-cart" id="myCart">
-        <h2>Varukorgen</h2>
+        <section class="my-cart">
+          <h2>Varukorgen</h2>
         <article>
+          <h2 class="cart-title">Orderbekräftelse</h2>
           <div id="cart"></div>
         </article>
         <div class="monday-discount" id="discount-summary"></div>
@@ -183,7 +187,7 @@
         <h3>Betalningsuppgifter</h3>
         <p>För att kunna betala med faktura behöver du ange ditt personummer nedan</p>
         <div class="invoice-information">
-          <label for="securitynumber">Personnummer</label><span id="securityNumberError"><i class="material-symbols-outlined">warning</i></span><span id="securityNumberErrorMessage"></span>
+          <label for="secnumber">Personnummer</label><span id="securityNumberError"><i class="material-symbols-outlined">warning</i></span><span id="securityNumberErrorMessage"></span>
           <input type="number" id="secnumber" name="securitynumber" placeholder="12345678-1234" aria-label="12345678-1234">
         </div>
         <div class="invoice-address">
