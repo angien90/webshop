@@ -40,9 +40,19 @@ I detta projekt har jag använt mig av;
 ![Figma](https://img.shields.io/badge/figma-%23F24E1E.svg?style=for-the-badge&logo=figma&logoColor=white)
 
 ## Slutresultat
+![Resultat](https://github.com/Medieinstitutet/fed24d-js-intro-inl-1-webshop-angien90/blob/main/Resultat.png)
 
 
 ### Valideringsrapporter
+#### Validering HTML
 ![Validering HTML](https://github.com/Medieinstitutet/fed24d-js-intro-inl-1-webshop-angien90/blob/main/Validering%20HTML.png)
 
+#### Validering CSS
+![Validering CSS](https://github.com/Medieinstitutet/fed24d-js-intro-inl-1-webshop-angien90/blob/main/Validering%20CSS.png)
+
 ### Lighthouse-analys
+#### Desktop
+![Lighthouse-desktop]https://github.com/Medieinstitutet/fed24d-js-intro-inl-1-webshop-angien90/blob/main/Lighthouse%20analys%20-%20Desktop.png
+
+#### Mobile
+![Lighthouse-mobile](https://github.com/Medieinstitutet/fed24d-js-intro-inl-1-webshop-angien90/blob/main/Lighthouse%20analys%20-%20Mobile.png)
