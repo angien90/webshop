@@ -1,5 +1,5 @@
 import { defineConfig } from "vite";
 
 export default({
-    base:'/angien90/webshop/'
+    base:'/fed24d-js-intro-inl-1-webshop-angien90/'
 });
