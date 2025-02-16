@@ -3,15 +3,15 @@ https://medieinstitutet.github.io/fed24d-js-intro-inl-1-webshop-angien90/
 
 ## Beskrivning
 
-Detta är var mitt första projekt i Javascript under utbildningen. Vi fick 4 veckor på oss att bygga en webbshop där vi skulle uppfylla vissa krav från den ficktiva kunden Gottfrid Jästson.
+Detta är var mitt första projekt i Javascript under utbildningen. Vi fick 4 veckor på oss att bygga en webbshop där vi skulle uppfylla vissa krav från den fiktiva kunden Gottfrid Jästson.
 
 Det handlade bland annat om att skapa en produktlista med hjälp av en array. Där man skulle kunna öka och minska antalet produkter med hjälp av plus och minus knapp. Man skulle även skapa en varukorg som visar de produkter man valt.
 
-Det var vissa rabattaer som skulle slåd på vid vissa tilläfällen och dels meddela det via varukorgen men också uppdatera priset. 
+Det var vissa rabatter som skulle slåd på vid vissa tillfällen och dels meddela det via varukorgen men också uppdatera priset. 
 
 Det skulle gå att filtrera på produkternas olika egenskaper. 
 
-Vi skulle även ha ett formuär med massainput fält som skulle valideras innan man kunde skicka iväg sin beställning. 
+Vi skulle även ha ett formulär med massainput fält som skulle valideras innan man kunde skicka iväg sin beställning. 
 
 Utöver dess skulle vissa knappar visas och döljas beroende på andra faktorer och det skulle finnas en timer som räknade ner och tog bort valda produkter och ifyllda fält efter 15 minuter. När man tryckte på knappen för att skicka iväg sin beställning skulle ett meddelande komma upp. 
 
