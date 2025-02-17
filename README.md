@@ -56,3 +56,7 @@ I detta projekt har jag använt mig av;
 
 #### Mobile
 ![Lighthouse-mobile](https://github.com/Medieinstitutet/fed24d-js-intro-inl-1-webshop-angien90/blob/main/Lighthouse%20analys%20-%20Mobile.png)
+
+## Betyg 
+![image](https://github.com/user-attachments/assets/a37797b2-b169-4df7-a5d6-28dedb33a385)
+Obs: VG är max
